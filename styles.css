@@ -2338,8 +2338,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn-event-register--ended:hover { background: var(--background); color: var(--dark); transform: none; }
 
 /* Ended card dimming */
-.event-card[data-status="ended"] { opacity: 0.72; }
-.event-card[data-status="ended"]:hover { opacity: 1; }
 
 @media (max-width: 1024px) {
   .events-grid { grid-template-columns: repeat(2, 1fr); }
