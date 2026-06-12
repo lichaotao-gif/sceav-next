@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数字教材 | 四川省教育电子音像出版社</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .coming-page {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      background: linear-gradient(135deg, #050d1a 0%, #0b1f3a 40%, #1149be 100%);
+      color: #fff;
+      position: relative; overflow: hidden;
+    }
+
+    /* 背景装饰 */
+    .coming-bg {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .coming-bg::before {
+      content: '';
+      position: absolute;
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(25,211,197,.12) 0%, transparent 65%);
+      top: -200px; left: -200px;
+      animation: bgpulse 8s ease-in-out infinite alternate;
+    }
+    .coming-bg::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(100,80,255,.1) 0%, transparent 65%);
+      bottom: -100px; right: -100px;
+      animation: bgpulse 10s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes bgpulse {
+      0%   { transform: scale(1) translate(0,0); }
+      100% { transform: scale(1.15) translate(30px, -20px); }
+    }
+
+    /* 网格线 */
+    .coming-grid {
+      position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(25,211,197,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(25,211,197,.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* 内容区 */
+    .coming-inner {
+      position: relative; z-index: 1;
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+    }
+
+    /* 图标动画 */
+    .coming-icon-wrap {
+      position: relative;
+      width: 140px; height: 140px;
+      margin-bottom: 40px;
+    }
+    /* 外环旋转 */
+    .coming-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: rgba(25,211,197,.3);
+      animation: spin 3s linear infinite;
+    }
+    .coming-ring-2 {
+      position: absolute; inset: 14px;
+      border-radius: 50%;
+      border: 1.5px solid transparent;
+      border-bottom-color: rgba(99,102,241,.6);
+      border-left-color: rgba(99,102,241,.2);
+      animation: spin 5s linear infinite reverse;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* 中心图标 */
+    .coming-icon-center {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .coming-icon-center svg {
+      width: 56px; height: 56px;
+      animation: iconpulse 3s ease-in-out infinite;
+    }
+    @keyframes iconpulse {
+      0%,100% { opacity: .9; transform: scale(1); }
+      50%      { opacity: 1;  transform: scale(1.08); }
+    }
+    @keyframes shimmer { to { left: 200%; } }
+
+    /* 标题 */
+    .coming-eyebrow {
+      font-size: 12px; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); font-weight: 700; margin-bottom: 16px;
+    }
+    .coming-title {
+      font-size: clamp(32px, 5vw, 58px);
+      font-weight: 900; line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .coming-title span {
+      background: linear-gradient(90deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .coming-desc {
+      font-size: 16px; color: rgba(255,255,255,.65);
+      line-height: 1.8; max-width: 520px;
+      margin-bottom: 48px;
+    }
+
+    /* 特性卡片 */
+    .coming-features {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 52px;
+      max-width: 720px;
+    }
+    .coming-feat {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 20px 22px;
+      width: 200px;
+      backdrop-filter: blur(8px);
+      transition: border-color .2s, background .2s;
+    }
+    .coming-feat:hover {
+      border-color: rgba(25,211,197,.4);
+      background: rgba(25,211,197,.07);
+    }
+    .coming-feat-icon {
+      font-size: 28px; margin-bottom: 10px;
+    }
+    .coming-feat h4 {
+      font-size: 14px; font-weight: 700;
+      color: #fff; margin-bottom: 6px;
+    }
+    .coming-feat p {
+      font-size: 12px; color: rgba(255,255,255,.5);
+      line-height: 1.6;
+    }
+
+    /* 按钮 */
+    .coming-actions {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+    .coming-btn-back {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 11px 26px; border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      border: 1.5px solid rgba(255,255,255,.2);
+      color: #fff; font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: all .18s;
+    }
+    .coming-btn-back:hover {
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.4);
+    }
+    .coming-btn-notify {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 11px 26px; border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), #0fb0a5);
+      color: #071a35; font-size: 14px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity .18s;
+    }
+    .coming-btn-notify:hover { opacity: .88; }
+
+    /* Footer */
+    .coming-footer {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 20px 24px 32px;
+      font-size: 12px; color: rgba(255,255,255,.3);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ 导航 ══ -->
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="首页">
+      <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="四川省教育电子音像出版社标志" /></span>
+      <div class="brand-name">
+        <span class="brand-text">四川省教育电子音像出版社</span>
+        <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="announcements.html">通知公告</a>
+      <a href="events.html">赛事活动</a>
+      <a href="courses.html">赛事服务</a>
+      <a href="textbooks.html" class="nav-active">数字教材</a>
+      <a href="ebooks.html">电子书</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-login" type="button" data-login-open>登录 / 注册</button>
+    
+      <button class="nav-mobile-toggle" type="button" data-menu-toggle aria-label="展开菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="mobile-menu" data-mobile-menu hidden>
+    <nav>
+        <a href="index.html" data-menu-close>首页</a>
+        <a href="announcements.html" data-menu-close>通知公告</a>
+        <a href="events.html" data-menu-close>赛事活动</a>
+        <a href="courses.html" data-menu-close>赛事服务</a>
+        <a href="textbooks.html" data-menu-close>数字教材</a>
+        <a href="ebooks.html" data-menu-close>电子书</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <button class="btn-login-mobile" type="button" data-login-open>登录 / 注册</button>
+    </div>
+  </div>
+
+  <!-- ══ 主体 ══ -->
+  <main class="coming-page">
+    <div class="coming-bg"></div>
+    <div class="coming-grid"></div>
+
+    <div class="coming-inner">
+
+      <!-- 动画图标 -->
+      <div class="coming-icon-wrap">
+        <div class="coming-ring"></div>
+        <div class="coming-ring-2"></div>
+        <div class="coming-icon-center">
+          <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="6" width="30" height="38" rx="3" stroke="rgba(25,211,197,.5)" stroke-width="1.5"/>
+            <rect x="14" y="4" width="30" height="38" rx="3" stroke="rgba(25,211,197,.7)" stroke-width="1.5"/>
+            <rect x="18" y="12" width="30" height="38" rx="3" fill="rgba(25,211,197,.08)" stroke="#19d3c5" stroke-width="1.5"/>
+            <line x1="24" y1="22" x2="42" y2="22" stroke="#19d3c5" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="24" y1="28" x2="38" y2="28" stroke="rgba(25,211,197,.6)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="24" y1="34" x2="40" y2="34" stroke="rgba(25,211,197,.4)" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="44" cy="44" r="9" fill="#0a1830" stroke="#19d3c5" stroke-width="1.5"/>
+            <path d="M41 44l2 2 4-4" stroke="#19d3c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <p class="coming-eyebrow">Coming Soon</p>
+      <h1 class="coming-title"><span>正在开发中···</span></h1>
+      <p class="coming-desc">
+        数字教材平台正在全力建设中，将汇聚覆盖小学、初中、高中全学段的互动数字教材，
+        支持在线阅读、批注、练习与多端同步，敬请期待。
+      </p>
+
+      <!-- 特性预告 -->
+      <div class="coming-features">
+        <div class="coming-feat">
+          <div class="coming-feat-icon">📚</div>
+          <h4>全学段覆盖</h4>
+          <p>小学、初中、高中，12个学科，完整体系</p>
+        </div>
+        <div class="coming-feat">
+          <div class="coming-feat-icon">🎯</div>
+          <h4>互动练习</h4>
+          <p>内嵌题库与即时反馈，边学边练</p>
+        </div>
+        <div class="coming-feat">
+          <div class="coming-feat-icon">📱</div>
+          <h4>多端同步</h4>
+          <p>PC、平板、手机无缝切换，进度云端保存</p>
+        </div>
+      </div>
+
+      <!-- 按钮 -->
+      <div class="coming-actions">
+        <a class="coming-btn-back" href="index.html">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          返回首页
+        </a>
+        <a class="coming-btn-notify" href="ebooks.html">
+          浏览电子书库
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+
+    <div class="coming-footer">
+      © 2026 四川省教育电子音像出版社 &nbsp;|&nbsp; 蜀ICP备19016579号 &nbsp;|&nbsp; 川公网安备 51010402000773号
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

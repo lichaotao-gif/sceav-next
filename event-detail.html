@@ -1,0 +1,1324 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026年省级科幻类作品征集活动 | 四川省教育电子音像出版社</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ═══ Detail Page Styles ═══ */
+
+    /* ── Detail Hero ── */
+    .detail-hero {
+      position: relative;
+      overflow: hidden;
+      padding: 180px max(28px, calc((100vw - 1160px) / 2)) 80px;
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .detail-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 8% 30%,  rgba(59,130,246,.55)   0%, transparent 48%),
+        radial-gradient(ellipse at 90% 12%, rgba(56,189,248,.4)    0%, transparent 42%),
+        radial-gradient(ellipse at 50% 95%, rgba(6,182,212,.38)    0%, transparent 44%),
+        linear-gradient(135deg, #0f2d6e 0%, #1250a0 30%, #0a6898 60%, #0369a1 100%);
+    }
+    .detail-hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.45) 0%, transparent 72%);
+    }
+    /* decorative floating orbs */
+    .detail-hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 20%; right: 8%;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .detail-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 800px;
+    }
+    .detail-hero-inner .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0; border: none; background: none; border-radius: 0;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 18px;
+    }
+    .detail-hero-inner .eyebrow::before {
+      content: ''; display: block; width: 20px; height: 2px;
+      background: rgba(255,255,255,.9); border-radius: 2px; flex-shrink: 0;
+    }
+    .detail-hero-inner h1 {
+      font-size: clamp(28px, 3.8vw, 50px);
+      font-weight: 900; line-height: 1.22;
+      margin-bottom: 22px;
+      text-shadow: none;
+    }
+    .detail-hero-inner > p {
+      font-size: 15px; line-height: 1.85;
+      color: rgba(255,255,255,0.78);
+      max-width: 640px; margin: 0 0 32px;
+    }
+    .detail-hero-meta {
+      display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 10px 20px;
+      margin-bottom: 36px;
+    }
+    .detail-hero-meta span {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 7px 16px; border-radius: 999px;
+      backdrop-filter: blur(8px);
+    }
+    .detail-hero-meta span svg { flex-shrink: 0; opacity: 0.9; }
+    .detail-hero-meta strong { color: #fff; font-weight: 800; }
+    .btn-enroll {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: #fff; font-weight: 800; font-size: 16px;
+      padding: 14px 44px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s;
+      box-shadow: 0 6px 28px rgba(249,115,22,0.45);
+    }
+    .btn-enroll:hover { background: linear-gradient(135deg, #ea6e0a, #f97316); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(249,115,22,0.55); }
+
+    /* ── Detail Body ── */
+    .detail-body {
+      max-width: 1200px; margin: 0 auto;
+      padding: 60px 28px;
+      display: grid; grid-template-columns: 1fr 320px; gap: 48px;
+    }
+    .detail-main { min-width: 0; }
+    .detail-sidebar { min-width: 0; }
+    .detail-sidebar-inner { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 0; }
+
+    /* Section blocks */
+    .detail-block { margin-bottom: 48px; }
+    #attachments-block h2 { margin-bottom: 8px; padding-bottom: 10px; }
+    .detail-block h2 {
+      font-size: 20px; font-weight: 800; color: var(--dark);
+      padding-bottom: 12px; margin-bottom: 20px;
+      border-bottom: 2px solid var(--accent);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .detail-block h2 svg { color: var(--accent); }
+    .detail-block p {
+      font-size: 15px; color: #444; line-height: 1.9; margin-bottom: 12px;
+    }
+    .detail-block ul {
+      padding-left: 0; list-style: none; margin: 0;
+    }
+    .detail-block ul li {
+      font-size: 14px; color: #555; line-height: 1.8;
+      padding: 6px 0 6px 20px; position: relative;
+      border-bottom: 1px dashed #e8f0f8;
+    }
+    .detail-block ul li::before {
+      content: ''; position: absolute; left: 4px; top: 15px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
+    .timeline-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 14px 16px; border-radius: 10px;
+      background: #f5f8ff; border: 1px solid #e2edf8;
+    }
+    .tl-dot-wrap { flex-shrink: 0; }
+    .tl-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 13px; font-weight: 700;
+    }
+    .tl-line { display: none; }
+    .tl-content { flex: 1; min-width: 0; }
+    .tl-content h4 { font-size: 14px; font-weight: 700; color: var(--dark); margin: 0 0 2px; }
+    .tl-content p { font-size: 12px; color: #888; margin: 0; }
+
+    /* Prize table */
+    .prize-list { display: flex; flex-direction: column; gap: 10px; }
+    .prize-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px; border-radius: 10px;
+      background: #f4f9ff;
+    }
+    .prize-medal {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .prize-medal.gold { background: linear-gradient(135deg,#fbbf24,#f59e0b); }
+    .prize-medal.silver { background: linear-gradient(135deg,#9ca3af,#6b7280); }
+    .prize-medal.bronze { background: linear-gradient(135deg,#d97706,#b45309); }
+    .prize-medal.special { background: linear-gradient(135deg,#7c3aed,#a855f7); }
+    .prize-row-info { flex: 1; }
+    .prize-row-info h4 { font-size: 14px; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+    .prize-row-info p { font-size: 12px; color: #666; margin: 0; }
+    .prize-row-count { font-size: 13px; font-weight: 700; color: var(--secondary); }
+
+    /* Sidebar card */
+    .sidebar-card {
+      background: #fff; border-radius: 16px;
+      border: 1px solid #e2edf8;
+      box-shadow: 0 4px 24px rgba(10,77,140,0.07);
+      overflow: hidden; margin-bottom: 24px;
+    }
+    .sidebar-card-head {
+      background: linear-gradient(135deg, #1250a0, #0369a1);
+      padding: 16px 20px; color: #fff;
+    }
+    .sidebar-card-head h3 { font-size: 15px; font-weight: 800; margin: 0; }
+    .sidebar-card-body { padding: 16px 20px; }
+    .sidebar-info-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 8px 0; border-bottom: 1px solid #f0f6ff; font-size: 13px;
+    }
+    .sidebar-info-row:last-child { border-bottom: none; }
+    .sidebar-info-row span:first-child { color: #888; }
+    .sidebar-info-row span:last-child { font-weight: 600; color: var(--dark); }
+    .sidebar-info-row .tag-open { color: #059669; font-weight: 700; }
+    .sidebar-enroll-btn {
+      display: block; width: 100%; margin-top: 16px;
+      background: #1d6fb8;
+      color: #fff; font-weight: 800; font-size: 15px;
+      padding: 13px 0; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s; text-align: center;
+      box-shadow: 0 4px 20px rgba(29,111,184,0.35);
+    }
+    .sidebar-enroll-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(29,111,184,0.45); }
+    .sidebar-share { display: flex; gap: 8px; margin-top: 12px; }
+    .sidebar-share a {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      gap: 4px; font-size: 12px; padding: 8px;
+      border-radius: 8px; border: 1px solid #e2edf8; color: #666;
+      text-decoration: none; transition: all .15s;
+    }
+    .sidebar-share a:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Sidebar Product Cards ── */
+    .sidebar-product-list { display: flex; flex-direction: column; gap: 12px; padding: 12px 14px; }
+    .sidebar-product {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 10px; border-radius: 10px; background: #f8fbff;
+      border: 1px solid #e8f0fb; transition: all .15s;
+    }
+    .sidebar-product:hover { border-color: var(--accent); background: #f0fbfa; }
+    .sidebar-product-img {
+      width: 64px; height: 64px; flex-shrink: 0; border-radius: 8px;
+      overflow: hidden; background: #e8f0fb;
+    }
+    .sidebar-product-img svg { width: 100%; height: 100%; display: block; }
+    .sidebar-product-info { flex: 1; min-width: 0; }
+    .sidebar-product-info h4 {
+      font-size: 13px; font-weight: 700; color: var(--dark);
+      line-height: 1.4; margin-bottom: 4px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .sidebar-product-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; }
+    .sidebar-product-price { display: flex; align-items: baseline; gap: 4px; }
+    .sidebar-product-price .price-main { font-size: 16px; font-weight: 800; color: #e74c3c; }
+    .sidebar-product-price .price-main::before { content: '¥'; font-size: 11px; }
+    .sidebar-product-price .price-orig { font-size: 11px; color: #bbb; text-decoration: line-through; }
+    .btn-buy {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, #e8303a, #c0392b);
+      color: #fff; font-weight: 700; font-size: 11px;
+      padding: 5px 12px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .15s; text-decoration: none; white-space: nowrap;
+    }
+    .btn-buy:hover { box-shadow: 0 3px 12px rgba(231,76,60,0.4); }
+
+    /* ═══ Login Modal (pre-filled) ═══ */
+    /* inherits from styles.css */
+
+    /* ═══ Register Modal ═══ */
+    .register-modal {
+      display: none; /* hidden by default — use .is-open to show */
+    }
+    .register-modal.is-open {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(7,26,53,0.72); backdrop-filter: blur(4px);
+    }
+    /* Three-part layout: fixed header / scrollable body / sticky footer */
+    .register-card {
+      background: #fff; border-radius: 24px;
+      width: min(580px, 95vw); max-height: 90vh;
+      box-shadow: 0 24px 80px rgba(7,26,53,0.25);
+      display: flex; flex-direction: column;
+      overflow: hidden; /* children handle their own scroll */
+    }
+    /* ── Fixed header ── */
+    .register-card-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 12px; flex-shrink: 0;
+      padding: 24px 28px 18px;
+      border-bottom: 1px solid #eef3fb;
+      background: #fff;
+    }
+    .register-card-head h2 { font-size: 20px; font-weight: 900; color: var(--dark); margin-bottom: 3px; }
+    .register-card-head p  { font-size: 13px; color: #888; margin: 0; }
+    .register-close {
+      flex-shrink: 0; margin-top: 2px;
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: #f4f7fb; border: none; cursor: pointer;
+      color: #888; transition: all .15s;
+    }
+    .register-close:hover { background: #fee2e2; color: #e74c3c; }
+    /* ── Scrollable body ── */
+    .register-card-body {
+      flex: 1; overflow-y: auto;
+      padding: 24px 28px;
+    }
+    .register-card-body::-webkit-scrollbar { width: 4px; }
+    .register-card-body::-webkit-scrollbar-thumb { background: #d1dff0; border-radius: 4px; }
+    /* ── Sticky footer ── */
+    .register-card-foot {
+      flex-shrink: 0;
+      padding: 16px 28px 22px;
+      border-top: 1px solid #eef3fb;
+      background: #fff;
+    }
+
+    .register-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+    .form-field label { font-size: 13px; font-weight: 600; color: #555; }
+    .form-field label .req { color: #e74c3c; margin-left: 2px; }
+    .form-field label .req-note { color: #999; font-weight: 400; font-size: 12px; margin-left: 4px; }
+    .form-field input,
+    .form-field select {
+      border: 1.5px solid #e2edf8; border-radius: 10px;
+      padding: 10px 14px; font-size: 14px; color: var(--dark);
+      outline: none; transition: border-color .15s; width: 100%;
+      font-family: inherit; background: #fafcff; box-sizing: border-box;
+    }
+    .form-field input:focus,
+    .form-field select:focus { border-color: #1d6fb8; background: #fff; }
+    .form-field input.field-error,
+    .form-field select.field-error { border-color: #e74c3c !important; background: #fff8f8; }
+
+    /* 省市区联动 */
+    .region-selects { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+    /* 错误提示条 */
+    .reg-error-banner {
+      display: flex; align-items: center; gap: 8px;
+      background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px;
+      padding: 10px 14px; font-size: 13px; color: #dc2626;
+    }
+    .reg-error-banner[hidden] { display: none; }
+
+    /* Upload area */
+    .upload-area {
+      border: 2px dashed #b8d4f0; border-radius: 12px;
+      padding: 24px 20px; text-align: center;
+      cursor: pointer; transition: all .2s; background: #fafcff;
+      position: relative;
+    }
+    .upload-area:hover { border-color: #1d6fb8; background: #f0f6ff; }
+    .upload-area input[type=file] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+      border: none; padding: 0; width: 100%; height: 100%;
+    }
+    .upload-area-icon { color: #93c5fd; margin-bottom: 8px; }
+    .upload-area-text { font-size: 14px; font-weight: 600; color: #1d6fb8; margin-bottom: 4px; }
+    .upload-area-sub { font-size: 12px; color: #999; }
+    .uploaded-preview { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .uploaded-file {
+      display: flex; align-items: center; justify-content: space-between;
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px;
+      padding: 6px 10px; font-size: 12px; color: #1e40af;
+    }
+    .uploaded-file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .uploaded-file-remove { cursor: pointer; color: #9ca3af; flex-shrink: 0; margin-left: 8px; font-size: 16px; line-height: 1; }
+    .uploaded-file-remove:hover { color: #e74c3c; }
+
+    /* 截止提示 */
+    .reg-deadline-tip {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: #6b7280; margin-bottom: 10px;
+    }
+    .reg-deadline-tip strong { color: #e74c3c; }
+    .reg-deadline-tip svg { flex-shrink: 0; color: #f59e0b; }
+
+    .btn-register-submit {
+      background: linear-gradient(135deg, #1d6fb8, #0369a1);
+      color: #fff; font-weight: 800; font-size: 15px;
+      padding: 14px; border-radius: 999px; border: none;
+      cursor: pointer; transition: all .2s; width: 100%;
+      box-shadow: 0 4px 20px rgba(29,111,184,0.35);
+    }
+    .btn-register-submit:hover { background: linear-gradient(135deg, #1558a0, #025f8e); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(29,111,184,0.45); }
+
+    /* Success state */
+    .register-success {
+      text-align: center; padding: 20px 0 10px;
+    }
+    .register-success .success-icon { font-size: 56px; margin-bottom: 16px; }
+    .register-success h3 { font-size: 22px; font-weight: 900; color: var(--dark); margin-bottom: 8px; }
+    .register-success p { font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 24px; }
+    .btn-success-close {
+      background: linear-gradient(135deg, #1250a0, #0369a1);
+      color: #fff; font-weight: 700; font-size: 14px;
+      padding: 11px 36px; border-radius: 999px; border: none; cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .detail-hero-inner { flex-direction: column; gap: 32px; }
+      .detail-hero-poster { width: 100%; max-width: 400px; }
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-sidebar { order: -1; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 540px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .register-card-head, .register-card-body, .register-card-foot { padding-left: 18px; padding-right: 18px; }
+    }
+  
+      /* 相关课程视频占位 */
+      .sidebar-video-wrap { padding: 16px; }
+      .sidebar-video-placeholder { border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; }
+      .sidebar-video-placeholder:hover .svp-thumb svg { opacity: .85; }
+      .svp-thumb svg { width: 100%; display: block; transition: opacity .2s; border-radius: 8px; }
+      .svp-label {
+        position: absolute; bottom: 8px; left: 0; right: 0;
+        text-align: center; color: rgba(255,255,255,.7); font-size: 12px; margin: 0;
+      }
+      .svp-hint { display: none; }
+      .svp-course-info { padding: 10px 0 4px; }
+      .svp-course-title { font-size: 13px; font-weight: 600; color: #1f2937; line-height: 1.5; margin: 0 0 6px; }
+      .svp-course-meta { display: flex; align-items: center; gap: 10px; font-size: 11px; color: #6b7280; }
+      .svp-course-meta .svp-tag { background: #dbeafe; color: #1e40af; padding: 2px 7px; border-radius: 4px; font-size: 11px; }
+      .svp-duration::before { content: "⏱ "; }
+
+      /* 附件列表 */
+      .attach-list { display: flex; flex-direction: column; gap: 0; }
+      .attach-item {
+        display: flex; align-items: center; gap: 12px;
+        padding: 12px 0; border-bottom: 1px solid #f0f4fb;
+        cursor: pointer; transition: background .15s;
+      }
+      .attach-item:last-child { border-bottom: none; }
+      .attach-item:hover { background: #f5f8ff; margin: 0 -4px; padding-left: 4px; padding-right: 4px; border-radius: 6px; }
+      .attach-icon { width: 32px; flex-shrink: 0; }
+      .attach-icon svg { width: 32px; height: 40px; display: block; }
+      .attach-info { flex: 1; min-width: 0; }
+      .attach-name { font-size: 13px; font-weight: 600; color: #1e3a5f; margin: 0 0 2px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.4; }
+      .attach-meta { font-size: 11px; color: #9ca3af; margin: 0 !important; line-height: 1.4; }
+      .attach-preview-btn {
+        flex-shrink: 0; display: inline-flex; align-items: center; gap: 4px;
+        font-size: 12px; color: #1d6fb8; background: #eff6ff;
+        border: 1px solid #bfdbfe; border-radius: 6px;
+        padding: 4px 10px; cursor: pointer; transition: all .15s; white-space: nowrap;
+      }
+      .attach-preview-btn:hover { background: #dbeafe; color: #1e40af; }
+
+      /* PDF 弹窗 */
+      .pdf-modal { position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center; }
+      .pdf-modal[hidden] { display: none; }
+      .pdf-modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.55); backdrop-filter: blur(4px); }
+      .pdf-modal-box {
+        position: relative; z-index: 1;
+        width: min(860px, 94vw); height: min(88vh, 680px);
+        background: #fff; border-radius: 14px; overflow: hidden;
+        box-shadow: 0 24px 80px rgba(0,0,0,.35);
+        display: flex; flex-direction: column;
+      }
+      .pdf-modal-head {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 14px 20px; background: #1250a0; color: #fff; flex-shrink: 0;
+      }
+      .pdf-modal-title { font-size: 14px; font-weight: 700; }
+      .pdf-modal-close {
+        background: rgba(255,255,255,.15); border: none; border-radius: 6px;
+        color: #fff; cursor: pointer; padding: 4px 8px; line-height: 0;
+        transition: background .15s;
+      }
+      .pdf-modal-close:hover { background: rgba(255,255,255,.3); }
+      .pdf-modal-body { flex: 1; overflow: hidden; background: #f3f4f6; }
+      .pdf-modal-body iframe { width: 100%; height: 100%; border: none; display: block; }
+      .pdf-modal-placeholder {
+        height: 100%; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 16px; color: #6b7280;
+      }
+      .pdf-modal-placeholder svg { opacity: .35; }
+      .pdf-modal-placeholder p { font-size: 14px; margin: 0; }
+</style>
+</head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="四川省教育电子音像出版社首页">
+      <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="四川省教育电子音像出版社标志" /></span>
+        <div class="brand-name">
+          <span class="brand-text">四川省教育电子音像出版社</span>
+          <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+        </div>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="announcements.html">通知公告</a>
+      <a href="events.html" class="nav-active">赛事活动</a>
+      <a href="courses.html">赛事服务</a>
+      <a href="textbooks.html">数字教材</a>
+      <a href="ebooks.html">电子书</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-login" type="button" data-login-open id="login-btn">登录</button>
+      <div class="user-menu" id="user-menu" hidden>
+        <button class="user-avatar-btn" type="button" data-user-toggle>
+          <span class="user-avatar" id="user-avatar">我</span>
+          <span class="user-name" id="user-name"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="user-dropdown" id="user-dropdown" hidden>
+          <a href="#profile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>个人中心</a>
+          <a href="#favorites"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>我的收藏</a>
+          <hr />
+          <button type="button" data-logout><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>退出登录</button>
+        </div>
+      </div>
+      <button class="nav-mobile-toggle" type="button" data-menu-toggle aria-label="展开菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" data-mobile-menu hidden>
+    <nav>
+      <a href="index.html" data-menu-close>首页</a>
+      <a href="announcements.html" data-menu-close>通知公告</a>
+      <a href="events.html" data-menu-close>赛事活动</a>
+      <a href="courses.html" data-menu-close>赛事服务</a>
+      <a href="textbooks.html" data-menu-close>数字教材</a>
+      <a href="ebooks.html" data-menu-close>电子书</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <button class="btn-login-mobile" type="button" data-login-open>登录 / 注册</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ LOGIN MODAL（预填账号密码）═══════════════ -->
+  <div class="login-modal" id="login-modal" hidden>
+    <div class="login-card">
+      <button class="login-close" type="button" data-login-close aria-label="关闭">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="login-logo">
+        
+        <span>四川省教育电子音像出版社</span>
+      </div>
+      <h2>欢迎登录</h2>
+      <p class="login-sub">数字教育资源平台</p>
+      <div class="login-tabs">
+        <button class="login-tab" data-tab="phone">手机号登录</button>
+        <button class="login-tab active" data-tab="account">账号登录</button>
+      </div>
+      <div class="login-pane" id="pane-phone" hidden>
+        <div class="input-group">
+          <label>手机号</label>
+          <input type="tel" id="input-phone" placeholder="请输入手机号" maxlength="11" />
+        </div>
+        <div class="input-group">
+          <label>验证码</label>
+          <div class="code-row">
+            <input type="text" id="input-code" placeholder="请输入验证码" maxlength="6" />
+            <button class="btn-send-code" type="button" id="send-code-btn">获取验证码</button>
+          </div>
+        </div>
+      </div>
+      <div class="login-pane" id="pane-account">
+        <div class="input-group">
+          <label>账号</label>
+          <!-- 预填账号 -->
+          <input type="text" id="input-account" value="student2026" />
+        </div>
+        <div class="input-group">
+          <label>密码</label>
+          <!-- 预填密码 -->
+          <input type="password" id="input-password" value="sceav123456" />
+        </div>
+        <p style="font-size:12px;color:#19d3c5;margin:0 0 4px;text-align:right;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:3px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+          已为您预填演示账号，直接点击登录即可
+        </p>
+      </div>
+      <button class="btn-login-submit" type="button" id="login-submit">登 录</button>
+      <p class="login-agree">登录即代表同意 <a href="#">用户协议</a> 与 <a href="#">隐私政策</a></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ REGISTER MODAL ═══════════════ -->
+  <div class="register-modal" id="register-modal">
+    <div class="register-card" id="register-card">
+
+      <!-- ── Form state ── -->
+      <div id="register-form-state">
+        <!-- Fixed header -->
+        <div class="register-card-head">
+          <div>
+            <h2>参赛报名</h2>
+            <p>2026年省级科幻类作品征集活动</p>
+          </div>
+          <button class="register-close" type="button" id="register-close" aria-label="关闭">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <!-- Scrollable body -->
+        <div class="register-card-body">
+          <div class="register-form">
+
+            <!-- 错误提示 -->
+            <div class="reg-error-banner" id="reg-error-banner" hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span id="reg-error-msg">请填写所有必填项</span>
+            </div>
+
+            <!-- 报名者姓名 -->
+            <div class="form-field full">
+              <label>报名者姓名<span class="req">*</span></label>
+              <input type="text" id="reg-name" placeholder="请输入真实姓名" />
+            </div>
+
+            <!-- 报名者手机号 -->
+            <div class="form-field full">
+              <label>报名者手机号<span class="req">*</span></label>
+              <input type="tel" id="reg-phone" placeholder="请输入11位手机号" maxlength="11" />
+            </div>
+
+            <!-- 行政区选择 -->
+            <div class="form-field full">
+              <label>所在行政区<span class="req">*</span></label>
+              <div class="region-selects">
+                <select id="reg-province">
+                  <option value="">请选择省份</option>
+                  <option>四川省</option><option>北京市</option><option>上海市</option><option>重庆市</option>
+                  <option>天津市</option><option>广东省</option><option>江苏省</option><option>浙江省</option>
+                  <option>山东省</option><option>河南省</option><option>湖北省</option><option>湖南省</option>
+                  <option>河北省</option><option>安徽省</option><option>福建省</option><option>辽宁省</option>
+                  <option>陕西省</option><option>云南省</option><option>贵州省</option><option>江西省</option>
+                  <option>黑龙江省</option><option>吉林省</option><option>山西省</option><option>广西壮族自治区</option>
+                  <option>内蒙古自治区</option><option>新疆维吾尔自治区</option><option>西藏自治区</option>
+                  <option>宁夏回族自治区</option><option>甘肃省</option><option>海南省</option><option>青海省</option>
+                </select>
+                <select id="reg-city">
+                  <option value="">请选择市</option>
+                </select>
+                <select id="reg-district">
+                  <option value="">请选择区/县</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 单位名称 -->
+            <div class="form-field full">
+              <label>报名者单位名称</label>
+              <input type="text" id="reg-unit" placeholder="请输入学校或单位全称" />
+            </div>
+
+            <!-- 作品数量 -->
+            <div class="form-field full">
+              <label>作品数量<span class="req">*</span></label>
+              <input type="number" id="reg-count" placeholder="请输入参赛作品数量" min="1" max="20" />
+            </div>
+
+            <!-- 上传附件 -->
+            <div class="form-field full">
+              <label>上传附件<span class="req">*</span><span class="req-note">（最多10个文件）</span></label>
+              <div class="upload-area" id="upload-area">
+                <input type="file" id="reg-file" accept=".jpg,.jpeg,.png,.mp4,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" multiple />
+                <div class="upload-area-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <div class="upload-area-text">点击或拖拽上传文件</div>
+                <div class="upload-area-sub">支持 JPG / MP4 / PDF / Word / Excel / PPT，每个文件不超过 50MB</div>
+              </div>
+              <div class="uploaded-preview" id="uploaded-preview"></div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Sticky footer：截止提示 + 提交按钮 -->
+        <div class="register-card-foot">
+          <div class="reg-deadline-tip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+            报名截止时间：<strong>2026年7月31日 23:59</strong>，请尽早提交
+          </div>
+          <button class="btn-register-submit" type="button" id="reg-submit">提 交 报 名</button>
+        </div>
+      </div>
+
+      <!-- ── Success state ── -->
+      <div id="register-success-state" hidden>
+        <div class="register-card-head" style="justify-content:flex-end;">
+          <button class="register-close" type="button" id="register-close-success" aria-label="关闭">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="register-card-body">
+          <div class="register-success">
+            <div class="success-icon">🎉</div>
+            <h3>报名成功！</h3>
+            <p>您的参赛信息已提交，我们将在 3 个工作日内发送确认短信至您的手机。<br />祝您在比赛中取得优异成绩！</p>
+            <button class="btn-success-close" type="button" id="success-close">好的，知道了</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════ DETAIL HERO ═══════════════ -->
+    <section class="detail-hero">
+      <div class="detail-hero-bg" aria-hidden="true"></div>
+
+      <!-- 面包屑 -->
+      <div class="page-breadcrumb">
+        <a class="breadcrumb-back" href="events.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+          返回赛事列表
+        </a>
+        <nav class="breadcrumb-nav">
+          <a href="index.html">首页</a>
+          <span class="bc-sep">›</span>
+          <a href="events.html">赛事活动</a>
+          <span class="bc-sep">›</span>
+          <span class="bc-current">2026年省级科幻类作品征集活动</span>
+        </nav>
+      </div>
+      <div class="detail-hero-inner">
+
+        <h1>2026年省级<br/>科幻类作品征集活动</h1>
+        <p>面向全省中小学生征集科幻征文、科幻绘画与AI绘本作品，激发青少年对科学与未来的想象力，培养创新思维与表达能力。</p>
+        <div class="detail-hero-meta">
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M8 1v4M16 1v4M2 9h20"/></svg>报名截止：<strong>2026年7月31日</strong></span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>面向：<strong>全国中小学生</strong></span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>参赛费用：<strong>免费</strong></span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>已报名：<strong>12,480 人</strong></span>
+        </div>
+        <button class="btn-enroll" type="button" id="hero-enroll-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          立即报名
+        </button>
+      </div>
+    </section>
+
+    <!-- ═══════════════ DETAIL BODY ═══════════════ -->
+    <div class="detail-body">
+
+      <!-- ── Main Content ── -->
+      <div class="detail-main">
+
+        <!-- 大赛介绍 -->
+        <div class="detail-block reveal">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+            大赛介绍
+          </h2>
+          <p>2026年省级科幻类作品征集活动由四川省教育电子音像出版社主办，面向全省中小学生开放参与。活动旨在激发青少年对科学与未来的想象，通过科幻创作培育具有创新精神的新一代少年。</p>
+          <p>本届大赛以"蓝色家园·创想未来"为主题，设绘画、摄影、手工艺及数字创意四个参赛类别，面向小学、初中、高中各学段分组评奖，确保公平公正。</p>
+        </div>
+        <!-- 赛程安排 -->
+        <div class="detail-block reveal">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="3"/><path d="M8 1v4M16 1v4M2 9h20"/></svg>
+            赛程安排
+          </h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot">1</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <h4>大赛启动 · 2026年4月1日</h4>
+                <p>官方正式发布参赛通知，开放报名系统</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot">2</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <h4>报名征集阶段 · 2026年4月1日—7月31日</h4>
+                <p>参赛选手在线报名并提交作品，支持多次修改，以最后提交为准</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot">3</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <h4>初审阶段 · 2026年8月1日—8月20日</h4>
+                <p>评委团对全部作品进行初步评审，筛选入围作品</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot">4</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <h4>终评与公示 · 2026年8月21日—9月10日</h4>
+                <p>专家评委终评定奖，在官网及公众号公示获奖名单</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="tl-dot-wrap">
+                <div class="tl-dot">5</div>
+                <div class="tl-line"></div>
+              </div>
+              <div class="tl-content">
+                <h4>颁奖典礼 · 2026年9月下旬</h4>
+                <p>举办线上+线下颁奖典礼，优秀作品展览，获奖证书与奖品邮寄</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 相关政策文件 -->
+        <div class="detail-block reveal" id="attachments-block">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            相关政策文件
+          </h2>
+          <div class="attach-list" id="attach-list">
+            <div class="attach-item" data-pdf="docs/notice-2026-contest.pdf">
+              <div class="attach-icon">
+                <svg viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="40" rx="4" fill="#fee2e2"/>
+                  <path d="M20 0v8h8" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+                  <polygon points="20,0 32,12 20,12" fill="#fca5a5"/>
+                  <text x="16" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="7" fill="#ef4444">PDF</text>
+                </svg>
+              </div>
+              <div class="attach-info">
+                <p class="attach-name">2026年省级科幻类作品征集活动通知</p>
+                <p class="attach-meta">PDF · 234 KB · 2026-03-15</p>
+              </div>
+              <button class="attach-preview-btn" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                预览
+              </button>
+            </div>
+            <div class="attach-item" data-pdf="docs/rules-2026-contest.pdf">
+              <div class="attach-icon">
+                <svg viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="40" rx="4" fill="#fee2e2"/>
+                  <path d="M20 0v8h8" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+                  <polygon points="20,0 32,12 20,12" fill="#fca5a5"/>
+                  <text x="16" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="7" fill="#ef4444">PDF</text>
+                </svg>
+              </div>
+              <div class="attach-info">
+                <p class="attach-name">2026年省级科幻类作品征集评审细则</p>
+                <p class="attach-meta">PDF · 187 KB · 2026-03-15</p>
+              </div>
+              <button class="attach-preview-btn" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                预览
+              </button>
+            </div>
+            <div class="attach-item" data-pdf="docs/policy-youth-innovation.pdf">
+              <div class="attach-icon">
+                <svg viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="40" rx="4" fill="#fee2e2"/>
+                  <path d="M20 0v8h8" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+                  <polygon points="20,0 32,12 20,12" fill="#fca5a5"/>
+                  <text x="16" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700" font-size="7" fill="#ef4444">PDF</text>
+                </svg>
+              </div>
+              <div class="attach-info">
+                <p class="attach-name">四川省青少年科技创新活动管理办法</p>
+                <p class="attach-meta">PDF · 512 KB · 2025-09-01</p>
+              </div>
+              <button class="attach-preview-btn" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                预览
+              </button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /detail-main -->
+
+      <!-- ── Sidebar ── -->
+      <aside class="detail-sidebar">
+        <div class="detail-sidebar-inner">
+        <div class="sidebar-card">
+          <div class="sidebar-card-head"><h3>主办单位</h3></div>
+          <div class="sidebar-card-body">
+            <div class="sidebar-info-row"><span>主办单位</span><span style="font-size:11px;">四川省教育信息化与大数据中心</span></div>
+            <div class="sidebar-info-row"><span>承办单位</span><span style="font-size:11px;">四川省教育电子音像出版社</span></div>
+            <div class="sidebar-info-row"><span>官方邮箱</span><span style="font-size:11px;">sceav@sceav.online</span></div>
+            <div class="sidebar-info-row"><span>咨询电话</span><span>028-86669129</span></div>
+          </div>
+        </div>
+        <!-- ── 相关课程 ── -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-head"><h3>相关课程</h3></div>
+          <div class="sidebar-video-wrap">
+            <div class="sidebar-video-placeholder">
+              <div class="svp-thumb">
+                <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="svp-sky" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#bfdbfe"/>
+                      <stop offset="100%" stop-color="#e0f2fe"/>
+                    </linearGradient>
+                    <linearGradient id="svp-ground" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#6ee7b7"/>
+                      <stop offset="100%" stop-color="#34d399"/>
+                    </linearGradient>
+                    <linearGradient id="svp-screen" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="#1e40af"/>
+                      <stop offset="100%" stop-color="#0369a1"/>
+                    </linearGradient>
+                    <linearGradient id="svp-bar" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stop-color="#1d4ed8"/>
+                      <stop offset="100%" stop-color="#0ea5e9"/>
+                    </linearGradient>
+                  </defs>
+
+                  <!-- 天空背景 -->
+                  <rect width="480" height="270" fill="url(#svp-sky)"/>
+
+                  <!-- 云朵 -->
+                  <ellipse cx="80" cy="44" rx="38" ry="16" fill="#fff" opacity=".85"/>
+                  <ellipse cx="60" cy="50" rx="22" ry="13" fill="#fff" opacity=".85"/>
+                  <ellipse cx="104" cy="50" rx="24" ry="12" fill="#fff" opacity=".85"/>
+                  <ellipse cx="310" cy="32" rx="28" ry="11" fill="#fff" opacity=".7"/>
+                  <ellipse cx="295" cy="38" rx="16" ry="9" fill="#fff" opacity=".7"/>
+                  <ellipse cx="330" cy="38" rx="18" ry="8" fill="#fff" opacity=".7"/>
+                  <ellipse cx="420" cy="55" rx="22" ry="9" fill="#fff" opacity=".6"/>
+
+                  <!-- 太阳 -->
+                  <circle cx="400" cy="48" r="22" fill="#fbbf24" opacity=".9"/>
+                  <circle cx="400" cy="48" r="16" fill="#fcd34d"/>
+                  <!-- 光芒 -->
+                  <line x1="400" y1="18" x2="400" y2="10" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="421" y1="27" x2="427" y2="21" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="430" y1="48" x2="438" y2="48" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="379" y1="27" x2="373" y2="21" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="370" y1="48" x2="362" y2="48" stroke="#fbbf24" stroke-width="2.5" stroke-linecap="round"/>
+
+                  <!-- 远山 -->
+                  <polygon points="0,170 60,100 120,155 180,90 240,140 300,95 360,130 420,80 480,120 480,185 0,185" fill="#93c5fd" opacity=".5"/>
+                  <polygon points="0,185 60,130 130,170 200,120 270,160 340,125 410,155 480,135 480,200 0,200" fill="#60a5fa" opacity=".45"/>
+
+                  <!-- 草地 -->
+                  <rect x="0" y="198" width="480" height="72" fill="url(#svp-ground)"/>
+                  <!-- 草地高光 -->
+                  <ellipse cx="240" cy="198" rx="240" ry="8" fill="#a7f3d0" opacity=".5"/>
+
+                  <!-- 小花草装饰 -->
+                  <circle cx="30" cy="200" r="4" fill="#fbbf24"/>
+                  <circle cx="30" cy="200" r="2" fill="#f59e0b"/>
+                  <line x1="30" y1="204" x2="30" y2="212" stroke="#059669" stroke-width="1.5"/>
+                  <circle cx="65" cy="199" r="3.5" fill="#f472b6"/>
+                  <line x1="65" y1="203" x2="65" y2="210" stroke="#059669" stroke-width="1.5"/>
+                  <circle cx="440" cy="201" r="4" fill="#a78bfa"/>
+                  <line x1="440" y1="205" x2="440" y2="213" stroke="#059669" stroke-width="1.5"/>
+                  <circle cx="460" cy="200" r="3" fill="#fbbf24"/>
+                  <line x1="460" y1="203" x2="460" y2="210" stroke="#059669" stroke-width="1.5"/>
+
+                  <!-- 电脑桌 -->
+                  <rect x="148" y="185" width="184" height="10" rx="3" fill="#92400e"/>
+                  <rect x="168" y="195" width="8" height="18" rx="2" fill="#78350f"/>
+                  <rect x="304" y="195" width="8" height="18" rx="2" fill="#78350f"/>
+                  <!-- 显示器边框 -->
+                  <rect x="145" y="110" width="190" height="78" rx="6" fill="#1e3a8a"/>
+                  <!-- 屏幕 -->
+                  <rect x="152" y="117" width="176" height="64" rx="3" fill="url(#svp-screen)"/>
+                  <!-- 屏幕内容（代码感） -->
+                  <rect x="160" y="125" width="60" height="4" rx="2" fill="#7dd3fc" opacity=".7"/>
+                  <rect x="160" y="133" width="90" height="4" rx="2" fill="#a5f3fc" opacity=".5"/>
+                  <rect x="168" y="141" width="70" height="4" rx="2" fill="#6ee7b7" opacity=".6"/>
+                  <rect x="168" y="149" width="50" height="4" rx="2" fill="#fcd34d" opacity=".5"/>
+                  <rect x="160" y="157" width="80" height="4" rx="2" fill="#a5f3fc" opacity=".4"/>
+                  <!-- 屏幕右侧图表 -->
+                  <rect x="252" y="127" width="66" height="50" rx="3" fill="rgba(255,255,255,.08)"/>
+                  <rect x="258" y="154" width="10" height="18" rx="2" fill="#34d399"/>
+                  <rect x="272" y="147" width="10" height="25" rx="2" fill="#60a5fa"/>
+                  <rect x="286" y="140" width="10" height="32" rx="2" fill="#f472b6"/>
+                  <rect x="300" y="133" width="10" height="39" rx="2" fill="#fbbf24"/>
+
+                  <!-- 小人 (学生) -->
+                  <!-- 头 -->
+                  <circle cx="116" cy="148" r="14" fill="#fde68a"/>
+                  <!-- 头发 -->
+                  <ellipse cx="116" cy="137" rx="14" ry="7" fill="#78350f"/>
+                  <ellipse cx="108" cy="140" rx="5" ry="9" fill="#78350f"/>
+                  <!-- 身体 -->
+                  <rect x="104" y="162" width="24" height="28" rx="5" fill="#3b82f6"/>
+                  <!-- 领口 -->
+                  <polygon points="116,162 111,170 121,170" fill="#1d4ed8"/>
+                  <!-- 手臂 -->
+                  <rect x="90" y="163" width="14" height="8" rx="4" fill="#3b82f6"/>
+                  <rect x="128" y="163" width="14" height="8" rx="4" fill="#3b82f6"/>
+                  <!-- 手 -->
+                  <circle cx="89" cy="167" r="5" fill="#fde68a"/>
+                  <circle cx="143" cy="167" r="5" fill="#fde68a"/>
+                  <!-- 腿 -->
+                  <rect x="107" y="189" width="9" height="16" rx="3" fill="#1e40af"/>
+                  <rect x="116" y="189" width="9" height="16" rx="3" fill="#1e40af"/>
+                  <!-- 鞋 -->
+                  <ellipse cx="111" cy="205" rx="7" ry="4" fill="#1f2937"/>
+                  <ellipse cx="121" cy="205" rx="7" ry="4" fill="#1f2937"/>
+                  <!-- 眼睛 -->
+                  <circle cx="112" cy="148" r="2.2" fill="#1f2937"/>
+                  <circle cx="120" cy="148" r="2.2" fill="#1f2937"/>
+                  <circle cx="112.8" cy="147.2" r=".8" fill="#fff"/>
+                  <circle cx="120.8" cy="147.2" r=".8" fill="#fff"/>
+                  <!-- 嘴巴 -->
+                  <path d="M113 153 Q116 156 119 153" stroke="#92400e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+
+                  <!-- 飘浮元素（代码、公式） -->
+                  <rect x="355" y="108" width="60" height="22" rx="5" fill="rgba(30,64,175,.85)"/>
+                  <text x="365" y="123" font-family="monospace" font-size="10" fill="#7dd3fc">{ code }</text>
+                  <rect x="360" y="140" width="50" height="20" rx="5" fill="rgba(234,179,8,.85)"/>
+                  <text x="370" y="154" font-family="monospace" font-size="10" fill="#1f2937">O(n²)</text>
+                  <circle cx="352" cy="172" r="12" fill="rgba(167,243,208,.85)"/>
+                  <text x="352" y="177" font-family="monospace" font-size="11" font-weight="700" fill="#065f46" text-anchor="middle">✓</text>
+
+                  <!-- 进度条底栏 -->
+                  <rect x="0" y="248" width="480" height="22" fill="rgba(0,0,0,.4)"/>
+                  <rect x="16" y="254" width="280" height="6" rx="3" fill="rgba(255,255,255,.2)"/>
+                  <rect x="16" y="254" width="96" height="6" rx="3" fill="url(#svp-bar)"/>
+                  <text x="308" y="262" font-family="sans-serif" font-size="10" fill="rgba(255,255,255,.7)">⏱ 45 分钟</text>
+                  <rect x="394" y="250" width="68" height="16" rx="3" fill="rgba(59,130,246,.5)"/>
+                  <text x="428" y="261" font-family="sans-serif" font-size="10" fill="#fff" text-anchor="middle">免费试看</text>
+
+                  <!-- 播放按钮中央遮罩 (hover 提示) -->
+                  <circle cx="240" cy="124" r="22" fill="rgba(0,0,0,.18)"/>
+                  <polygon points="232,113 232,135 254,124" fill="rgba(255,255,255,.92)"/>
+                </svg>
+              </div>
+            </div>
+            <div class="svp-course-info">
+              <p class="svp-course-title">2025全国青少年信息学奥赛备赛强化课程</p>
+              <div class="svp-course-meta">
+                <span class="svp-tag">免费</span>
+                <span class="svp-duration">45 分钟</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div><!-- /detail-sidebar-inner -->
+        </aside>
+
+    </div><!-- /detail-body -->
+
+  </main>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+            <img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="" />
+            <span>四川省教育电子音像出版社</span>
+        </div>
+        <p class="footer-slogan">数字出版 · 教育服务 · 融合创新</p>
+        <p class="footer-en">Sichuan Audio-Visual Press Co., Ltd.</p>
+        <div class="footer-badges"><span>互联网出版许可</span><span>电子出版许可</span><span>网络出版服务</span></div>
+      </div>
+      <div class="footer-nav-group">
+        <div class="footer-nav">
+          <h4>关于我们</h4>
+          <a href="index.html#about">发展历程</a><a href="index.html#about">机构介绍</a><a href="index.html#about">荣誉资质</a><a href="index.html#about">联系我们</a>
+        </div>
+        <div class="footer-nav">
+          <h4>业务服务</h4>
+          <a href="textbooks.html">数字教材</a><a href="ebooks.html">电子书</a><a href="courses.html">赛事服务</a><a href="index.html#fusion">融合出版</a>
+        </div>
+        <div class="footer-nav">
+          <h4>赛事活动</h4>
+          <a href="events.html">科幻征文</a><a href="events.html">科幻征文</a><a href="events.html">AI绘本大赛</a><a href="events.html">活动公告</a>
+        </div>
+        <div class="footer-nav">
+          <h4>新闻中心</h4>
+          <a href="index.html#news">出版社动态</a><a href="announcements.html">通知公告</a><a href="index.html#news">行业资讯</a><a href="index.html#news">媒体报道</a>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>联系我们</h4>
+        <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 四川省成都市锦江区学道街42号</p>
+        <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 028-86669129 / 86728072</p>
+        <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> sceav@sceav.online</p>
+        <p class="footer-icp">蜀ICP备19016579号<br/>川公网安备 51010402000773号</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 四川省教育电子音像出版社 版权所有</p>
+      <p>主管单位：四川省教育厅 &nbsp;|&nbsp; 主办单位：四川省教育信息化与大数据中心</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  /* ═══════════════════════════════════════════
+     Detail Page: Enroll flow
+     1. Click "立即报名" → check login
+     2. Not logged in → open login modal (pre-filled)
+     3. After login → open register modal
+     4. Submit register form → show success
+  ═══════════════════════════════════════════ */
+  (function() {
+    const loginModal    = document.getElementById('login-modal');
+    const registerModal = document.getElementById('register-modal');
+    const formState     = document.getElementById('register-form-state');
+    const successState  = document.getElementById('register-success-state');
+
+    /* ── 页面级变量，离开页面自动清空，不跨导航污染 ── */
+    var pendingRegister = false;
+
+    /* Helper: is logged in? */
+    function isLoggedIn() {
+      return !!sessionStorage.getItem('sceav_user');
+    }
+
+    /* 顺手清除可能残留的 sessionStorage 旧标记 */
+    sessionStorage.removeItem('sceav_post_login');
+
+    /* Open register modal */
+    function openRegister() {
+      formState.hidden    = false;
+      successState.hidden = true;
+      registerModal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    /* Close register modal */
+    function closeRegister() {
+      registerModal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      pendingRegister = false;
+    }
+
+    /* Enroll action: check login first */
+    function handleEnroll() {
+      if (isLoggedIn()) {
+        openRegister();
+      } else {
+        /* 仅设置内存变量，不写 sessionStorage */
+        pendingRegister = true;
+        loginModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    /* Hook enroll buttons */
+    document.getElementById('hero-enroll-btn')?.addEventListener('click', handleEnroll);
+    document.getElementById('sidebar-enroll-btn')?.addEventListener('click', handleEnroll);
+
+    /* After login: check memory flag only */
+    var origSubmit = document.getElementById('login-submit');
+    if (origSubmit) {
+      origSubmit.addEventListener('click', function() {
+        setTimeout(function() {
+          if (pendingRegister && isLoggedIn()) {
+            pendingRegister = false;
+            openRegister();
+          }
+        }, 80);
+      });
+    }
+
+    /* Close register modal — use onclick to avoid any listener-order issues */
+    var closeBtn = document.getElementById('register-close');
+    if (closeBtn) closeBtn.onclick = closeRegister;
+
+    var closeBtnSuccess = document.getElementById('register-close-success');
+    if (closeBtnSuccess) closeBtnSuccess.onclick = closeRegister;
+
+    /* Click backdrop to close */
+    registerModal.addEventListener('click', function(e) {
+      if (e.target === registerModal && registerModal.classList.contains('is-open')) closeRegister();
+    });
+
+    /* 省市区数据 */
+    var regionData = {
+      '四川省': { '成都市':['锦江区','青羊区','金牛区','武侯区','成华区','龙泉驿区','青白江区','新都区','温江区','双流区','郫都区','金堂县','大邑县','蒲江县','新津区','简阳市','都江堰市','彭州市','邛崃市','崇州市'], '绵阳市':['涪城区','游仙区','安州区','梓潼县','三台县','盐亭县','平武县','北川县','江油市'], '德阳市':['旌阳区','罗江区','中江县','广汉市','什邡市','绵竹市'], '宜宾市':['翠屏区','南溪区','叙州区','江安县','长宁县','高县','珙县','筠连县','兴文县','屏山县'], '泸州市':['江阳区','纳溪区','龙马潭区','泸县','合江县','叙永县','古蔺县'], '南充市':['顺庆区','高坪区','嘉陵区','南部县','营山县','蓬安县','仪陇县','西充县','阆中市'], '达州市':['通川区','达川区','宣汉县','开江县','大竹县','渠县','万源市'], '广元市':['利州区','昭化区','朝天区','旺苍县','青川县','剑阁县','苍溪县'], '巴中市':['巴州区','恩阳区','通江县','南江县','平昌县'], '雅安市':['雨城区','名山区','荥经县','汉源县','石棉县','天全县','芦山县','宝兴县'], '眉山市':['东坡区','彭山区','仁寿县','洪雅县','丹棱县','青神县'], '乐山市':['市中区','沙湾区','五通桥区','金口河区','犍为县','井研县','夹江县','沐川县','峨边县','马边县','峨眉山市'], '内江市':['市中区','东兴区','威远县','资中县','隆昌市'], '自贡市':['自流井区','贡井区','大安区','沿滩区','荣县','富顺县'], '攀枝花市':['东区','西区','仁和区','米易县','盐边县'], '凉山州':['西昌市','木里县','盐源县','德昌县','会理市','会东县','宁南县','普格县','布拖县','金阳县','昭觉县','喜德县','冕宁县','越西县','甘洛县','美姑县','雷波县'], '甘孜州':['康定市','泸定县','丹巴县','九龙县','雅江县','道孚县','炉霍县','甘孜县','新龙县','德格县','白玉县','石渠县','色达县','理塘县','巴塘县','乡城县','稻城县','得荣县'], '阿坝州':['马尔康市','汶川县','理县','茂县','松潘县','九寨沟县','金川县','小金县','黑水县','壤塘县','阿坝县','若尔盖县','红原县'], '广安市':['广安区','前锋区','岳池县','武胜县','邻水县','华蓥市','邻水县','武胜县'], '资阳市':['雁江区','安岳县','乐至县'] },
+      '北京市': { '北京市':['东城区','西城区','朝阳区','丰台区','石景山区','海淀区','门头沟区','房山区','通州区','顺义区','昌平区','大兴区','怀柔区','平谷区','密云区','延庆区'] },
+      '上海市': { '上海市':['黄浦区','徐汇区','长宁区','静安区','普陀区','虹口区','杨浦区','闵行区','宝山区','嘉定区','浦东新区','金山区','松江区','青浦区','奉贤区','崇明区'] },
+      '重庆市': { '重庆市':['渝中区','万州区','黔江区','涪陵区','大渡口区','江北区','沙坪坝区','九龙坡区','南岸区','北碚区','綦江区','大足区','渝北区','巴南区','长寿区','江津区','合川区','永川区','南川区','璧山区','铜梁区','潼南区','荣昌区','开州区','梁平区','武隆区'] }
+    };
+    var defaultCities = ['请选择市'];
+    var provinceEl = document.getElementById('reg-province');
+    var cityEl = document.getElementById('reg-city');
+    var districtEl = document.getElementById('reg-district');
+
+    function populateSelect(el, options, placeholder) {
+      el.innerHTML = '<option value="">' + placeholder + '</option>';
+      options.forEach(function(o){ var opt = document.createElement('option'); opt.value = o; opt.textContent = o; el.appendChild(opt); });
+    }
+    if (provinceEl) {
+      provinceEl.addEventListener('change', function() {
+        var cities = regionData[this.value] ? Object.keys(regionData[this.value]) : [];
+        populateSelect(cityEl, cities, '请选择市');
+        populateSelect(districtEl, [], '请选择区/县');
+      });
+      cityEl.addEventListener('change', function() {
+        var prov = provinceEl.value, city = this.value;
+        var districts = (regionData[prov] && regionData[prov][city]) ? regionData[prov][city] : [];
+        populateSelect(districtEl, districts, '请选择区/县');
+      });
+    }
+
+    /* File upload — max 10 files */
+    var uploadedFiles = [];
+    var fileInput = document.getElementById('reg-file');
+    var preview = document.getElementById('uploaded-preview');
+    function renderFiles() {
+      preview.innerHTML = '';
+      uploadedFiles.forEach(function(f, i) {
+        var el = document.createElement('div');
+        el.className = 'uploaded-file';
+        el.innerHTML = '<span class="uploaded-file-name"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;vertical-align:-2px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + f.name + '</span><span class="uploaded-file-remove" data-idx="' + i + '">×</span>';
+        preview.appendChild(el);
+      });
+      preview.querySelectorAll('.uploaded-file-remove').forEach(function(btn) {
+        btn.addEventListener('click', function() { uploadedFiles.splice(+this.dataset.idx, 1); renderFiles(); });
+      });
+    }
+    if (fileInput) {
+      fileInput.addEventListener('change', function() {
+        var newFiles = Array.from(this.files);
+        newFiles.forEach(function(f) { if (uploadedFiles.length < 10) uploadedFiles.push(f); });
+        if (Array.from(this.files).length + uploadedFiles.length > 10) {
+          showError('最多只能上传10个文件');
+        }
+        renderFiles();
+        fileInput.value = '';
+      });
+    }
+
+    function showError(msg) {
+      var banner = document.getElementById('reg-error-banner');
+      var msgEl = document.getElementById('reg-error-msg');
+      msgEl.textContent = msg;
+      banner.hidden = false;
+      banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function clearErrors() {
+      document.getElementById('reg-error-banner').hidden = true;
+      document.querySelectorAll('.field-error').forEach(function(el){ el.classList.remove('field-error'); });
+    }
+
+    /* Submit */
+    document.getElementById('reg-submit')?.addEventListener('click', function() {
+      clearErrors();
+      var errors = [];
+      var fields = [
+        { id: 'reg-name',     label: '报名者姓名' },
+        { id: 'reg-phone',    label: '报名者手机号' },
+        { id: 'reg-province', label: '省份' },
+        { id: 'reg-city',     label: '城市' },
+        { id: 'reg-district', label: '区/县' },
+        { id: 'reg-count',    label: '作品数量' },
+      ];
+      fields.forEach(function(f) {
+        var el = document.getElementById(f.id);
+        if (el && !el.value.trim()) { el.classList.add('field-error'); errors.push(f.label); }
+      });
+      var phone = document.getElementById('reg-phone').value.trim();
+      if (phone && !/^1\d{10}$/.test(phone)) {
+        document.getElementById('reg-phone').classList.add('field-error');
+        errors.push('手机号格式不正确');
+      }
+      if (uploadedFiles.length === 0) { errors.push('上传附件'); }
+      if (errors.length) { showError('以下内容未填写或有误：' + errors.join('、')); return; }
+      formState.hidden = true;
+      successState.hidden = false;
+    });
+
+    /* Success close */
+    var successCloseBtn = document.getElementById('success-close');
+    if (successCloseBtn) successCloseBtn.onclick = closeRegister;
+  })();
+
+  /* ── PDF 预览 ── */
+  (function(){
+    var modal = document.getElementById('pdf-modal');
+    var backdrop = document.getElementById('pdf-modal-backdrop');
+    var closeBtn = document.getElementById('pdf-modal-close');
+    var iframe = document.getElementById('pdf-iframe');
+    var titleEl = document.getElementById('pdf-modal-title');
+
+    function openPdf(name, src) {
+      titleEl.textContent = name;
+      // 用 placeholder 代替真实 iframe（无实际文件时显示提示）
+      var body = document.querySelector('.pdf-modal-body');
+      body.innerHTML = '';
+      var ph = document.createElement('div');
+      ph.className = 'pdf-modal-placeholder';
+      ph.innerHTML = '<svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>' + name + '</p><p style="font-size:12px;color:#bbb;">后台配置文件后可在此预览</p>';
+      body.appendChild(ph);
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePdf() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.attach-preview-btn').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var item = btn.closest('.attach-item');
+        var name = item.querySelector('.attach-name').textContent;
+        var src = item.dataset.pdf || '';
+        openPdf(name, src);
+      });
+    });
+    document.querySelectorAll('.attach-item').forEach(function(item){
+      item.addEventListener('click', function(){
+        var name = item.querySelector('.attach-name').textContent;
+        var src = item.dataset.pdf || '';
+        openPdf(name, src);
+      });
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', closePdf);
+    if (backdrop) backdrop.addEventListener('click', closePdf);
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePdf(); });
+  })();
+  </script>
+
+  <!-- PDF 预览弹窗 -->
+        <div class="pdf-modal" id="pdf-modal" hidden>
+          <div class="pdf-modal-backdrop" id="pdf-modal-backdrop"></div>
+          <div class="pdf-modal-box">
+            <div class="pdf-modal-head">
+              <span class="pdf-modal-title" id="pdf-modal-title">文件预览</span>
+              <button class="pdf-modal-close" id="pdf-modal-close" type="button">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="pdf-modal-body">
+              <iframe id="pdf-iframe" src="" title="PDF预览"></iframe>
+            </div>
+          </div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>赛事活动 | 四川省教育电子音像出版社</title>
+    <meta name="description" content="四川省教育电子音像出版社年度赛事活动，包括科幻征文、AI绘本大赛、绘画书法大赛等全国中小学生赛事。" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* ── Page-specific overrides ── */
+      .events-page-wrap { padding-top: 0; }
+      /* ══ Events Banner Override – Fire Orange/Gold ══ */
+      .events-banner {
+        background: transparent;
+      }
+      .events-banner-bg {
+        background:
+          
+          
+          radial-gradient(ellipse at 8% 30%,  rgba(16,185,129,.55)  0%, transparent 48%),
+          radial-gradient(ellipse at 90% 12%, rgba(5,150,105,.45)   0%, transparent 42%),
+          radial-gradient(ellipse at 50% 95%, rgba(6,182,212,.4)    0%, transparent 44%),
+          linear-gradient(135deg, #064e3b 0%, #0a5c50 30%, #0e6e72 60%, #0e7490 100%) !important;
+      }
+      .events-banner-bg::after {
+        background:
+          linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px) !important;
+        background-size: 48px 48px !important;
+        mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.5) 0%, transparent 72%) !important;
+      }
+      .events-banner .eyebrow {
+        display: inline-flex !important; align-items: center !important; gap: 8px !important;
+        padding: 0 !important; border: none !important; background: none !important;
+        border-radius: 0 !important;
+        font-size: 11px !important; letter-spacing: .12em !important;
+        text-transform: uppercase !important; font-weight: 700 !important;
+        color: rgba(255,255,255,.9) !important; margin-bottom: 18px !important;
+      }
+      .events-banner .eyebrow::before {
+        content: '' !important; display: block !important;
+        width: 20px !important; height: 2px !important;
+        background: rgba(255,255,255,.9) !important; border-radius: 2px !important;
+        flex-shrink: 0 !important;
+      }
+      .events-banner h1, .events-banner h2 {
+        color: #fff !important; text-shadow: 0 2px 20px rgba(0,0,0,.3) !important;
+      }
+      .events-banner-stats strong { color: #6ee7b7 !important; }
+      .events-banner-stats span { color: rgba(255,255,255,.62) !important; }
+
+      /* ── 装饰元素 ── */
+      .ev-decos { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+
+      .ev-blob { position:absolute; border-radius:50%; filter:blur(100px); }
+      .ev-blob-1 { width:600px; height:600px; background:rgba(16,185,129,.48); top:-180px; left:50%; transform:translateX(-50%); }
+      .ev-blob-2 { width:380px; height:380px; background:rgba(6,182,212,.42); top:-60px; left:10%; }
+      .ev-blob-3 { width:300px; height:300px; background:rgba(5,150,105,.38); bottom:-80px; right:10%; }
+
+      .ev-ray {
+        position:absolute; top:50%; left:50%;
+        width:2px; transform-origin:0 50%;
+        background:linear-gradient(90deg, rgba(255,200,80,.3), transparent);
+        border-radius:2px;
+      }
+
+      .ev-star {
+        position:absolute;
+        clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+        background: rgba(251,191,36,.55);
+      }
+      .ev-star-1 { width:32px; height:32px; top:15%; left:8%; animation:evfloat 8s ease-in-out infinite; }
+      .ev-star-2 { width:18px; height:18px; top:65%; left:12%; animation:evfloat 11s ease-in-out infinite .6s; opacity:.6; }
+      .ev-star-3 { width:26px; height:26px; top:40%; right:10%; animation:evfloat 9s ease-in-out infinite 1.2s; }
+      .ev-star-4 { width:14px; height:14px; top:20%; right:18%; animation:evfloat 13s ease-in-out infinite .3s; background:rgba(56,189,248,.4); }
+      .ev-star-5 { width:20px; height:20px; top:75%; right:22%; animation:evfloat 10s ease-in-out infinite 2s; opacity:.5; }
+      .ev-star-6 { width:38px; height:38px; top:55%; left:4%; animation:evfloat 15s ease-in-out infinite 1s; opacity:.25; }
+
+      .ev-spark { position:absolute; border-radius:50%; background:rgba(110,231,183,.7); }
+      .ev-spark-1 { width:5px; height:5px; top:28%; left:20%; animation:evspark 3s ease-in-out infinite; }
+      .ev-spark-2 { width:3px; height:3px; top:50%; right:14%; animation:evspark 4s ease-in-out infinite .9s; }
+      .ev-spark-3 { width:4px; height:4px; top:72%; left:30%; background:rgba(56,189,248,.65); animation:evspark 5s ease-in-out infinite 1.8s; }
+      .ev-spark-4 { width:6px; height:6px; top:18%; right:30%; animation:evspark 3.5s ease-in-out infinite 2.5s; }
+
+      .ev-circle {
+        position:absolute; border-radius:50%;
+        border:1.5px solid rgba(52,211,153,.25);
+      }
+      .ev-circle-1 { width:520px; height:520px; top:50%; left:50%; transform:translate(-50%,-50%); animation:evpulse 4s ease-out infinite; }
+      .ev-circle-2 { width:360px; height:360px; top:50%; left:50%; transform:translate(-50%,-50%); animation:evpulse 4s ease-out infinite .8s; }
+      .ev-circle-3 { width:200px; height:200px; top:50%; left:50%; transform:translate(-50%,-50%); animation:evpulse 4s ease-out infinite 1.6s; }
+
+      @keyframes evfloat  { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-14px) rotate(15deg)} }
+      @keyframes evspark  { 0%,100%{transform:scale(1);opacity:.8} 50%{transform:scale(3.5);opacity:.1} }
+      @keyframes evpulse  { 0%{transform:translate(-50%,-50%) scale(.7);opacity:.4} 100%{transform:translate(-50%,-50%) scale(1.5);opacity:0} }
+    </style>
+  </head>
+  <body>
+
+    <!-- ═══════════════════════════════════════
+         HEADER（悬浮胶囊）
+    ═══════════════════════════════════════ -->
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html" aria-label="四川省教育电子音像出版社首页">
+        <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="四川省教育电子音像出版社标志" /></span>
+        <div class="brand-name">
+          <span class="brand-text">四川省教育电子音像出版社</span>
+          <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="主导航">
+        <a href="index.html">首页</a>
+        <a href="announcements.html">通知公告</a>
+        <a href="events.html" class="nav-active">赛事活动</a>
+        <a href="courses.html">赛事服务</a>
+        <a href="textbooks.html">数字教材</a>
+        <a href="ebooks.html">电子书</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-login" type="button" data-login-open id="login-btn">登录</button>
+        <div class="user-menu" id="user-menu" hidden>
+          <button class="user-avatar-btn" type="button" data-user-toggle>
+            <span class="user-avatar" id="user-avatar">我</span>
+            <span class="user-name" id="user-name"></span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="user-dropdown" id="user-dropdown" hidden>
+            <a href="#profile">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              个人中心
+            </a>
+            <a href="#favorites">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              我的收藏
+            </a>
+            <hr />
+            <button type="button" data-logout>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              退出登录
+            </button>
+          </div>
+        </div>
+        <button class="nav-mobile-toggle" type="button" data-menu-toggle aria-label="展开菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" data-mobile-menu hidden>
+      <nav>
+        <a href="index.html" data-menu-close>首页</a>
+        <a href="announcements.html" data-menu-close>通知公告</a>
+        <a href="events.html" data-menu-close>赛事活动</a>
+        <a href="courses.html" data-menu-close>赛事服务</a>
+        <a href="textbooks.html" data-menu-close>数字教材</a>
+        <a href="ebooks.html" data-menu-close>电子书</a>
+      </nav>
+      <div class="mobile-menu-footer">
+        <button class="btn-login-mobile" type="button" data-login-open>登录 / 注册</button>
+      </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="login-modal" hidden>
+      <div class="login-card">
+        <button class="login-close" type="button" data-login-close aria-label="关闭">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <div class="login-logo">
+          
+          <span>四川省教育电子音像出版社</span>
+        </div>
+        <h2>欢迎登录</h2>
+        <p class="login-sub">数字教育资源平台</p>
+        <div class="login-tabs">
+          <button class="login-tab active" data-tab="phone">手机号登录</button>
+          <button class="login-tab" data-tab="account">账号登录</button>
+        </div>
+        <div class="login-pane" id="pane-phone">
+          <div class="input-group">
+            <label>手机号</label>
+            <input type="tel" id="input-phone" placeholder="请输入手机号" maxlength="11" />
+          </div>
+          <div class="input-group">
+            <label>验证码</label>
+            <div class="code-row">
+              <input type="text" id="input-code" placeholder="请输入验证码" maxlength="6" />
+              <button class="btn-send-code" type="button" id="send-code-btn">获取验证码</button>
+            </div>
+          </div>
+        </div>
+        <div class="login-pane" id="pane-account" hidden>
+          <div class="input-group">
+            <label>账号</label>
+            <input type="text" id="input-account" placeholder="手机号 / 用户名" />
+          </div>
+          <div class="input-group">
+            <label>密码</label>
+            <input type="password" id="input-password" placeholder="请输入密码" />
+          </div>
+        </div>
+        <button class="btn-login-submit" type="button" id="login-submit">登 录</button>
+        <p class="login-agree">登录即代表同意 <a href="#">用户协议</a> 与 <a href="#">隐私政策</a></p>
+      </div>
+    </div>
+
+    <main class="events-page-wrap">
+
+      <!-- ══ Banner ══ -->
+      <div class="events-banner">
+        <div class="events-banner-bg" aria-hidden="true"></div>
+        <div class="ev-decos" aria-hidden="true">
+          <div class="ev-blob ev-blob-1"></div>
+          <div class="ev-blob ev-blob-2"></div>
+          <div class="ev-blob ev-blob-3"></div>
+          <div class="ev-circle ev-circle-1"></div>
+          <div class="ev-circle ev-circle-2"></div>
+          <div class="ev-circle ev-circle-3"></div>
+          <div class="ev-star ev-star-1"></div>
+          <div class="ev-star ev-star-2"></div>
+          <div class="ev-star ev-star-3"></div>
+          <div class="ev-star ev-star-4"></div>
+          <div class="ev-star ev-star-5"></div>
+          <div class="ev-star ev-star-6"></div>
+          <div class="ev-spark ev-spark-1"></div>
+          <div class="ev-spark ev-spark-2"></div>
+          <div class="ev-spark ev-spark-3"></div>
+          <div class="ev-spark ev-spark-4"></div>
+        </div>
+
+        <!-- 面包屑 -->
+        <div class="events-banner-inner">
+          <p class="eyebrow">Competition Events</p>
+          <h1 style="font-size:clamp(36px,4.5vw,54px);font-weight:900;line-height:1.15;margin-bottom:14px;color:#fff;">赛事活动</h1>
+          <p class="events-banner-sub" style="font-size:18px;color:rgba(255,255,255,.78);line-height:1.8;max-width:580px;margin:0 0 28px;">面向全国中小学生开放征集，涵盖科幻创想、艺术表达、数字创新等多元主题，<br>激发青少年创造力与表达力。</p>
+          <div class="events-banner-stats">
+            <div><strong>6</strong><span>年度赛事</span></div>
+            <div><strong>50万+</strong><span>累计参与人数</span></div>
+            <div><strong>全国</strong><span>覆盖地区</span></div>
+            <div><strong>免费</strong><span>参与报名</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 赛事列表 ══ -->
+      <div class="events-list-wrap">
+
+        <!-- 筛选 -->
+        <div class="events-filter">
+          <button class="ef-tab ef-tab--active" data-ef="all">全部赛事</button>
+          <button class="ef-tab" data-ef="open">报名中</button>
+          <button class="ef-tab" data-ef="soon">即将开始</button>
+          <button class="ef-tab" data-ef="ended">已结束</button>
+        </div>
+
+        <!-- 赛事网格 -->
+        <div class="events-grid">
+
+
+          <!-- 2 绘画书法 -->
+          <article class="event-card" data-status="open">
+            <div class="event-card-banner">
+              <svg viewBox="0 0 420 148" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="eca1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs>
+                <rect width="420" height="148" fill="url(#eca1)"/>
+                <ellipse cx="390" cy="148" rx="108" ry="76" fill="rgba(255,255,255,0.05)"/>
+                <path d="M58,32 C80,20 106,42 128,32" stroke="rgba(255,255,255,0.25)" stroke-width="9" stroke-linecap="round" fill="none"/>
+                <path d="M168,54 C194,38 224,58 256,46" stroke="rgba(255,255,255,0.18)" stroke-width="7" stroke-linecap="round" fill="none"/>
+                <rect x="316" y="18" width="88" height="104" rx="6" fill="rgba(255,255,255,0.07)"/>
+                <line x1="326" y1="40" x2="394" y2="40" stroke="rgba(255,255,255,0.28)" stroke-width="3" stroke-linecap="round"/>
+                <line x1="326" y1="56" x2="380" y2="56" stroke="rgba(255,255,255,0.2)" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="326" y1="70" x2="388" y2="70" stroke="rgba(255,255,255,0.18)" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="326" y1="84" x2="372" y2="84" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"/>
+                <text x="24" y="74" font-size="24" font-weight="800" fill="rgba(255,255,255,0.95)" font-family="sans-serif">绘画书法</text>
+                <text x="24" y="100" font-size="14" fill="rgba(255,255,255,0.65)" font-family="sans-serif">作品大赛</text>
+                <rect x="24" y="112" width="56" height="20" rx="10" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.35)" stroke-width="1"/>
+                <text x="30" y="126" font-size="11" fill="rgba(255,255,255,0.85)" font-family="sans-serif">艺术创作</text>
+              </svg>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-head">
+                <span class="event-status event-status--open">● 报名中</span>
+                <span class="event-tag">艺术创作</span>
+              </div>
+              <h3>全国中小学生绘画书法作品大赛</h3>
+              <p>弘扬中华传统书画艺术，鼓励中小学生以笔墨表达对生活与自然的感悟，培养审美与艺术素养。设绘画组、书法组、硬笔书法组三个参赛方向。</p>
+              <ul class="event-meta">
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>报名截止：2026年8月15日</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2z"/><path d="M8 5v3l2 2"/></svg>参赛对象：全国中小学生</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 6c0 5-5 8-5 8S3 11 3 6a5 5 0 0 1 10 0z"/><circle cx="8" cy="6" r="2"/></svg>主办单位：四川省教育电子音像出版社</li>
+              </ul>
+              <div class="event-card-footer">
+                <span class="event-count"><strong>8,924</strong> 已报名</span>
+                <a class="btn-event-register" href="event-detail.html">查看详情</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3 科幻征文 -->
+          <article class="event-card" data-status="open">
+            <div class="event-card-banner">
+              <svg viewBox="0 0 420 148" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="ecs1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e3a5f"/></linearGradient></defs>
+                <rect width="420" height="148" fill="url(#ecs1)"/>
+                <circle cx="44" cy="28" r="2" fill="white" opacity="0.7"/><circle cx="88" cy="16" r="1.2" fill="white" opacity="0.5"/><circle cx="138" cy="32" r="2" fill="white" opacity="0.6"/><circle cx="210" cy="14" r="1.2" fill="white" opacity="0.4"/><circle cx="274" cy="24" r="2" fill="white" opacity="0.7"/><circle cx="356" cy="20" r="1.2" fill="white" opacity="0.5"/><circle cx="402" cy="34" r="2" fill="white" opacity="0.6"/><circle cx="160" cy="8" r="1" fill="white" opacity="0.4"/><circle cx="320" cy="12" r="1.2" fill="white" opacity="0.5"/>
+                <circle cx="362" cy="74" r="42" fill="#1e40af" opacity="0.45"/>
+                <ellipse cx="362" cy="74" rx="62" ry="16" fill="none" stroke="rgba(25,211,197,0.5)" stroke-width="2.5"/>
+                <path d="M148,94 C148,64 178,34 210,22 C242,34 272,64 272,94 L252,94 C252,78 240,66 210,56 C180,66 168,78 168,94Z" fill="rgba(255,255,255,0.18)"/>
+                <path d="M210,22 L217,56 L203,56Z" fill="rgba(255,255,255,0.3)"/>
+                <path d="M168,94 L154,116 L168,110Z" fill="rgba(255,150,50,0.65)"/>
+                <path d="M252,94 L266,116 L252,110Z" fill="rgba(255,150,50,0.65)"/>
+                <text x="24" y="62" font-size="24" font-weight="800" fill="rgba(255,255,255,0.95)" font-family="sans-serif">科幻征文</text>
+                <text x="24" y="88" font-size="14" fill="rgba(255,255,255,0.65)" font-family="sans-serif">创作大赛</text>
+                <rect x="24" y="100" width="64" height="20" rx="10" fill="rgba(25,211,197,0.2)" stroke="rgba(25,211,197,0.5)" stroke-width="1"/>
+                <text x="30" y="114" font-size="11" fill="#a8f5ef" font-family="sans-serif">科幻文学</text>
+              </svg>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-head">
+                <span class="event-status event-status--open">● 报名中</span>
+                <span class="event-tag">科幻文学</span>
+              </div>
+              <h3>全国中小学生科幻征文创作大赛</h3>
+              <p>以科学幻想为主题，鼓励学生探索未来世界，通过写作表达对科技与人文的想象与思考。设短篇故事、科幻诗歌两个赛道，不限字数。</p>
+              <ul class="event-meta">
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>报名截止：2026年9月30日</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2z"/><path d="M8 5v3l2 2"/></svg>参赛对象：全国中小学生</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 6c0 5-5 8-5 8S3 11 3 6a5 5 0 0 1 10 0z"/><circle cx="8" cy="6" r="2"/></svg>主办单位：四川省教育电子音像出版社</li>
+              </ul>
+              <div class="event-card-footer">
+                <span class="event-count"><strong>6,312</strong> 已报名</span>
+                <a class="btn-event-register" href="event-detail.html">查看详情</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4 AI绘本 -->
+          <article class="event-card" data-status="soon">
+            <div class="event-card-banner">
+              <svg viewBox="0 0 420 148" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="ecai1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#065f46"/><stop offset="100%" stop-color="#0891b2"/></linearGradient></defs>
+                <rect width="420" height="148" fill="url(#ecai1)"/>
+                <ellipse cx="50" cy="138" rx="88" ry="60" fill="rgba(255,255,255,0.05)"/>
+                <circle cx="350" cy="74" r="20" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+                <circle cx="382" cy="48" r="11" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+                <circle cx="388" cy="100" r="11" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/>
+                <circle cx="318" cy="50" r="9" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1.2"/>
+                <line x1="350" y1="54" x2="374" y2="50" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                <line x1="350" y1="94" x2="379" y2="98" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+                <line x1="330" y1="66" x2="320" y2="54" stroke="rgba(255,255,197,0.15)" stroke-width="1"/>
+                <path d="M138,96 L186,46 L202,62 L154,112Z" fill="rgba(255,255,255,0.18)"/>
+                <path d="M132,104 C126,118 136,124 144,116Z" fill="rgba(255,200,50,0.45)"/>
+                <text x="24" y="66" font-size="24" font-weight="800" fill="rgba(255,255,255,0.95)" font-family="sans-serif">AI 绘本</text>
+                <text x="24" y="92" font-size="14" fill="rgba(255,255,255,0.65)" font-family="sans-serif">创意设计大赛</text>
+                <rect x="24" y="104" width="64" height="20" rx="10" fill="rgba(255,200,50,0.2)" stroke="rgba(255,200,50,0.5)" stroke-width="1"/>
+                <text x="30" y="118" font-size="11" fill="#fde68a" font-family="sans-serif">即将开始</text>
+              </svg>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-head">
+                <span class="event-status event-status--soon">◷ 即将开始</span>
+                <span class="event-tag">AI创作</span>
+              </div>
+              <h3>全国中小学生 AI 创意绘本设计大赛</h3>
+              <p>结合人工智能工具与创意思维，引导学生设计原创绘本故事，探索 AI 辅助下的图文创作新形式。支持文字脚本+AI 生图的组合投稿方式。</p>
+              <ul class="event-meta">
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>报名开始：2026年8月1日</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2z"/><path d="M8 5v3l2 2"/></svg>参赛对象：全国中小学生</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 6c0 5-5 8-5 8S3 11 3 6a5 5 0 0 1 10 0z"/><circle cx="8" cy="6" r="2"/></svg>主办单位：四川省教育电子音像出版社</li>
+              </ul>
+              <div class="event-card-footer">
+                <span class="event-count">敬请期待</span>
+                <a class="btn-event-register btn-event-register--soon" href="#">预约通知</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5 传统文化朗诵 -->
+          <article class="event-card" data-status="soon">
+            <div class="event-card-banner">
+              <svg viewBox="0 0 420 148" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="ecc1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7c2d12"/><stop offset="100%" stop-color="#b45309"/></linearGradient></defs>
+                <rect width="420" height="148" fill="url(#ecc1)"/>
+                <ellipse cx="406" cy="22" rx="98" ry="66" fill="rgba(255,255,255,0.05)"/>
+                <rect x="304" y="42" width="106" height="84" rx="0" fill="rgba(255,255,255,0.06)"/>
+                <path d="M304,74 Q357,42 410,74" fill="rgba(255,255,255,0.08)"/>
+                <line x1="268" y1="148" x2="284" y2="28" stroke="rgba(255,255,255,0.1)" stroke-width="7" stroke-linecap="round"/>
+                <line x1="292" y1="148" x2="302" y2="38" stroke="rgba(255,255,255,0.07)" stroke-width="5" stroke-linecap="round"/>
+                <line x1="248" y1="148" x2="256" y2="48" stroke="rgba(255,255,255,0.06)" stroke-width="4" stroke-linecap="round"/>
+                <text x="24" y="66" font-size="24" font-weight="800" fill="rgba(255,255,255,0.95)" font-family="sans-serif">传统文化</text>
+                <text x="24" y="92" font-size="14" fill="rgba(255,255,255,0.65)" font-family="sans-serif">经典朗诵展演活动</text>
+                <rect x="24" y="104" width="64" height="20" rx="10" fill="rgba(255,200,50,0.2)" stroke="rgba(255,200,50,0.5)" stroke-width="1"/>
+                <text x="30" y="118" font-size="11" fill="#fde68a" font-family="sans-serif">即将开始</text>
+              </svg>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-head">
+                <span class="event-status event-status--soon">◷ 即将开始</span>
+                <span class="event-tag">文化传承</span>
+              </div>
+              <h3>中华传统文化经典朗诵展演活动</h3>
+              <p>以诗词歌赋、历史故事为载体，引导学生感受中华优秀传统文化，提升语言表达与文化认同感。设个人朗诵、小组展演两个赛道。</p>
+              <ul class="event-meta">
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>报名开始：2026年8月15日</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2z"/><path d="M8 5v3l2 2"/></svg>参赛对象：全国中小学生</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 6c0 5-5 8-5 8S3 11 3 6a5 5 0 0 1 10 0z"/><circle cx="8" cy="6" r="2"/></svg>主办单位：四川省教育电子音像出版社</li>
+              </ul>
+              <div class="event-card-footer">
+                <span class="event-count">敬请期待</span>
+                <a class="btn-event-register btn-event-register--soon" href="#">预约通知</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 6 数字短视频 -->
+          <article class="event-card" data-status="ended">
+            <div class="event-card-banner">
+              <svg viewBox="0 0 420 148" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                <defs><linearGradient id="ecv1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#374151"/><stop offset="100%" stop-color="#1f2937"/></linearGradient></defs>
+                <rect width="420" height="148" fill="url(#ecv1)"/>
+                <rect x="282" y="14" width="128" height="100" rx="6" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+                <rect x="282" y="14" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="282" y="36" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="282" y="58" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="282" y="80" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/>
+                <rect x="397" y="14" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="397" y="36" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="397" y="58" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/><rect x="397" y="80" width="13" height="16" rx="2" fill="rgba(255,255,255,0.1)"/>
+                <circle cx="346" cy="60" r="24" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+                <polygon points="340,50 340,70 358,60" fill="rgba(255,255,255,0.28)"/>
+                <text x="24" y="66" font-size="24" font-weight="800" fill="rgba(255,255,255,0.75)" font-family="sans-serif">数字短视频</text>
+                <text x="24" y="92" font-size="14" fill="rgba(255,255,255,0.45)" font-family="sans-serif">创意比赛</text>
+                <rect x="24" y="104" width="56" height="20" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                <text x="32" y="118" font-size="11" fill="rgba(255,255,255,0.5)" font-family="sans-serif">已结束</text>
+              </svg>
+            </div>
+            <div class="event-card-body">
+              <div class="event-card-head">
+                <span class="event-status event-status--ended">✓ 已结束</span>
+                <span class="event-tag">数字创意</span>
+              </div>
+              <h3>全国中小学生数字创意短视频比赛</h3>
+              <p>以手机或平板为创作工具，鼓励学生拍摄记录身边的美好，用视频语言表达创意与观察力。</p>
+              <ul class="event-meta">
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="2"/><path d="M5 1v4M11 1v4M2 7h12"/></svg>报名截止：2026年5月31日（已截止）</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2z"/><path d="M8 5v3l2 2"/></svg>参赛对象：全国中小学生</li>
+                <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 6c0 5-5 8-5 8S3 11 3 6a5 5 0 0 1 10 0z"/><circle cx="8" cy="6" r="2"/></svg>主办单位：四川省教育电子音像出版社</li>
+              </ul>
+              <div class="event-card-footer">
+                <span class="event-count"><strong>15,608</strong> 已参与</span>
+                <a class="btn-event-register btn-event-register--ended" href="#">查看结果</a>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /events-grid -->
+      </div><!-- /events-list-wrap -->
+
+    </main>
+
+    <!-- ═══════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════ -->
+    <footer class="footer" id="contact">
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="" />
+            <span>四川省教育电子音像出版社</span>
+          </div>
+          <p class="footer-slogan">数字出版 · 教育服务 · 融合创新</p>
+          <p class="footer-en">Sichuan Audio-Visual Press Co., Ltd.</p>
+          <div class="footer-badges">
+            <span>互联网出版许可</span>
+            <span>电子出版许可</span>
+            <span>网络出版服务</span>
+          </div>
+        </div>
+
+        <div class="footer-nav-group">
+          <div class="footer-nav">
+            <h4>关于我们</h4>
+            <a href="index.html#about">发展历程</a>
+            <a href="index.html#about">机构介绍</a>
+            <a href="index.html#about">荣誉资质</a>
+            <a href="index.html#about">联系我们</a>
+          </div>
+          <div class="footer-nav">
+            <h4>业务服务</h4>
+            <a href="textbooks.html">数字教材</a>
+            <a href="ebooks.html">电子书</a>
+            <a href="courses.html">赛事服务</a>
+            <a href="index.html#fusion">融合出版</a>
+          </div>
+          <div class="footer-nav">
+            <h4>赛事活动</h4>
+            <a href="events.html">科幻征文</a>
+            <a href="events.html">科幻征文</a>
+            <a href="events.html">AI绘本大赛</a>
+            <a href="events.html">活动公告</a>
+          </div>
+          <div class="footer-nav">
+            <h4>新闻中心</h4>
+            <a href="index.html#news">出版社动态</a>
+            <a href="announcements.html">通知公告</a>
+            <a href="index.html#news">行业资讯</a>
+            <a href="index.html#news">媒体报道</a>
+          </div>
+        </div>
+
+        <div class="footer-contact">
+          <h4>联系我们</h4>
+          <p>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            四川省成都市锦江区学道街42号
+          </p>
+          <p>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            028-86669129 / 86728072 / 86678676
+          </p>
+          <p>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            sceav@sceav.online
+          </p>
+          <p class="footer-icp">蜀ICP备19016579号<br />川公网安备 51010402000773号</p>
+        </div>
+
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 四川省教育电子音像出版社 版权所有</p>
+        <p>主管单位：四川省教育厅 &nbsp;|&nbsp; 主办单位：四川省教育信息化与大数据中心</p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

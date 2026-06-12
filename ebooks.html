@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电子书库 | 四川省教育电子音像出版社</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ═══ Ebooks Page Styles ═══ */
+
+    /* ── Hero ── */
+    .ebooks-hero {
+      position: relative; overflow: hidden;
+      padding: 120px max(28px, calc((100vw - 1160px) / 2)) 72px;
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .ebooks-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        
+        radial-gradient(ellipse at 8% 30%,  rgba(251,146,60,.55)   0%, transparent 48%),
+        radial-gradient(ellipse at 90% 12%, rgba(217,70,239,.45)   0%, transparent 42%),
+        radial-gradient(ellipse at 50% 95%, rgba(139,92,246,.4)    0%, transparent 44%),
+        linear-gradient(135deg, #92400e 0%, #7c1d6f 30%, #5b1590 60%, #3b0fa8 100%);
+    }
+    .ebooks-hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.5) 0%, transparent 72%);
+    }
+
+    /* ── 紫主题覆盖 ── */
+    .ebooks-hero-inner h1 { color: #fff; }
+    .ebooks-hero-stats .stat strong { color: #fcd34d; }
+
+    /* ── 装饰元素 ── */
+    .ebooks-decos { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+
+    .eb-blob { position:absolute; border-radius:50%; filter:blur(100px); }
+    .eb-blob-1 { width:500px; height:500px; background:rgba(251,146,60,.45); top:-120px; left:-80px; }
+    .eb-blob-2 { width:420px; height:420px; background:rgba(217,70,239,.38); top:-80px; right:-60px; }
+    .eb-blob-3 { width:360px; height:360px; background:rgba(139,92,246,.35); bottom:-100px; right:15%; }
+    @keyframes ebfloat { 0%,100%{transform-origin:center; opacity:.8} 50%{transform:translateY(-14px) rotate(var(--r,0deg)); opacity:1} }
+    @keyframes ebspark { 0%,100%{transform:scale(1);opacity:.7} 50%{transform:scale(3);opacity:.15} }
+    @keyframes ebring  { to{transform:rotate(360deg)} }
+    .ebooks-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 700px;
+    }
+    .ebooks-hero-inner .eyebrow {
+      display: inline-flex !important; align-items: center; gap: 8px;
+      padding: 0; border: none; background: none; border-radius: 0;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 18px;
+    }
+    .ebooks-hero-inner .eyebrow::before {
+      content: ''; display: block; width: 20px; height: 2px;
+      background: rgba(255,255,255,.9); border-radius: 2px; flex-shrink: 0;
+    }
+    .ebooks-hero-inner h1 {
+      font-size: clamp(36px, 4.5vw, 54px);
+      font-weight: 900; line-height: 1.15; margin-bottom: 14px;
+      text-shadow: none;
+    }
+    .ebooks-hero-inner > p {
+      font-size: 18px; line-height: 1.8;
+      color: rgba(255,255,255,.78); max-width: 580px; margin-bottom: 28px;
+    }
+    .ebooks-hero-stats {
+      display: flex; justify-content: flex-start; gap: 40px;
+      margin-top: 0;
+    }
+    .ebooks-hero-stats .stat {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    }
+    .ebooks-hero-stats .stat strong {
+      font-size: clamp(22px, 2.8vw, 36px); font-weight: 900; color: #fcd34d;
+    }
+    .ebooks-hero-stats .stat span { font-size: 12px; color: rgba(255,255,255,.6); }
+
+    /* ── Main layout ── */
+    .ebooks-body-wrap { background: #f5f2fc; }
+    .ebooks-body {
+      max-width: 1200px; margin: 0 auto; padding: 56px 28px 80px;
+    }
+
+    /* ── Category tabs ── */
+    .cat-tabs {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 48px;
+      border-bottom: 2px solid #ddd4f8; padding-bottom: 0;
+    }
+    .cat-tab {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px 12px; font-size: 14px; font-weight: 600;
+      color: #666; background: none; border: none; cursor: pointer;
+      position: relative; transition: color .18s; white-space: nowrap;
+    }
+    .cat-tab::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 2px; background: #1d6fb8; border-radius: 2px 2px 0 0;
+      transform: scaleX(0); transition: transform .18s;
+    }
+    .cat-tab.active { color: #1250a0; }
+    .cat-tab.active::after { transform: scaleX(1); }
+    .cat-tab:hover { color: #1d6fb8; }
+    .cat-tab .cat-count {
+      font-size: 11px; font-weight: 700; color: #fff;
+      background: #1d6fb8; border-radius: 999px;
+      padding: 1px 7px; min-width: 20px; text-align: center;
+    }
+    .cat-tab.active .cat-count { background: #1250a0; }
+
+    /* ── Category section ── */
+    .cat-section { display: none; }
+    .cat-section.active { display: block; }
+    .cat-section-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .cat-section-head h2 {
+      font-size: 20px; font-weight: 800; color: var(--dark);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cat-section-head h2 span {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .cat-desc { font-size: 14px; color: #888; margin-bottom: 32px; line-height: 1.7; }
+
+    /* ── Bookshelf grid ── */
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 28px 24px;
+    }
+
+    /* ── Book card ── */
+    .book-card {
+      display: flex; flex-direction: column; gap: 10px;
+      cursor: pointer;
+    }
+    .book-cover-wrap {
+      position: relative;
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: 4px 10px 10px 4px;
+      box-shadow:
+        -6px 6px 0 0 rgba(0,0,0,0.18),
+        -3px 3px 0 0 rgba(0,0,0,0.1),
+        0 8px 28px rgba(0,0,0,0.18);
+      overflow: hidden;
+      transition: transform .22s, box-shadow .22s;
+      transform-origin: left center;
+    }
+    .book-card:hover .book-cover-wrap {
+      transform: translateX(4px) rotateY(-4deg);
+      box-shadow:
+        -10px 8px 0 0 rgba(0,0,0,0.2),
+        -5px 4px 0 0 rgba(0,0,0,0.12),
+        0 16px 40px rgba(0,0,0,0.24);
+    }
+    /* left spine */
+    .book-cover-wrap::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 8px; z-index: 2;
+      background: linear-gradient(90deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.08) 60%, transparent 100%);
+    }
+    .book-cover-wrap svg,
+    .book-cover-wrap img {
+      width: 100%; height: 100%; display: block; object-fit: cover;
+    }
+    .book-badge {
+      position: absolute; top: 8px; right: 8px; z-index: 3;
+      font-size: 10px; font-weight: 700; color: #fff;
+      background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+      padding: 3px 8px; border-radius: 999px;
+    }
+    .book-badge.new { background: #e74c3c; }
+    .book-badge.hot { background: #f39c12; }
+    .book-badge.free { background: #7c3aed; color: #fff; }
+
+    .book-info { padding: 0 2px; }
+    .book-title {
+      font-size: 13px; font-weight: 700; color: var(--dark);
+      line-height: 1.45; margin-bottom: 4px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .book-author { font-size: 12px; color: #888; margin-bottom: 5px; }
+    .book-price.free { color: #059669; font-size: 13px; font-weight: 700; }
+
+    /* ── Book detail modal ── */
+    .book-modal {
+      display: none;
+    }
+    .book-modal.is-open {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .book-modal-overlay {
+      position: absolute; inset: 0;
+      background: rgba(7,26,53,0.72); backdrop-filter: blur(6px);
+    }
+    .book-modal-card {
+      position: relative; z-index: 1;
+      background: #fff; border-radius: 20px;
+      width: 100%; max-width: 820px;
+      height: 78vh; max-height: 640px; min-height: 480px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(7,26,53,0.3);
+    }
+    .book-modal-close {
+      position: absolute; top: 16px; right: 16px; z-index: 10;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,0.08); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    .book-modal-close:hover { background: rgba(0,0,0,0.15); }
+
+    /* modal top: cover + meta side by side */
+    .book-modal-top {
+      display: flex; gap: 28px; padding: 28px 28px 0;
+      flex-shrink: 0; align-items: stretch;
+    }
+    .book-modal-cover {
+      flex-shrink: 0; width: 120px; height: 160px;
+      border-radius: 4px 10px 10px 4px;
+      overflow: hidden;
+      box-shadow: -5px 5px 0 0 rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .book-modal-cover svg { width: 100%; height: 100%; display: block; }
+    .book-modal-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+    .book-modal-meta-top { flex: 1; }
+    .book-modal-price-row { margin-top: auto; padding-bottom: 12px; }
+    .book-modal-meta h2 {
+      font-size: 20px; font-weight: 900; color: var(--dark);
+      line-height: 1.3; margin-bottom: 8px;
+    }
+    .book-modal-meta .meta-row {
+      display: flex; flex-wrap: wrap; gap: 6px 20px;
+      margin-bottom: 12px;
+    }
+    .book-modal-meta .meta-row span {
+      font-size: 13px; color: #666;
+    }
+    .book-modal-meta .meta-row strong { color: var(--dark); }
+    .book-modal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .book-tag {
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 999px;
+      background: #ede9fc; color: #5b21b6;
+    }
+    .book-modal-price-row {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .bm-price.free { color: #059669; font-size: 18px; font-weight: 700; }
+    .bm-free-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, #f97316, #fb923c);
+      color: #fff; font-size: 14px; font-weight: 700;
+      padding: 9px 22px; border-radius: 999px; border: none; cursor: pointer;
+      transition: all .18s;
+    }
+
+    /* modal tabs */
+    .book-modal-tabs {
+      display: flex; gap: 0; padding: 0 28px;
+      border-bottom: 1px solid #eef2f8; flex-shrink: 0; margin-top: 20px;
+    }
+    .book-modal-tab {
+      padding: 10px 18px 11px; font-size: 14px; font-weight: 600;
+      color: #888; background: none; border: none; cursor: pointer;
+      position: relative; transition: color .15s;
+    }
+    .book-modal-tab::after {
+      content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 2px; background: #7c3aed; border-radius: 2px 2px 0 0;
+      transform: scaleX(0); transition: transform .15s;
+    }
+    .book-modal-tab.active { color: var(--primary); }
+    .book-modal-tab.active::after { transform: scaleX(1); }
+
+    /* modal pane */
+    .book-modal-panes { flex: 1; overflow-y: auto; padding: 24px 28px 28px; }
+    .book-modal-pane { display: none; }
+    .book-modal-pane.active { display: block; }
+    .book-modal-pane[hidden] { display: none; }
+
+    .pane-intro p { font-size: 14px; color: #555; line-height: 1.9; margin-bottom: 14px; }
+    .pane-intro .intro-highlights {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px;
+    }
+    .intro-highlight {
+      background: #ede9fc; border-radius: 10px; padding: 14px 16px; text-align: center;
+    }
+    .intro-highlight .hl-num {
+      font-size: 22px; font-weight: 900; color: var(--primary); display: block;
+    }
+    .intro-highlight .hl-label { font-size: 12px; color: #777; }
+
+    .pane-toc ol { padding-left: 0; list-style: none; }
+    .toc-chapter {
+      border-bottom: 1px solid #f0f6ff; padding: 10px 0;
+    }
+    .toc-chapter .ch-title {
+      font-size: 14px; font-weight: 700; color: var(--dark);
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0;
+    }
+    .toc-chapter .ch-page { font-size: 12px; color: #aaa; font-weight: 400; }
+    .toc-chapter .ch-subs {
+      padding-left: 16px; margin-top: 6px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .toc-chapter .ch-subs span {
+      font-size: 13px; color: #666;
+      display: flex; justify-content: space-between;
+    }
+    .toc-chapter .ch-subs span em { font-style: normal; font-size: 12px; color: #bbb; }
+
+    .pane-preview {
+      background: #fafafa; border-radius: 10px; padding: 20px 24px;
+      font-size: 14px; color: #444; line-height: 2; border: 1px solid #eef2f8;
+    }
+    .pane-preview .preview-label {
+      font-size: 12px; color: #aaa; margin-bottom: 12px; font-style: italic;
+    }
+    .pane-preview h4 { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+    .pane-preview p { margin-bottom: 12px; }
+
+
+    @media (max-width: 640px) {
+      .book-modal-top { flex-direction: column; align-items: center; text-align: center; }
+      .book-modal-meta .meta-row { justify-content: center; }
+      .book-modal-tags { justify-content: center; }
+      .book-modal-price-row { justify-content: center; }
+      .pane-intro .intro-highlights { grid-template-columns: repeat(2, 1fr); }
+      .book-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <a href="index.html" class="brand">
+      <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="四川省教育电子音像出版社标志" /></span>
+        <div class="brand-name">
+          <span class="brand-text">四川省教育电子音像出版社</span>
+          <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+        </div>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="announcements.html">通知公告</a>
+      <a href="events.html">赛事活动</a>
+      <a href="courses.html">赛事服务</a>
+      <a href="textbooks.html">数字教材</a>
+      <a href="ebooks.html" class="nav-active">电子书</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-login" type="button" data-login-open id="login-btn">登录</button>
+      <div class="user-menu" id="user-menu" hidden>
+        <button class="user-avatar-btn" type="button" data-user-toggle>
+          <span class="user-avatar" id="user-avatar">我</span>
+          <span class="user-name" id="user-name"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="user-dropdown" id="user-dropdown" hidden>
+          <a href="#profile"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>个人中心</a>
+          <a href="#favorites"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>我的收藏</a>
+          <hr />
+          <button type="button" data-logout><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>退出登录</button>
+        </div>
+      </div>
+      <button class="nav-mobile-toggle" type="button" data-menu-toggle aria-label="展开菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" data-mobile-menu hidden>
+    <nav>
+      <a href="index.html" data-menu-close>首页</a>
+      <a href="announcements.html" data-menu-close>通知公告</a>
+      <a href="events.html" data-menu-close>赛事活动</a>
+      <a href="courses.html" data-menu-close>赛事服务</a>
+      <a href="textbooks.html" data-menu-close>数字教材</a>
+      <a href="ebooks.html" data-menu-close>电子书</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <button class="btn-login-mobile" type="button" data-login-open>登录 / 注册</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       LOGIN MODAL
+  ══════════════════════════════════════════ -->
+  <div class="login-modal" id="login-modal" hidden>
+    <div class="login-card">
+      <button class="login-close" type="button" data-login-close aria-label="关闭">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="login-logo">
+        
+        <span>四川省教育电子音像出版社</span>
+      </div>
+      <h2>欢迎登录</h2>
+      <p class="login-sub">数字教育资源平台</p>
+      <div class="login-tabs">
+        <button class="login-tab" data-tab="phone">手机号登录</button>
+        <button class="login-tab active" data-tab="account">账号登录</button>
+      </div>
+      <div class="login-pane" id="pane-phone" hidden>
+        <div class="input-group">
+          <label>手机号</label>
+          <input type="tel" id="input-phone" placeholder="请输入手机号" maxlength="11" />
+        </div>
+        <div class="input-group">
+          <label>验证码</label>
+          <div class="code-row">
+            <input type="text" id="input-code" placeholder="请输入验证码" maxlength="6" />
+            <button class="btn-send-code" type="button" id="send-code-btn">获取验证码</button>
+          </div>
+        </div>
+      </div>
+      <div class="login-pane" id="pane-account">
+        <div class="input-group">
+          <label>账号</label>
+          <input type="text" id="input-account" value="sceav_demo" />
+        </div>
+        <div class="input-group">
+          <label>密码</label>
+          <input type="password" id="input-password" value="sceav123456" />
+        </div>
+      </div>
+      <button class="btn-login-submit" type="button" id="login-submit">登 录</button>
+      <p class="login-agree">登录即代表同意 <a href="#">用户协议</a> 与 <a href="#">隐私政策</a></p>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+    <section class="ebooks-hero">
+      <div class="ebooks-hero-bg" aria-hidden="true"></div>
+      <div class="ebooks-decos" aria-hidden="true">
+        <div class="eb-blob eb-blob-1"></div>
+        <div class="eb-blob eb-blob-2"></div>
+        <div class="eb-blob eb-blob-3"></div>
+      </div>
+      <!-- 面包屑 -->
+      <div class="ebooks-hero-inner">
+        <p class="eyebrow">Digital Library · SCEAV</p>
+        <h1>电子书库</h1>
+        <p>汇聚数字教材、教研成果、赛事作品、志书年鉴及非遗文化等优质出版资源，全部资源免费在线阅读。</p>
+        <div class="ebooks-hero-stats">
+          <div class="stat"><strong>500+</strong><span>正版图书</span></div>
+          <div class="stat"><strong>5</strong><span>资源分类</span></div>
+          <div class="stat"><strong>免费</strong><span>全部免费阅读</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BOOK LIBRARY
+    ══════════════════════════════════════════ -->
+    <div class="ebooks-body-wrap"><div class="ebooks-body">
+
+      <!-- Category Tabs -->
+      <div class="cat-tabs" role="tablist">
+        <button class="cat-tab active" data-cat="textbook" role="tab">
+          数字教材
+        </button>
+        <button class="cat-tab" data-cat="research" role="tab">
+          教研成果
+        </button>
+        <button class="cat-tab" data-cat="contest" role="tab">
+          赛事成果
+        </button>
+        <button class="cat-tab" data-cat="annals" role="tab">
+          志书年鉴
+        </button>
+        <button class="cat-tab" data-cat="heritage" role="tab">
+          非物质文化遗产
+        </button>
+      </div>
+
+      <!-- ── 数字教材 ── -->
+      <div class="cat-section active" id="cat-textbook">
+        <div class="book-grid" id="grid-textbook"></div>
+      </div>
+
+      <!-- ── 教研成果 ── -->
+      <div class="cat-section" id="cat-research">
+        <div class="book-grid" id="grid-research"></div>
+      </div>
+
+      <!-- ── 赛事成果 ── -->
+      <div class="cat-section" id="cat-contest">
+        <div class="book-grid" id="grid-contest"></div>
+      </div>
+
+      <!-- ── 志书年鉴 ── -->
+      <div class="cat-section" id="cat-annals">
+        <div class="book-grid" id="grid-annals"></div>
+      </div>
+
+      <!-- ── 非物质文化遗产 ── -->
+      <div class="cat-section" id="cat-heritage">
+        <div class="book-grid" id="grid-heritage"></div>
+      </div>
+
+    </div></div><!-- /ebooks-body -->
+
+  </main>
+
+  <!-- ══════════════════════════════════════════
+       BOOK DETAIL MODAL
+  ══════════════════════════════════════════ -->
+  <div class="book-modal" id="book-modal">
+    <div class="book-modal-overlay" id="book-modal-overlay"></div>
+    <div class="book-modal-card">
+      <button class="book-modal-close" type="button" id="book-modal-close" aria-label="关闭">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Cover + meta -->
+      <div class="book-modal-top">
+        <div class="book-modal-cover" id="bm-cover"></div>
+        <div class="book-modal-meta">
+          <div class="book-modal-meta-top">
+            <h2 id="bm-title"></h2>
+            <div class="meta-row">
+              <span>作者：<strong id="bm-author"></strong></span>
+              <span>出版社：<strong>四川省教育电子音像出版社</strong></span>
+              <span>年份：<strong id="bm-year"></strong></span>
+              <span>页数：<strong id="bm-pages"></strong></span>
+            </div>
+          </div>
+          <div class="book-modal-price-row">
+            <span class="bm-price free">免费</span>
+            <a class="bm-free-btn" id="bm-trial-btn" href="#" target="_blank">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              免费阅读
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="book-modal-tabs">
+        <button class="book-modal-tab active" data-bm-tab="intro">简介</button>
+        <button class="book-modal-tab" data-bm-tab="toc">目录</button>
+      </div>
+
+      <!-- Panes -->
+      <div class="book-modal-panes">
+        <div class="book-modal-pane pane-intro active" id="bmp-intro"></div>
+        <div class="book-modal-pane pane-toc" id="bmp-toc"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        
+        <span>四川省教育电子音像出版社</span>
+      </div>
+      <p class="footer-copy">© 2026 四川省教育电子音像出版社 版权所有</p>
+      <p class="footer-copy" style="font-size:11px;opacity:.55;margin-top:4px;">蜀ICP备19016579号 &nbsp;|&nbsp; 川公网安备 51010402000773号</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  /* ══════════════════════════════════════
+     BOOK DATA
+  ══════════════════════════════════════ */
+
+  // SVG cover generator: (gradient colors, icon emoji/text, title text)
+  function makeCover(g1, g2, iconText, titleShort) {
+    const id = 'g' + Math.random().toString(36).slice(2,7);
+    return `<svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="${id}" x1="0" y1="0" x2="0.6" y2="1">
+          <stop offset="0%" stop-color="${g1}"/>
+          <stop offset="100%" stop-color="${g2}"/>
+        </linearGradient>
+      </defs>
+      <rect width="120" height="160" fill="url(#${id})"/>
+      <rect x="0" y="0" width="8" height="160" fill="rgba(0,0,0,0.25)"/>
+      <rect x="8" y="0" width="4" height="160" fill="rgba(255,255,255,0.07)"/>
+      <text x="64" y="72" text-anchor="middle" font-size="34">${iconText}</text>
+      <text x="64" y="108" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.9)" font-family="sans-serif" font-weight="700">${titleShort[0] || ''}</text>
+      <text x="64" y="124" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.9)" font-family="sans-serif" font-weight="700">${titleShort[1] || ''}</text>
+      <rect x="16" y="140" width="88" height="1" fill="rgba(255,255,255,0.2)"/>
+      <text x="64" y="153" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)" font-family="sans-serif">四川教育电子音像</text>
+    </svg>`;
+  }
+
+  const BOOKS = {
+    textbook: [
+      { title: '小学数学思维拓展数字教材（上册）', author: '王建国 主编', year: '2024', pages: '312页', price: '68', orig: '88', badge: 'new', tags: ['数学', '小学', 'EPUB'], icon: '🔢', colors: ['#1a6fc4','#0a3d82'], intro: '本教材以核心素养为导向，系统梳理小学数学思维体系，配套互动练习和微视频讲解，支持 PC 端与移动端同步阅读。内容涵盖数与代数、图形与几何、统计与概率三大模块，共 18 章 312 页。', chapters: [['第一章 整数与运算', '1', [['加减法进阶','1'],['乘除综合','28'],['混合运算','52']]],['第二章 分数与小数', '78', [['分数基础','78'],['小数运算','98'],['综合应用','118']]],['第三章 几何图形', '140', [['平面图形','140'],['立体图形','172'],['面积计算','195']]]], preview: '第一章 整数与运算\n\n在日常生活中，整数无处不在。从商店的价签到操场上的距离，从食堂的人数到图书馆的藏书量，整数构成了我们认识世界的数学基础。\n\n本章将带领同学们系统复习并拓展整数运算的技巧。我们不仅关注"算对"，更要理解"为什么这样算"，培养数学思维的严密性与创造性……', highlight: [{num:'18章', label:'系统章节'},{num:'200+', label:'例题解析'},{num:'300+', label:'练习题'}] },
+      { title: '初中物理实验探究数字教材', author: '李思敏 主编', year: '2023', pages: '286页', price: '72', orig: '95', badge: '', tags: ['物理', '初中', '实验'], icon: '⚗️', colors: ['#0e7490','#155e75'], intro: '融合虚拟实验仿真技术，将传统物理实验搬上屏幕，包含力学、热学、光学、电磁学四大领域共 42 个实验模块，配套实验报告模板。', chapters: [['第一章 力学基础', '1', [['力的概念','1'],['牛顿定律','22'],['摩擦力','45']]],['第二章 热学', '68', [['温度与热量','68'],['热传导','88'],['热膨胀','104']]],['第三章 光学', '120', [['光的传播','120'],['折射与反射','140'],['透镜','160']]]], preview: '第一章 力学基础\n\n力是物体间的相互作用。我们看不见力，却能感受到它的存在——你推开一扇门，门对手也施加了反作用力；足球被踢出，球对脚同样产生了力……\n\n实验一：探究摩擦力的影响因素\n\n【实验目的】探究接触面粗糙程度和压力大小对滑动摩擦力的影响。\n\n【实验器材】弹簧测力计、长木板、砝码、棉布、玻璃板……', highlight: [{num:'42个', label:'虚拟实验'},{num:'4大', label:'物理领域'},{num:'100+', label:'知识点'}] },
+      { title: '高中语文名著导读精华版', author: '张晓云 编著', year: '2024', pages: '348页', price: '58', orig: '76', badge: 'hot', tags: ['语文', '高中', '文学'], icon: '📖', colors: ['#7c2d82','#4a1475'], intro: '精选高中新课标必读名著 16 部，每部作品包含背景介绍、内容精要、人物图谱、重点章节精读及考点解析，帮助学生高效备考。', chapters: [['鲁迅小说精读', '1', [['《呐喊》导读','1'],['《彷徨》精析','38'],['考点梳理','72']]],['《红楼梦》精华', '85', [['人物图谱','85'],['重点章节','110'],['主题探讨','148']]],['外国名著选', '162', [['《哈姆雷特》','162'],['《老人与海》','198'],['《罪与罚》','230']]]], preview: '走进鲁迅的文学世界\n\n鲁迅，原名周树人，是中国现代文学的奠基人。他的小说以深刻的现实主义笔触，解剖了封建礼教对人性的压迫与摧残。\n\n《呐喊》收录了《狂人日记》《孔乙己》《阿Q正传》等 14 篇小说。"呐喊"二字，既是对黑暗现实的控诉，也是对觉醒者的呼唤……', highlight: [{num:'16部', label:'必读名著'},{num:'考点', label:'全面覆盖'},{num:'精读', label:'重点章节'}] },
+      { title: '小学英语分级阅读教材（三年级）', author: '陈美玲 主编', year: '2024', pages: '224页', price: '48', orig: '62', badge: 'new', tags: ['英语', '小学', '分级阅读'], icon: '🔤', colors: ['#0369a1','#0c4a6e'], intro: '采用国际通行分级阅读体系，结合中国小学生认知特点设计，配套音频朗读和单词测评，适合三年级及以上学生自主阅读。', chapters: [['Unit 1 My Family', '1', [['词汇积累','1'],['阅读文章','12'],['练习与测评','24']]],['Unit 2 School Life', '30', [['校园场景词汇','30'],['情景对话','44'],['小练笔','58']]]], preview: 'Unit 1: My Family\n\nHello! My name is Lily. I have a happy family.\n\nThis is my father. He is a teacher. He likes reading books. This is my mother. She is a doctor. She helps sick people every day.\n\nI have a little brother. His name is Tom. He is five years old. We play together after school……', highlight: [{num:'12单元', label:'分级内容'},{num:'配套', label:'音频朗读'},{num:'2000+', label:'核心词汇'}] },
+      { title: '初中历史图文数字教材（中国史）', author: '刘永平 主编', year: '2023', pages: '296页', price: '65', orig: '85', badge: '', tags: ['历史', '初中', '图文'], icon: '🏛️', colors: ['#854d0e','#78350f'], intro: '以时间轴为主线，融合历史地图、图片、文献资料，采用数字化呈现方式，系统介绍中国从先秦到近代的历史进程。', chapters: [['先秦至秦汉', '1', [['夏商周','1'],['春秋战国','32'],['秦汉统一','68']]],['三国至唐宋', '98', [['魏晋南北朝','98'],['隋唐盛世','128'],['宋元时代','162']]],['明清至近代', '190', [['明清历史','190'],['近代百年','228'],['历史反思','268']]]], preview: '第一章 中华文明的起源\n\n中国是世界上历史最悠久的文明古国之一。约 170 万年前，元谋人便已在这片土地上繁衍生息。\n\n距今约 6000-7000 年前，以仰韶文化和河姆渡文化为代表的新石器时代文明，展现出中国先民高超的智慧与创造力。彩陶上流动的纹样，不只是装饰，更是原始艺术的最初表达……', highlight: [{num:'300+', label:'历史地图'},{num:'500+', label:'图片资料'},{num:'全程', label:'时间轴导航'}] },
+      { title: '小学科学探究数字教材（综合版）', author: '赵丽华 编著', year: '2024', pages: '260页', price: '55', orig: '72', badge: 'hot', tags: ['科学', '小学', '探究'], icon: '🔭', colors: ['#166534','#14532d'], intro: '以 STEM 理念为指引，围绕生命科学、地球与宇宙、物质科学三大领域设计探究任务，每节课配套实验指南和观察记录表。', chapters: [['生命科学', '1', [['植物的奥秘','1'],['动物世界','38'],['人体探秘','72']]],['地球与宇宙', '98', [['地球结构','98'],['天气与气候','122'],['太阳系','148']]]], preview: '探究一：种子的萌发\n\n【问题提出】是什么条件让种子"醒"过来，开始生长？\n\n【猜想与假设】我们猜测，种子萌发可能需要：水分、适宜的温度、空气。\n\n【实验设计】准备 4 组绿豆种子，分别置于干燥、潮湿、低温、正常等不同条件下，记录 7 天内的变化……', highlight: [{num:'60+', label:'探究任务'},{num:'3大', label:'科学领域'},{num:'记录表', label:'配套资源'}] },
+      { title: '高中数学解题思维全析', author: '吴志远 主编', year: '2023', pages: '388页', price: '88', orig: '115', badge: '', tags: ['数学', '高中', '思维'], icon: '📐', colors: ['#1e3a5f','#0a2240'], intro: '汇集高考及竞赛数学核心题型，从解题思路、方法迁移到规律总结，系统培养高中生的数学建模与逻辑推理能力。', chapters: [['函数与极限', '1', [['函数概念','1'],['基本初等函数','30'],['极限初步','68']]],['三角函数', '90', [['三角恒等变换','90'],['解三角形','118'],['实际应用','140']]],['数列与不等式', '158', [['等差数列','158'],['等比数列','180'],['不等式证明','205']]]], preview: '第一章 函数与极限\n\n函数是高中数学的核心概念，也是高考数学的必考内容。\n\n例题 1-1：已知函数 f(x) = ax² + bx + c（a≠0），其对称轴为 x=1，且 f(0)=3，f(2)=5，求 a、b、c 的值。\n\n【解题思路】利用对称轴公式和已知条件建立方程组，逐步求解……', highlight: [{num:'500+', label:'精选例题'},{num:'高考', label:'真题解析'},{num:'思维导图', label:'章末总结'}] },
+      { title: '初中生物多媒体数字教材', author: '周文静 主编', year: '2024', pages: '272页', price: '62', orig: '82', badge: 'new', tags: ['生物', '初中', '多媒体'], icon: '🌿', colors: ['#15803d','#14532d'], intro: '全彩插图配合 3D 生物结构演示，涵盖细胞学、遗传学、生态学等核心章节，支持虚拟解剖实验与在线测评。', chapters: [['细胞的结构与功能', '1', [['细胞基本结构','1'],['细胞代谢','28'],['细胞分裂','52']]],['遗传与变异', '76', [['DNA与基因','76'],['遗传规律','100'],['基因突变','125']]]], preview: '第一章 细胞——生命的基本单位\n\n细胞是生物体结构和功能的基本单位。除病毒外，一切生物都由细胞构成。\n\n在光学显微镜下，我们可以看到细胞膜、细胞核和细胞质三个基本结构。而在电子显微镜下，细胞内部精密复杂的结构令人叹为观止——线粒体、核糖体、内质网……每一个细胞都是一个高度有序的生命工厂……', highlight: [{num:'200+', label:'3D插图'},{num:'虚拟', label:'解剖实验'},{num:'全彩', label:'高清图谱'}] },
+    ],
+    research: [
+      { title: '四川基础教育课程改革实践研究', author: '省教研院 编', year: '2023', pages: '356页', price: '96', orig: '128', badge: '', tags: ['课程改革', '研究报告', '基础教育'], icon: '🔬', colors: ['#0369a1','#1e3a5f'], intro: '汇集四川省近三年基础教育课程改革的实践探索与阶段性研究成果，涵盖课标解读、教学设计创新、评价体系构建等核心议题，为教育决策提供参考。', chapters: [['课改背景与政策解读', '1', [['国家政策框架','1'],['四川实施方案','22'],['改革目标分析','45']]],['课堂教学创新实践', '68', [['项目式学习','68'],['跨学科融合','98'],['数字化教学','128']]],['评价体系改革', '156', [['过程性评价','156'],['素养导向评价','185'],['案例分析','212']]]], preview: '第一章 基础教育课程改革的时代背景\n\n进入新时代，党和国家对基础教育提出了更高要求。"双减"政策的落地、新课标的颁布实施，标志着我国基础教育正在经历一场深层次的结构性变革。\n\n四川作为西部教育大省，在推进课程改革的过程中既面临区域发展不均衡的现实挑战，也积累了富有地方特色的实践经验……', highlight: [{num:'32个', label:'典型案例'},{num:'15个市', label:'州数据'},{num:'3年', label:'跟踪研究'}] },
+      { title: '中小学人工智能教育路径探索', author: '陈伟 李洁 著', year: '2024', pages: '224页', price: '78', orig: '105', badge: 'new', tags: ['人工智能', '教育信息化', '研究'], icon: '🤖', colors: ['#4338ca','#1e1b4b'], intro: '系统梳理国内外中小学 AI 教育的理论框架与实践路径，结合四川省试点学校案例，为学校推进 AI 课程提供可操作的参考方案。', chapters: [['AI教育理论框架', '1', [['国际比较','1'],['核心素养框架','28'],['课程设计原则','50']]],['四川试点实践', '72', [['小学阶段案例','72'],['初中阶段案例','98'],['效果评估','122']]]], preview: '序言：为什么在中小学推进 AI 教育\n\n人工智能正在重塑社会的方方面面。从自动驾驶到医疗诊断，从语言翻译到创意创作，AI 技术的影响已无处不在。\n\n面对这一现实，让中小学生从小建立对 AI 的正确认知，培养计算思维和数据意识，不是选修课，而是必修课……', highlight: [{num:'12所', label:'试点学校'},{num:'3年', label:'跟踪数据'},{num:'全龄', label:'分段方案'}] },
+      { title: '项目式学习在初中综合实践中的应用', author: '马晓萌 著', year: '2023', pages: '198页', price: '68', orig: '88', badge: '', tags: ['项目式学习', '综合实践', '初中'], icon: '📋', colors: ['#065f46','#064e3b'], intro: '结合一线教学实践，详细呈现项目式学习（PBL）在初中综合实践活动课程中的设计逻辑、实施步骤和评价工具，附有完整案例。', chapters: [['PBL基础理论', '1', [['PBL概念与价值','1'],['学习环境设计','20'],['教师角色转变','38']]],['12个完整案例', '55', [['生态调查项目','55'],['社区服务项目','88'],['科技创新项目','120']]]], preview: '第一章 什么是项目式学习\n\n项目式学习（Project-Based Learning，简称 PBL）是一种以学生为中心的教学模式。学生围绕真实问题或挑战，在一段持续时间内开展深入探究，最终以具体成果展示学习结果。\n\n与传统课堂相比，PBL 最显著的特点是"真实性"——问题来自真实世界，产品面向真实受众……', highlight: [{num:'12个', label:'完整案例'},{num:'全套', label:'评价工具'},{num:'可复制', label:'实施方案'}] },
+      { title: '学校心理健康教育理论与实践', author: '黄思远 主编', year: '2023', pages: '268页', price: '82', orig: '110', badge: '', tags: ['心理健康', '学校教育', '实践'], icon: '💙', colors: ['#7c3aed','#4c1d95'], intro: '从理论到实操，涵盖学校心理健康教育的顶层设计、课程体系构建、个案辅导方法和危机干预流程，适合学校管理者和心理教师参考。', chapters: [['理论基础', '1', [['积极心理学视角','1'],['发展性辅导模式','25'],['文化适应性','48']]],['课程体系设计', '68', [['小学阶段','68'],['初中阶段','96'],['高中阶段','124']]],['个案辅导实践', '152', [['辅导技术','152'],['危机干预','188'],['案例精析','215']]]], preview: '第一章 积极心理学视角下的学校心理健康教育\n\n长期以来，学校心理健康教育以"问题预防"为主要目标——识别问题学生、干预心理危机。这种"修补式"取向固然重要，但也存在局限：大多数学生没有明显的心理问题，但他们同样需要成长的支持……\n\n积极心理学的引入，让我们将目光从"减少痛苦"转向"增进幸福感"……', highlight: [{num:'50+', label:'辅导工具'},{num:'危机', label:'干预流程'},{num:'200+', label:'实践案例'}] },
+      { title: '信息技术与学科教学深度融合研究', author: '田丽萍 赵刚 著', year: '2024', pages: '244页', price: '75', orig: '98', badge: 'new', tags: ['信息技术', '学科融合', '教研'], icon: '💻', colors: ['#0e7490','#164e63'], intro: '聚焦信息技术与语文、数学、科学等主要学科的深度融合路径，提供典型教学设计案例和技术选型指南，帮助教师提升数字化教学能力。', chapters: [['融合理论框架', '1', [['TPACK模型','1'],['融合层次分析','20'],['障碍与应对','38']]],['学科融合案例', '55', [['语文学科','55'],['数学学科','88'],['科学学科','118']]],['教师专业发展', '145', [['能力框架','145'],['培训路径','168'],['发展支持','192']]]], preview: '导言：融合的本质是什么\n\n"信息技术与学科教学融合"这一命题提出已逾二十年，从最初的"计算机辅助教学"到如今的"智慧课堂"，技术工具在不断迭代，但一个根本问题始终没有改变：技术的引入，究竟改变了什么？\n\n真正的深度融合，不是把 PPT 换成白板，也不是把黑板字换成大屏投影……', highlight: [{num:'40+', label:'教学案例'},{num:'6个', label:'主要学科'},{num:'工具', label:'选型指南'}] },
+      { title: '乡村教育振兴：四川经验与路径', author: '贺建文 主编', year: '2023', pages: '312页', price: '88', orig: '118', badge: '', tags: ['乡村教育', '政策研究', '四川'], icon: '🌾', colors: ['#854d0e','#92400e'], intro: '全面梳理四川省推进乡村教育振兴的政策举措与实践探索，重点关注师资队伍建设、留守儿童教育、村小办学等核心议题，具有重要的政策参考价值。', chapters: [['政策框架与现状', '1', [['国家政策解读','1'],['四川教育现状','28'],['主要问题分析','55']]],['典型实践模式', '78', [['集团化办学','78'],['走教与支教','105'],['数字教育弥合','130']]],['展望与建议', '156', [['趋势研判','156'],['政策建议','180'],['实施路径','205']]]], preview: '第一章 乡村教育振兴的战略意义\n\n实施乡村振兴战略，教育是关键。农村孩子能否获得高质量教育，直接关系到城乡差距的消弭、区域发展的均衡和社会流动的公平。\n\n四川是全国乡村人口大省，全省有农村义务教育学校近 8000 所，农村在校生超 200 万人。乡村教育质量的提升，既是历史使命，也是现实课题……', highlight: [{num:'80个', label:'典型案例'},{num:'21市州', label:'全覆盖'},{num:'政策', label:'参考建议'}] },
+    ],
+    contest: [
+      { title: '2025年省级科幻类作品征集获奖作品集', author: '活动组委会 编', year: '2023', pages: '188页', price: '128', orig: '168', badge: '', tags: ['获奖作品', '科幻创作', '青少年'], icon: '🚀', colors: ['#0369a1','#0c4a6e'], intro: '收录2025年省级科幻类作品征集活动各类别一、二、三等奖及优秀奖作品共 260 幅/件，附专家点评，精装全彩印刷。', chapters: [['绘画类获奖作品', '1', [['金奖作品','1'],['银奖作品','28'],['铜奖与优秀','48']]],['摄影类获奖作品', '72', [['最佳作品','72'],['优秀摄影','88'],['点评专栏','102']]],['数字创意类', '112', [['创意设计','112'],['AI辅助创作','138'],['综合点评','162']]]], preview: '编者按\n\n当孩子们用画笔描绘心中的星际世界，当文字构建未来科技的图景，当数字技术让幻想中的宇宙跃然"屏"上——这些来自全国各地的孩子们，以自己的方式，表达了对科学与未来最真挚的热爱。\n\n本届活动共收到来自全省各地的参赛作品 58,472 件，最终评选出各奖项共 260 件……', highlight: [{num:'260件', label:'获奖作品'},{num:'全彩', label:'高清印刷'},{num:'专家', label:'逐一点评'}] },
+      { title: '全国中小学生科幻征文大赛优秀作品选', author: '活动组委会 编', year: '2024', pages: '244页', price: '68', orig: '88', badge: 'new', tags: ['科幻', '征文', '获奖'], icon: '🚀', colors: ['#1e1b4b','#312e81'], intro: '精选本届全国中小学生科幻征文大赛各年龄组一等奖及优秀奖作品 42 篇，配有插图和作者简介，充分展现青少年对科学与未来的想象力。', chapters: [['小学组获奖作品', '1', [['一等奖','1'],['优秀奖','32'],['教师点评','58']]],['初中组获奖作品', '68', [['一等奖','68'],['优秀奖','102'],['创作谈','138']]],['高中组获奖作品', '152', [['一等奖','152'],['优秀奖','188'],['综合评析','222']]]], preview: '一等奖作品·小学组\n\n《时间邮递员》\n作者：林可心（成都市实验小学 五年级）\n\n那一年，我收到了一封来自2086年的信。\n\n信封上没有邮戳，只有一行用银色墨水写成的字："献给2024年的小可心"。我不知道是谁把信塞进了门缝，也不知道未来的自己想说什么……', highlight: [{num:'42篇', label:'优秀作品'},{num:'3组', label:'年龄分组'},{num:'配套', label:'精美插图'}] },
+      { title: '青少年AI创意绘本设计大赛作品集', author: '活动组委会 编', year: '2024', pages: '160页', price: '98', orig: '128', badge: 'new', tags: ['AI创作', '绘本', '青少年'], icon: '🎨', colors: ['#be185d','#9d174d'], intro: '展示首届全国青少年 AI 创意绘本设计大赛 50 件获奖作品，是人工智能与儿童创意相遇的珍贵记录，具有重要的教育意义与艺术价值。', chapters: [['金银铜奖作品', '1', [['金奖三件','1'],['银奖六件','28'],['铜奖十件','62']]],['最具创意奖', '98', [['技术创新奖','98'],['故事最佳奖','118'],['视觉美学奖','138']]]], preview: '金奖作品《小熊和它的一千个梦》\n创作团队：重庆南坪小学 张昕瑜 陈浩然\n\n故事梗概：小熊每晚睡前都会做梦，它用 AI 绘图工具把每一个梦记录下来，慢慢地，一千个梦拼成了一幅关于勇气与成长的画卷……\n\n专家点评：作品以孩童的视角驾驭 AI 工具，没有技术的炫耀，只有纯净的想象力，这正是青少年 AI 创作最应珍视的特质。', highlight: [{num:'50件', label:'获奖作品'},{num:'首届', label:'权威赛事'},{num:'AI+', label:'人工智能'}] },
+      { title: '中小学生书法大赛获奖作品集（第十届）', author: '活动组委会 编', year: '2023', pages: '196页', price: '118', orig: '158', badge: '', tags: ['书法', '传统文化', '获奖'], icon: '🖌️', colors: ['#1c1917','#44403c'], intro: '第十届全国中小学生书法大赛各书体类别金银铜奖及优秀奖作品精选，附名家题词与点评，是学习中国书法传统的优质范本。', chapters: [['楷书组', '1', [['金奖','1'],['银铜奖','22'],['优秀奖','45']]],['行书组', '62', [['金奖','62'],['银铜奖','82'],['优秀奖','100']]],['隶书·草书', '118', [['隶书精选','118'],['草书精选','140'],['综合点评','168']]]], preview: '十年，一个里程碑\n\n今年是全国中小学生书法大赛创办的第十个年头。十年间，累计参赛学生超过 80 万人次，大赛已成为中国青少年书法领域规格最高、影响最广的赛事之一。\n\n本届大赛以"墨香传古韵·翰墨育新人"为主题，收到来自全国各省市中小学生投稿 12.6 万件……', highlight: [{num:'12万+', label:'参赛作品'},{num:'10年', label:'品牌积累'},{num:'名家', label:'专业点评'}] },
+      { title: '全国中小学生绘画大赛精华作品集', author: '活动组委会 编', year: '2023', pages: '212页', price: '108', orig: '148', badge: 'hot', tags: ['绘画', '美术', '获奖集'], icon: '🖼️', colors: ['#b45309','#92400e'], intro: '汇集全国中小学生绘画大赛各年龄段、各画种类别的精华获奖作品，国画、油画、水彩、插画等多种形式一应俱全，全彩精装出版。', chapters: [['国画·水墨', '1', [['国画精选','1'],['水墨创意','32'],['名师解析','56']]],['色彩类', '70', [['水彩精选','70'],['色粉与油画','98'],['综合技法','120']]],['创意插画', '138', [['插画精选','138'],['数字绘画','165'],['综合点评','188']]]], preview: '金奖作品·国画组\n《山乡新貌》\n作者：王梓萌（广元市利州区实验小学 六年级）\n\n用笔稚拙而不失生动，画面中青山如黛，新建的村舍错落有致，一列动车穿越山谷——传统笔墨与现代意象的碰撞，令评委们印象深刻。\n\n点评（国画评委、四川美院副教授 刘晨光）：难得的是，孩子没有刻意模仿传统程式，而是凭着对家乡的感情……', highlight: [{num:'300件', label:'精华作品'},{num:'多画种', label:'全面收录'},{num:'全彩', label:'精装出版'}] },
+      { title: '青少年诗词创作大赛获奖作品集', author: '活动组委会 编', year: '2024', pages: '176页', price: '58', orig: '76', badge: 'new', tags: ['诗词', '传统文化', '创作'], icon: '📜', colors: ['#831843','#9d174d'], intro: '精选本届全国青少年诗词创作大赛律诗、绝句、词牌等体裁获奖作品共 180 首，附专家注评，展现当代青少年传承经典的风采。', chapters: [['律诗精选', '1', [['五言律诗','1'],['七言律诗','28'],['排律','52']]],['绝句与词', '64', [['绝句精选','64'],['词牌创作','88'],['综合评析','120']]]], preview: '金奖作品\n\n《春日观候鸟》\n作者：陈悦然（成都市七中附小 五年级）\n\n万里长空一线分，北来群鸟报春音。\n翠羽点点穿云去，不负东风不负林。\n\n评委点评：此诗立意清新，颔联"翠羽点点穿云去"颇得唐人风致，能以小学生之年龄作此格律，实属不易。', highlight: [{num:'180首', label:'获奖诗词'},{num:'多体裁', label:'律绝词全收'},{num:'专家', label:'注评赏析'}] },
+      { title: '全国中小学生摄影大赛优秀作品集', author: '活动组委会 编', year: '2023', pages: '168页', price: '138', orig: '178', badge: 'hot', tags: ['摄影', '青少年', '艺术'], icon: '📷', colors: ['#374151','#1f2937'], intro: '精装展示全国中小学生摄影大赛各主题类别一二三等奖作品，含自然生态、城市生活、人物记录、创意摄影四大主题，全彩印刷。', chapters: [['自然生态组', '1', [['金奖','1'],['银铜奖','22'],['优秀作品','40']]],['城市与人文组', '58', [['金奖','58'],['银铜奖','78'],['优秀作品','96']]],['创意摄影组', '112', [['金奖','112'],['银铜奖','128'],['技法解析','148']]]], preview: '金奖作品·自然生态组\n《候鸟归来》\n作者：李佳宁（成都市双流区实验中学 初二）\n\n拍摄地点：四川若尔盖湿地\n\n清晨五点，摄影师独自一人守候在湿地边缘。当第一缕阳光斜射在水面，数百只候鸟同时腾空——那一刻的震撼，快门定格了，也永远刻在了心里。\n\n专家点评：光线运用极为成熟，前景虚化恰到好处……', highlight: [{num:'240件', label:'优秀作品'},{num:'4大', label:'主题分类'},{num:'全彩', label:'艺术印刷'}] },
+    ],
+    annals: [
+      { title: '四川教育年鉴 2023', author: '四川省教育厅 编', year: '2024', pages: '480页', price: '168', orig: '228', badge: 'new', tags: ['年鉴', '官方', '四川教育'], icon: '📊', colors: ['#1e3a5f','#0a2240'], intro: '《四川教育年鉴》官方版本，系统记录 2023 年度四川省各级各类教育发展状况、政策举措、统计数据及重要事件，是权威的教育文献资料。', chapters: [['综合篇', '1', [['四川教育概况','1'],['重大政策事件','32'],['获奖与荣誉','68']]],['数据篇', '92', [['基础教育数据','92'],['高等教育数据','148'],['职业教育数据','200']]],['专题篇', '240', [['双减政策落实','240'],['乡村教育振兴','290'],['教育信息化','335']]]], preview: '编者按\n\n2023 年，是全面贯彻党的二十大精神的开局之年，也是四川教育加快推进高质量发展的关键之年。\n\n这一年，全省教育系统深入学习贯彻习近平总书记关于教育的重要论述，坚持以人民为中心发展教育，统筹推进各级各类教育协调发展，教育改革发展取得新成效……', highlight: [{num:'480页', label:'全面翔实'},{num:'官方', label:'权威数据'},{num:'年度', label:'系统记录'}] },
+      { title: '四川教育志（1979-2010）', author: '四川省地方志委 编', year: '2022', pages: '876页', price: '298', orig: '398', badge: '', tags: ['教育志', '历史', '改革开放'], icon: '📚', colors: ['#1c1917','#292524'], intro: '系统记录改革开放三十年四川省教育历史的权威志书，覆盖基础教育、高等教育、职业教育、师范教育等各个领域，是研究四川教育史不可或缺的文献。', chapters: [['基础教育志', '1', [['普通小学','1'],['普通中学','85'],['特殊教育','168']]],['高等教育志', '195', [['高校发展历程','195'],['科研与学科建设','285'],['对外合作','360']]],['职业教育志', '390', [['中等职业教育','390'],['技工教育','455'],['成人教育','510']]]], preview: '凡例\n\n本志记述时限为1979年至2010年，上限从中国共产党十一届三中全会召开、改革开放全面启动时起，下限至2010年《国家中长期教育改革和发展规划纲要》颁布时止。\n\n三十余年，是四川教育从恢复到发展再到腾飞的关键历史时期，也是无数教育工作者忘我奉献、书写教育传奇的壮阔年代……', highlight: [{num:'876页', label:'巨著史志'},{num:'31年', label:'历史跨度'},{num:'权威', label:'官方修志'}] },
+      { title: '成都教育发展报告 2023-2024', author: '成都市教育局 编', year: '2024', pages: '324页', price: '118', orig: '158', badge: 'new', tags: ['成都', '发展报告', '年度'], icon: '🏙️', colors: ['#064e3b','#065f46'], intro: '全面呈现 2023-2024 年度成都市教育改革发展概况，包含教育政策、学校建设、优质均衡发展等核心内容，配有丰富的数据图表。', chapters: [['发展综述', '1', [['年度工作回顾','1'],['重点项目进展','28'],['数据概览','55']]],['改革亮点', '72', [['课程改革','72'],['评价改革','98'],['教师队伍建设','125']]],['展望与规划', '152', [['问题与挑战','152'],['2024年工作重点','175'],['中长期规划','200']]]], preview: '2023年成都教育：稳中有进，变中求新\n\n过去一年，成都市教育局深入贯彻落实党的二十大精神，以"办人民满意的教育"为根本遵循，聚焦教育优质均衡发展，深入推进教育评价改革……\n\n全市现有各级各类学校 3,468 所，在校学生 210.8 万人，专任教师 14.2 万人。', highlight: [{num:'100+', label:'数据图表'},{num:'2023', label:'最新年度'},{num:'政策', label:'全面解读'}] },
+      { title: '四川高等教育年鉴 2022', author: '四川省教育厅 编', year: '2023', pages: '412页', price: '148', orig: '198', badge: '', tags: ['高等教育', '年鉴', '2022'], icon: '🎓', colors: ['#1e40af','#1e3a8a'], intro: '《四川高等教育年鉴》2022 年卷，汇集全省普通高校、成人高校及高职院校年度发展数据、重要事项与学科专业统计，是高教研究的重要参考资料。', chapters: [['高校概况', '1', [['普通高校','1'],['高职高专','68'],['成人高校','112']]],['科研与学科', '138', [['重点学科','138'],['科研成果','188'],['国际合作','238']]],['统计数据', '268', [['招生数据','268'],['在校学生','310'],['毕业生就业','355']]]], preview: '2022年四川高等教育年度综述\n\n2022年，面对新冠疫情的持续影响，四川省高等教育系统在党的坚强领导下，统筹疫情防控和教育事业发展，全省高等教育改革发展稳中向好……\n\n全省共有普通高等学校 138 所，在校生 166.8 万人，研究生在校人数 11.2 万人……', highlight: [{num:'138所', label:'高校数据'},{num:'全省', label:'统计覆盖'},{num:'权威', label:'官方编制'}] },
+      { title: '四川特殊教育发展史（1949-2020）', author: '王芳 主编', year: '2022', pages: '366页', price: '128', orig: '168', badge: '', tags: ['特殊教育', '历史', '志书'], icon: '🌟', colors: ['#6d28d9','#5b21b6'], intro: '首部系统记录四川省特殊教育发展历程的专项史志，涵盖视障、听障、智障等各类特殊教育七十余年的发展脉络，填补了相关领域的文献空白。', chapters: [['建国初期(1949-1978)', '1', [['特教体系建立','1'],['主要学校沿革','28'],['师资队伍','50']]],['改革开放(1979-2012)', '68', [['政策变迁','68'],['随班就读推广','98'],['质量提升','128']]],['新时代(2013-2020)', '158', [['融合教育发展','158'],['保障体系完善','190'],['展望未来','220']]]], preview: '序言\n\n七十年，对于一个国家的教育史而言，不过是历史长河中的一段。然而对于数以万计的特殊儿童及其家庭而言，这七十年是从"不被看见"到"被善待"，从"边缘"走向"融合"的七十年。\n\n本书作者历时六年，走访全省 21 个市州，收集档案文献 3,000 余份，完成了这部迟来但珍贵的记录……', highlight: [{num:'70年', label:'历史跨度'},{num:'首部', label:'专项史志'},{num:'3000+', label:'历史档案'}] },
+    ],
+    heritage: [
+      { title: '四川非物质文化遗产图典', author: '省文化厅 省教厅 联编', year: '2023', pages: '428页', price: '238', orig: '298', badge: 'hot', tags: ['非遗', '图典', '四川'], icon: '🎎', colors: ['#b91c1c','#991b1b'], intro: '精选四川省 136 项国家级、省级非物质文化遗产项目，以图文并茂的形式系统介绍每项非遗的历史渊源、传承现状和保护措施，是权威的非遗图典文献。', chapters: [['传统表演艺术', '1', [['川剧','1'],['四川扬琴','45'],['民间歌舞','78']]],['传统手工技艺', '108', [['蜀绣','108'],['蜀锦','138'],['漆器工艺','168']]],['民俗与信仰', '198', [['民间信仰','198'],['传统节日','230'],['民间文学','265']]]], preview: '川剧——活态的文化遗产\n\n川剧，是四川人的精神家园，也是中国戏曲大家庭中一支独具魅力的成员。\n\n变脸、吐火、滚灯……这些令外地观众叹为观止的绝技，只是川剧舞台上的一角。川剧真正的魅力，在于它那用方言演绎人间悲欢离合的独特方式，在于那生旦净末丑共同构建的热闹人生……', highlight: [{num:'136项', label:'非遗项目'},{num:'国家级', label:'权威收录'},{num:'全彩', label:'高清图典'}] },
+      { title: '蜀绣艺术与传承研究', author: '孟德芬 著', year: '2023', pages: '286页', price: '128', orig: '168', badge: '', tags: ['蜀绣', '传统技艺', '研究'], icon: '🧵', colors: ['#be185d','#9d174d'], intro: '从历史、工艺、纹样、传承四个维度全面解析国家级非遗项目蜀绣，配有精美高清绣品图片 200 余幅，是蜀绣研究领域的重要学术著作。', chapters: [['蜀绣历史', '1', [['汉代蜀绣','1'],['唐宋发展','20'],['明清至今','38']]],['工艺技法', '58', [['基本针法','58'],['复合针法','85'],['图案设计','110']]],['当代传承', '138', [['传承人记录','138'],['产业化路径','170'],['创新与保护','210']]]], preview: '第一章 蜀绣的历史渊源\n\n蜀绣，又称"川绣"，与苏绣、粤绣、湘绣并称为"中国四大名绣"，是四川最具代表性的传统手工艺之一。\n\n其历史可追溯至汉代。西汉文学家扬雄在《蜀都赋》中写道："若挥锦布绣，望芒兮无幅"，形象地描绘了汉代蜀绣的繁盛景象……', highlight: [{num:'200+', label:'高清绣品'},{num:'国家级', label:'非遗传承'},{num:'学术', label:'权威研究'}] },
+      { title: '四川民族传统节日文化读本', author: '杨光辉 编著', year: '2024', pages: '232页', price: '78', orig: '98', badge: 'new', tags: ['民族文化', '节日', '读本'], icon: '🎐', colors: ['#d97706','#b45309'], intro: '面向中小学生的四川少数民族传统节日文化普及读本，图文并茂介绍藏族、彝族、羌族等 12 个世居民族的传统节日风俗，适合课外阅读。', chapters: [['藏族节日', '1', [['藏历新年','1'],['雪顿节','18'],['沐浴节','32']]],['彝族节日', '45', [['彝族年','45'],['火把节','62'],['都荣扎扎','78']]],['羌族节日', '90', [['羌历年','90'],['祭山会','105'],['转山节','118']]]], preview: '火把节——彝族人的狂欢\n\n每年农历六月二十四日，大小凉山便会燃起漫山遍野的火把，映红半边天空。这是彝族人最盛大的节日——火把节，也被称为"东方的狂欢节"。\n\n相传，火把节源自彝族先民借助火光驱赶虫害、祈求丰收的习俗。如今，它已发展成为集祭祀、歌舞、竞技为一体的综合性民俗大节……', highlight: [{num:'12个', label:'民族节日'},{num:'中小学', label:'适龄读本'},{num:'图文', label:'并茂呈现'}] },
+      { title: '巴蜀民间音乐文化遗产保护研究', author: '谭旭东 主编', year: '2023', pages: '312页', price: '108', orig: '138', badge: '', tags: ['民间音乐', '非遗保护', '研究'], icon: '🎵', colors: ['#065f46','#064e3b'], intro: '系统梳理巴蜀地区民间音乐类非物质文化遗产的现状与保护路径，涵盖川江号子、巴山背二歌、羌族多声部民歌等重要项目，配有音频二维码。', chapters: [['巴蜀民间音乐概述', '1', [['历史脉络','1'],['地理分布','22'],['音乐特征','40']]],['重点项目研究', '58', [['川江号子','58'],['巴山背二歌','88'],['羌族多声部','118']]],['保护与传承', '148', [['濒危现状','148'],['保护策略','175'],['数字化存档','205']]]], preview: '川江号子——激流中的生命之歌\n\n在电动船普及之前，川江上的劳工们以一种特殊的方式对抗湍急的水流——号子。\n\n领唱者高声呼喊，其余人整齐和应。那不是普通的歌声，是力量的节律，是生死与共的信号，是激流中人类文明最质朴的表达……\n\n2006 年，川江号子被列入首批国家级非物质文化遗产名录。然而，随着货运方式的变革，能唱传统号子的老艺人已寥寥无几……', highlight: [{num:'20项', label:'非遗音乐'},{num:'配套', label:'音频二维码'},{num:'抢救性', label:'记录保护'}] },
+      { title: '四川传统医药非遗项目汇编', author: '川中医药局 编', year: '2023', pages: '344页', price: '138', orig: '178', badge: '', tags: ['传统医药', '非遗', '中医'], icon: '🌿', colors: ['#166534','#14532d'], intro: '汇编四川省传统医药类非物质文化遗产项目 28 项，包括针灸、骨伤、中药炮制等传统技艺，图文结合，兼具学术价值与科普意义。', chapters: [['针灸推拿类', '1', [['成都地区针灸流派','1'],['郫县推拿技法','32'],['眼针疗法','58']]],['内科外科类', '78', [['杜氏骨伤','78'],['郑氏外伤','102'],['传统验方','128']]],['中药炮制类', '152', [['川派炮制技艺','152'],['药材加工','180'],['传承谱系','210']]]], preview: '郫县豆瓣与中药的不解之缘\n\n郫县豆瓣，被誉为"川菜之魂"，却鲜有人知，其酿造技艺中蕴含着深厚的传统医药智慧。\n\n豆瓣中的辣椒不只是调味品。中医理论认为辣椒性热、味辛，具有散寒除湿、开胃消食之功效。郫县豆瓣的酿造过程，正是将食物与药用价值融合的典范……', highlight: [{num:'28项', label:'非遗项目'},{num:'传统医药', label:'系统梳理'},{num:'图文', label:'学术科普'}] },
+      { title: '藏羌彝走廊非遗传承人口述史', author: '罗庆春 主编', year: '2024', pages: '388页', price: '158', orig: '208', badge: 'new', tags: ['口述史', '传承人', '走廊文化'], icon: '🗻', colors: ['#1e3a5f','#1e3a8a'], intro: '历时三年，深入四川藏羌彝文化走廊，对 40 位非遗传承人进行深度访谈，记录他们与非遗项目相伴相生的人生故事，是珍贵的口述历史文献。', chapters: [['藏族传承人', '1', [['藏戏传承人','1'],['唐卡绘画师','32'],['藏药传承人','62']]],['羌族传承人', '88', [['羌绣传承人','88'],['羌笛演奏者','112'],['羌族端公','136']]],['彝族传承人', '160', [['彝族漆器','160'],['彝绣传承人','185'],['毕摩文化','210']]]], preview: '唐卡绘师 强巴次仁的故事\n\n强巴次仁今年 68 岁，画了 52 年唐卡。他的工作室在甘孜州一座寺庙的偏殿里，终年弥漫着矿物颜料和酥油灯的混合气息。\n\n"我七岁就开始跟着父亲学画，那时候还不懂那些图案的含义，只是照着描。画到十五岁，我才真正开始理解，一笔一划都是修行……"\n\n强巴次仁是甘孜州唐卡彩绘技艺的国家级传承人，他的学生遍布西藏和四川各地……', highlight: [{num:'40位', label:'传承人故事'},{num:'3年', label:'田野调查'},{num:'珍贵', label:'口述档案'}] },
+    ],
+  };
+
+  /* ══════════════════════════════════════
+     RENDER BOOKS
+  ══════════════════════════════════════ */
+  const CATEGORY_COLORS = {
+    textbook: ['#1a6fc4','#0a3d82'],
+    research: ['#0369a1','#1e3a5f'],
+    contest:  ['#0369a1','#0c4a6e'],
+    annals:   ['#1e3a5f','#0a2240'],
+    heritage: ['#b91c1c','#991b1b'],
+  };
+
+  function renderGrid(catKey) {
+    const books = BOOKS[catKey];
+    const grid = document.getElementById('grid-' + catKey);
+    if (!grid || !books) return;
+    grid.innerHTML = books.map((b, i) => {
+      const cover = makeCover(b.colors[0], b.colors[1], b.icon, [b.title.slice(0,5), b.title.slice(5,9)]);
+      const badgeHTML = b.badge ? `<span class="book-badge ${b.badge}">${{new:'新书',hot:'热门',free:'免费'}[b.badge]}</span>` : '';
+      const priceHTML = `<span class="book-price free">免费</span>`;
+      return `<div class="book-card" data-cat="${catKey}" data-idx="${i}" onclick="openBook('${catKey}',${i})">
+        <div class="book-cover-wrap">${cover}${badgeHTML}</div>
+        <div class="book-info">
+          <div class="book-title">${b.title}</div>
+          <div class="book-author">${b.author}</div>
+          ${priceHTML}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  Object.keys(BOOKS).forEach(renderGrid);
+
+  /* ══════════════════════════════════════
+     CATEGORY TABS
+  ══════════════════════════════════════ */
+  document.querySelectorAll('.cat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      const key = tab.dataset.cat;
+      document.getElementById('cat-' + key).classList.add('active');
+    });
+  });
+
+  /* ══════════════════════════════════════
+     BOOK MODAL
+  ══════════════════════════════════════ */
+  function openBook(catKey, idx) {
+    const b = BOOKS[catKey][idx];
+    const modal = document.getElementById('book-modal');
+
+    // cover
+    document.getElementById('bm-cover').innerHTML =
+      makeCover(b.colors[0], b.colors[1], b.icon, [b.title.slice(0,5), b.title.slice(5,9)]);
+
+    // meta
+    document.getElementById('bm-title').textContent = b.title;
+    document.getElementById('bm-author').textContent = b.author;
+    document.getElementById('bm-year').textContent = b.year;
+    document.getElementById('bm-pages').textContent = b.pages;
+
+    // tags
+    // tags removed
+
+
+    // intro pane
+    document.getElementById('bmp-intro').innerHTML = `
+      <div class="pane-intro">
+        <p>${b.intro}</p>
+
+      </div>`;
+
+    // toc pane
+    document.getElementById('bmp-toc').innerHTML = `
+      <ol class="pane-toc">
+        ${b.chapters.map(ch => `<li class="toc-chapter">
+          <div class="ch-title">${ch[0]}<span class="ch-page">P${ch[1]}</span></div>
+          <div class="ch-subs">
+            ${ch[2].map(sub => `<span>${sub[0]}<em>P${sub[1]}</em></span>`).join('')}
+          </div>
+        </li>`).join('')}
+      </ol>`;
+
+    // 阅读按钮链接到阅读页，携带书名参数
+    const trialBtn = document.getElementById('bm-trial-btn');
+    trialBtn.href = `book-reader.html?cat=${catKey}&idx=${idx}`;
+
+    // reset to intro tab
+    switchBmTab('intro');
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function switchBmTab(key) {
+    document.querySelectorAll('.book-modal-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.bmTab === key);
+    });
+    document.querySelectorAll('.book-modal-pane').forEach(p => {
+      p.classList.toggle('active', p.id === 'bmp-' + key);
+    });
+  }
+
+  document.querySelectorAll('.book-modal-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchBmTab(tab.dataset.bmTab));
+  });
+
+  function closeBookModal() {
+    document.getElementById('book-modal').classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('book-modal-close').addEventListener('click', closeBookModal);
+  document.getElementById('book-modal-overlay').addEventListener('click', closeBookModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBookModal(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>在线阅读 | 四川省教育电子音像出版社</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', '宋体', serif;
+      background: radial-gradient(ellipse at 50% 30%, #2a1a0e 0%, #0f0a06 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ══ 顶栏 ══ */
+    .reader-topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+      height: 48px;
+      background: rgba(10,6,2,0.92);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center;
+      padding: 0 16px 0 16px;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .reader-back {
+      display: inline-flex; align-items: center; gap: 5px;
+      color: rgba(255,255,255,0.7); font-size: 13px; font-weight: 600;
+      text-decoration: none; flex-shrink: 0; font-family: sans-serif;
+      padding: 4px 12px 4px 8px; border-radius: 999px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      transition: all .15s;
+    }
+    .reader-back:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    /* 目录切换按钮（顶栏内） */
+    .toc-toggle-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.7); font-size: 12px; font-family: sans-serif;
+      padding: 4px 12px; border-radius: 999px; cursor: pointer;
+      transition: all .15s; flex-shrink: 0;
+    }
+    .toc-toggle-btn:hover { background: rgba(255,255,255,0.16); color: #fff; }
+    .toc-toggle-btn.active { background: rgba(255,200,120,0.18); border-color: rgba(255,190,80,0.35); color: #ffd080; }
+
+    .reader-title {
+      flex: 1; font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.72); font-family: sans-serif;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .reader-page-indicator {
+      font-size: 12px; color: rgba(255,255,255,0.4); font-family: sans-serif; flex-shrink: 0;
+    }
+
+    /* ══ 主体布局：左侧目录 + 书本舞台 ══ */
+    .reader-body {
+      flex: 1; display: flex; margin-top: 48px; overflow: hidden; height: calc(100vh - 48px);
+    }
+
+    /* ══ 左侧目录面板 ══ */
+    .toc-panel {
+      width: 240px; flex-shrink: 0;
+      background: rgba(8,4,1,0.88);
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex; flex-direction: column;
+      transition: width .3s cubic-bezier(.4,0,.2,1), opacity .3s;
+      overflow: hidden;
+    }
+    .toc-panel.collapsed { width: 0; opacity: 0; pointer-events: none; }
+
+    .toc-panel-head {
+      padding: 20px 20px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
+    }
+    .toc-panel-head h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: .1em;
+      color: rgba(255,255,255,0.35); font-family: sans-serif; text-transform: uppercase;
+    }
+    .toc-panel-head p {
+      font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 6px;
+      font-family: sans-serif; line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .toc-panel-list {
+      flex: 1; overflow-y: auto; padding: 10px 0 16px;
+    }
+    .toc-panel-list::-webkit-scrollbar { width: 3px; }
+    .toc-panel-list::-webkit-scrollbar-track { background: transparent; }
+    .toc-panel-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 2px; }
+
+    .toc-panel-chapter {
+      padding: 10px 20px 4px;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      color: rgba(255,190,80,0.7); font-family: sans-serif;
+    }
+    .toc-panel-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 20px 7px 28px;
+      font-size: 12px; color: rgba(255,255,255,0.5); font-family: sans-serif;
+      cursor: pointer; transition: all .15s; gap: 8px;
+    }
+    .toc-panel-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
+    .toc-panel-item.active {
+      color: #ffd080; background: rgba(255,190,80,0.1);
+      border-left: 2px solid #ffd080; padding-left: 26px;
+    }
+    .toc-panel-item .tpi-title { flex: 1; line-height: 1.4; }
+    .toc-panel-item .tpi-page { font-size: 11px; color: rgba(255,255,255,0.25); flex-shrink: 0; }
+    .toc-panel-item.active .tpi-page { color: rgba(255,208,128,0.5); }
+
+    /* spread index stored on item */
+    .toc-panel-spread {
+      font-size: 10px; color: rgba(255,255,255,0.2); font-family: sans-serif;
+      padding: 4px 20px 0 28px;
+    }
+
+    /* ══ 书本区域（舞台 + 底部控件） ══ */
+    .book-area {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    /* ══ 书本舞台 ══ */
+    .book-stage {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 16px 40px 0;
+      perspective: 2600px;
+      overflow: hidden;
+    }
+
+    /* ══ 书本列（书 + 导航竖排，作为整体居中） ══ */
+    .book-column {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+
+    /* ══ 书本外壳 ══ */
+    .book-wrap {
+      position: relative; display: flex;
+      filter: drop-shadow(0 50px 90px rgba(0,0,0,0.95));
+    }
+
+    /* 书脊 */
+    .book-spine {
+      position: absolute; left: 50%; top: 0; bottom: 0; width: 12px;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, rgba(0,0,0,0.55), rgba(80,50,20,0.25), rgba(0,0,0,0.55));
+      z-index: 10;
+    }
+
+    /* 单页容器 */
+    .page-side {
+      width: 420px;
+      height: 590px;
+      position: relative; overflow: hidden;
+    }
+
+    /* 页面 */
+    .page {
+      position: absolute; inset: 0;
+      background: #fdf8f0;
+      padding: 48px 44px 40px;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
+    .page-left {
+      border-radius: 4px 0 0 4px; border-right: none;
+      box-shadow: inset -6px 0 10px rgba(0,0,0,0.07);
+    }
+    .page-right {
+      border-radius: 0 4px 4px 0; border-left: none;
+      box-shadow: inset 6px 0 10px rgba(0,0,0,0.07), 6px 0 28px rgba(0,0,0,0.5);
+    }
+
+    /* 翻页动画 */
+    .flip-container {
+      position: absolute; inset: 0;
+      transform-style: preserve-3d;
+      transition: transform 0.75s cubic-bezier(0.4, 0.0, 0.2, 1);
+      z-index: 5;
+    }
+    .flip-container.flip-forward  { transform-origin: left center; }
+    .flip-container.flip-backward { transform-origin: right center; }
+    .flip-container.is-flipping-forward  { transform: rotateY(-180deg); }
+    .flip-container.is-flipping-backward { transform: rotateY(180deg); }
+
+    .flip-front, .flip-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    }
+    .flip-back { transform: rotateY(180deg); }
+
+    /* ══ 页面内容 ══ */
+    .page-content { flex: 1; overflow: hidden; }
+    .page-content h3 {
+      font-size: 16px; font-weight: 800; color: #1a0f05;
+      margin-bottom: 14px; padding-bottom: 9px;
+      border-bottom: 1.5px solid #c8956b; line-height: 1.4;
+    }
+    .page-content p {
+      font-size: 14px; line-height: 2.05; color: #2c1f0e; margin-bottom: 11px;
+    }
+    .page-content p.drop-cap::first-letter {
+      float: left; font-size: 3.2em; line-height: .72;
+      font-weight: 900; color: #8b4513; margin-right: 6px; margin-top: 4px;
+    }
+    .page-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 10px; border-top: 1px solid #e8d9c0;
+      flex-shrink: 0; margin-top: auto;
+    }
+    .page-footer .book-title-small {
+      font-size: 10px; color: #b09070; font-style: italic;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 240px;
+    }
+    .page-footer .page-num { font-size: 10px; color: #b09070; flex-shrink: 0; }
+
+    /* 封面页 */
+    .cover-page {
+      background: linear-gradient(160deg, var(--book-c1, #1a3a6e) 0%, var(--book-c2, #0a2040) 100%) !important;
+      justify-content: center; align-items: center; text-align: center;
+    }
+    .cover-page .cover-icon { font-size: 64px; margin-bottom: 18px; }
+    .cover-page .cover-title { font-size: 20px; font-weight: 900; color: #fff; line-height: 1.4; margin-bottom: 14px; }
+    .cover-page .cover-author { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .cover-page .cover-pub {
+      font-size: 11px; color: rgba(255,255,255,0.38);
+      position: absolute; bottom: 36px; left: 0; right: 0; text-align: center;
+    }
+    .cover-page .cover-stripe {
+      position: absolute; left: 0; top: 0; bottom: 0; width: 9px;
+      background: rgba(0,0,0,0.35);
+    }
+    .cover-page .cover-line {
+      width: 44px; height: 2px; background: rgba(255,255,255,0.38); margin: 0 auto 18px;
+    }
+
+    /* 目录页 */
+    .toc-page .toc-item {
+      display: flex; align-items: baseline; gap: 4px;
+      font-size: 13px; color: #2c1f0e;
+      padding: 6px 0; border-bottom: 1px dotted #d4c0a0;
+    }
+    .toc-page .toc-item .toc-title { flex: 1; }
+    .toc-page .toc-item .toc-page-num { color: #8b6030; flex-shrink: 0; }
+    .toc-page .toc-chapter { font-size: 14px; font-weight: 700; color: #1a0f05; padding: 9px 0 5px; margin-top: 4px; }
+
+    /* ══ 翻页按钮 ══ */
+    .nav-btn {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,0.11); border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s; backdrop-filter: blur(6px); flex-shrink: 0;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.22); color: #fff; transform: scale(1.08); }
+    .nav-btn:disabled { opacity: 0.18; cursor: default; pointer-events: none; }
+
+    /* ══ 底部导航栏（按钮 + 进度点） ══ */
+    .reader-footer {
+      height: 56px; display: flex; align-items: center; justify-content: center;
+      gap: 16px; flex-shrink: 0;
+    }
+    .page-dots {
+      display: flex; align-items: center; gap: 5px;
+    }
+    .page-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.18); cursor: pointer; transition: all .2s;
+    }
+    .page-dot.active { background: rgba(255,208,100,0.8); transform: scale(1.35); }
+
+    @media (max-width: 1100px) {
+      .page-side { width: 360px; height: 510px; }
+      .page { padding: 38px 34px 32px; }
+    }
+    @media (max-width: 860px) {
+      .toc-panel { display: none; }
+      .book-stage { padding: 28px 60px 8px; }
+      .page-side { width: 300px; height: 440px; }
+      .page { padding: 28px 24px 24px; }
+      .page-content h3 { font-size: 14px; }
+      .page-content p { font-size: 12px; }
+    }
+    @media (max-width: 640px) {
+      .page-side.left-side { display: none; }
+      .book-spine { display: none; }
+      .page-side { width: min(360px, calc(100vw - 80px)); height: 520px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶栏 -->
+  <div class="reader-topbar">
+    <a class="reader-back" href="ebooks.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      返回书库
+    </a>
+    <button class="toc-toggle-btn active" id="toc-toggle-btn" onclick="toggleToc()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="14" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+      目录
+    </button>
+    <span class="reader-title" id="reader-title">在线阅读</span>
+    <span class="reader-page-indicator" id="page-indicator"></span>
+  </div>
+
+
+  <!-- 主体 -->
+  <div class="reader-body">
+
+    <!-- 左侧目录面板 -->
+    <div class="toc-panel" id="toc-panel">
+      <div class="toc-panel-head">
+        <h4>目　录</h4>
+        <p id="toc-book-title"></p>
+      </div>
+      <div class="toc-panel-list" id="toc-panel-list"></div>
+    </div>
+
+    <!-- 书本区域 -->
+    <div class="book-area">
+      <!-- 书本舞台 -->
+      <div class="book-stage">
+        <!-- 书本 + 底部导航 竖向排列，整体居中 -->
+        <div class="book-column">
+          <div class="book-wrap" id="book-wrap">
+            <!-- 左页 -->
+            <div class="page-side left-side" id="left-side">
+              <div class="page page-left" id="static-left"></div>
+              <div class="flip-container flip-backward" id="flip-left">
+                <div class="flip-front"><div class="page page-left" id="flip-left-front"></div></div>
+                <div class="flip-back"><div class="page page-left" id="flip-left-back"></div></div>
+              </div>
+            </div>
+            <!-- 书脊 -->
+            <div class="book-spine"></div>
+            <!-- 右页 -->
+            <div class="page-side right-side" id="right-side">
+              <div class="page page-right" id="static-right"></div>
+              <div class="flip-container flip-forward" id="flip-right">
+                <div class="flip-front"><div class="page page-right" id="flip-right-front"></div></div>
+                <div class="flip-back"><div class="page page-right" id="flip-right-back"></div></div>
+              </div>
+            </div>
+          </div>
+          <!-- 底部导航，宽度自动与书本对齐 -->
+          <div class="reader-footer">
+            <button class="nav-btn" id="btn-prev" aria-label="上一页" onclick="flip(-1)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="page-dots" id="reader-footer"></div>
+            <button class="nav-btn" id="btn-next" aria-label="下一页" onclick="flip(1)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div><!-- /book-area -->
+
+  </div><!-- /reader-body -->
+
+<script>
+/* ══════════════ 书籍数据 ══════════════ */
+const BOOKS = {
+  textbook: [
+    { title: '小学数学思维拓展数字教材（上册）', author: '王建国 主编', year: '2024', icon: '🔢', colors: ['#1a6fc4','#0a3d82'], preview: '第一章 整数与运算\n\n在日常生活中，整数无处不在。从商店的价签到操场上的距离，从食堂的人数到图书馆的藏书量，整数构成了我们认识世界的数学基础。\n\n本章将带领同学们系统复习并拓展整数运算的技巧。我们不仅关注"算对"，更要理解"为什么这样算"，培养数学思维的严密性与创造性。\n\n一、加减法的进阶技巧\n\n在小学低年级，我们已经学习了加减法的基本运算。到了中高年级，数字变大了，但方法的本质没有改变——我们仍然在寻找数与数之间的规律。\n\n例1：计算 998 + 573\n\n【解题思路】998 接近 1000，可以把 998 看作 1000 - 2，则：998 + 573 = 1000 + 573 - 2 = 1571\n\n这种"凑整"的方法，是数学运算中非常实用的技巧。接下来的练习中，我们将反复练习这一方法，直到灵活运用。\n\n二、乘法的分配律\n\n乘法分配律是整数运算中最重要的性质之一：a×(b+c) = a×b + a×c。\n\n例2：计算 25 × 44\n25 × 44 = 25 × 4 × 11 = 100 × 11 = 1100\n\n看到 25，想到 4 个 25 等于 100；看到 125，想到 8 个 125 等于 1000。这些"整百整千"的组合，是快速心算的秘密武器。', chapters: [['第一章 整数与运算', '1', [['加减法进阶','1'],['乘除综合','28'],['混合运算','52']]],['第二章 分数与小数', '78', [['分数基础','78'],['小数运算','98'],['综合应用','118']]],['第三章 几何图形', '140', [['平面图形','140'],['立体图形','172'],['面积计算','195']]]] },
+    { title: '初中物理实验探究数字教材', author: '李思敏 主编', year: '2023', icon: '⚗️', colors: ['#0e7490','#155e75'], preview: '第一章 力学基础\n\n力是物体间的相互作用。我们看不见力，却能感受到它的存在——你推开一扇门，门对手也施加了反作用力；足球被踢出，球对脚同样产生了力。\n\n1.1 力的概念\n\n力的三要素：大小、方向、作用点。这三个要素缺一不可，改变任何一个，力的作用效果都会不同。\n\n实验一：探究摩擦力的影响因素\n\n【实验目的】探究接触面粗糙程度和压力大小对滑动摩擦力的影响。\n\n【实验器材】弹簧测力计一个、长木板一块、砝码若干、棉布一块、玻璃板一块。\n\n【实验步骤】\n第一步：将木块放在长木板上，用弹簧测力计水平匀速拉动，记录示数 F₁。\n第二步：在木板上铺棉布，重复步骤一，记录示数 F₂。\n第三步：在木板表面放玻璃板，重复步骤一，记录示数 F₃。\n\n思考：为什么要"匀速"拉动？因为只有匀速时，摩擦力才等于弹簧测力计的示数。', chapters: [['第一章 力学基础', '1', [['力的概念','1'],['牛顿定律','22'],['摩擦力','45']]],['第二章 热学', '68', [['温度与热量','68'],['热传导','88'],['热膨胀','104']]]] },
+    { title: '高中语文名著导读精华版', author: '张晓云 编著', year: '2024', icon: '📖', colors: ['#7c2d82','#4a1475'], preview: '走进鲁迅的文学世界\n\n鲁迅，原名周树人，是中国现代文学的奠基人。他的小说以深刻的现实主义笔触，解剖了封建礼教对人性的压迫与摧残。\n\n《呐喊》收录了《狂人日记》《孔乙己》《阿Q正传》等14篇小说。"呐喊"二字，既是对黑暗现实的控诉，也是对觉醒者的呼唤。\n\n《孔乙己》导读\n\n孔乙己是鲁迅笔下最令人心酸的人物之一。他穿着长衫站在柜台外喝酒，用手走进咸亨酒店，用指甲蘸着酒在柜台上写字……这些细节，构成了中国文学史上最深刻的悲剧图像之一。\n\n【主题分析】封建科举制度的毒害；知识分子的精神异化；人与人之间的冷漠。\n\n【写作背景】1919年，鲁迅发表《孔乙己》。彼时新文化运动如火如荼，知识界对封建旧制度的反思达到了高潮。鲁迅选择了一个失意的"读书人"作为主角，不是偶然——科举的幽灵，仍在那个时代游荡。', chapters: [['鲁迅小说精读', '1', [['《呐喊》导读','1'],['《彷徨》精析','38'],['考点梳理','72']]]] },
+  ],
+  research: [
+    { title: '四川基础教育课程改革实践研究', author: '省教研院 编', year: '2023', icon: '🔬', colors: ['#0369a1','#1e3a5f'], preview: '第一章 基础教育课程改革的时代背景\n\n进入新时代，党和国家对基础教育提出了更高要求。"双减"政策的落地、新课标的颁布实施，标志着我国基础教育正在经历一场深层次的结构性变革。\n\n1.1 国家政策框架解读\n\n2022年4月，教育部正式颁布《义务教育课程方案和课程标准（2022年版）》，这是自2001年以来规模最大的一次课程改革。新课标的核心理念可以概括为三个关键词：\n\n核心素养：从知识本位转向素养本位。大单元教学：打破碎片化知识传授。跨学科融合：培养综合应用能力。\n\n四川省在贯彻落实新课标的过程中，形成了"省级统筹-市级推进-校级实施"的三级联动工作机制。\n\n1.2 改革的核心挑战\n\n课程改革的最大阻力，往往不来自政策层面，而来自课堂层面——如何让一线教师真正理解并践行新的教学理念，是改革能否落地的关键。', chapters: [['课改背景与政策解读', '1', [['国家政策框架','1'],['四川实施方案','22']]]] },
+  ],
+  contest: [
+    { title: '2025年省级科幻类作品征集获奖作品集', author: '活动组委会 编', year: '2023', icon: '🚀', colors: ['#0369a1','#0c4a6e'], preview: '编者按\n\n当孩子们用画笔描绘心中的星际世界，当文字构建未来科技的图景，当数字技术让幻想中的宇宙跃然"屏"上——这些来自全省各地的孩子们，以自己的方式，表达了对科学与未来最真挚的热爱。\n\n本届活动共收到来自全省各地的参赛作品58,472件，最终评选出各奖项共260件。\n\n金奖作品·绘画类\n\n《星际漫游》\n作者：陈子墨（青岛实验小学 四年级）\n\n这幅水彩画描绘了人类首次登陆另一颗星球的瞬间，宇航员与外星植被交相辉映，色彩大胆而充满想象力，传递出对未知宇宙的好奇与向往。\n\n专家点评（中国美术学院教授 林默涵）：此作将幻想与现实融为一体，技法对于一个四年级学生而言已相当成熟，尤其是水彩的湿画法处理极为自然。', chapters: [['绘画类获奖作品', '1', [['金奖作品','1'],['银奖作品','28']]]] },
+  ],
+  annals: [
+    { title: '四川教育年鉴 2023', author: '四川省教育厅 编', year: '2024', icon: '📊', colors: ['#1e3a5f','#0a2240'], preview: '编者按\n\n2023年，是全面贯彻党的二十大精神的开局之年，也是四川教育加快推进高质量发展的关键之年。\n\n这一年，全省教育系统深入学习贯彻习近平总书记关于教育的重要论述，坚持以人民为中心发展教育，统筹推进各级各类教育协调发展，教育改革发展取得新成效。\n\n2023年四川教育主要数据：全省各级各类学校总数 26,847 所；在校学生总人数 1,218.6 万人；专任教师总人数 78.4 万人；学前教育毛入园率 92.6%；九年义务教育巩固率 96.8%。\n\n高等教育毛入学率 61.4%，较上年提升 2.1 个百分点，为历史最高水平。全省新增高校毕业生 65.2 万人，就业率保持稳定。', chapters: [['综合篇', '1', [['四川教育概况','1'],['重大政策事件','32']]]] },
+  ],
+  heritage: [
+    { title: '四川非物质文化遗产图典', author: '省文化厅 省教厅 联编', year: '2023', icon: '🎎', colors: ['#b91c1c','#991b1b'], preview: '川剧——活态的文化遗产\n\n川剧，是四川人的精神家园，也是中国戏曲大家庭中一支独具魅力的成员。\n\n变脸、吐火、滚灯……这些令外地观众叹为观止的绝技，只是川剧舞台上的一角。川剧真正的魅力，在于它那用方言演绎人间悲欢离合的独特方式，在于那生旦净末丑共同构建的热闹人生。\n\n川剧的历史\n\n川剧是由昆腔、高腔、胡琴、弹戏、灯调五种声腔艺术组成的综合体，形成于清代中叶。其中高腔（以帮腔为特色）是最具四川特色的声腔，与其他地方戏曲的高腔相比，四川高腔善用本地方言，旋律起伏更大，表达更加奔放。\n\n2006年，川剧被列入第一批国家级非物质文化遗产名录。目前，四川有川剧专业院团30余个，从业人员逾5000人。', chapters: [['传统表演艺术', '1', [['川剧','1'],['四川扬琴','45']]]] },
+  ],
+};
+
+/* ══════════════ 获取书籍 ══════════════ */
+const params = new URLSearchParams(location.search);
+const catKey = params.get('cat') || 'textbook';
+const idx = parseInt(params.get('idx') || '0', 10);
+const bookList = BOOKS[catKey] || BOOKS.textbook;
+const b = bookList[idx] || bookList[0];
+
+document.getElementById('reader-title').textContent = b.title;
+document.getElementById('toc-book-title').textContent = b.title;
+
+/* ══════════════ 构建页面数组 ══════════════ */
+const pages = [];
+pages.push({ type: 'cover' });
+
+const tocLines = [];
+b.chapters.forEach(ch => {
+  tocLines.push({ type: 'chapter', text: ch[0], page: ch[1] });
+  ch[2].forEach(sub => tocLines.push({ type: 'sub', text: sub[0], page: sub[1] }));
+});
+pages.push({ type: 'toc', lines: tocLines });
+
+const rawParas = b.preview.split('\n').filter(l => l.trim());
+const PARAS_PER_PAGE = 5;
+for (let i = 0; i < rawParas.length; i += PARAS_PER_PAGE) {
+  pages.push({ type: 'content', paras: rawParas.slice(i, i + PARAS_PER_PAGE) });
+}
+pages.push({ type: 'end' });
+
+const spreads = [];
+spreads.push({ left: null, right: pages[0] });
+for (let i = 1; i < pages.length; i += 2) {
+  spreads.push({ left: pages[i], right: pages[i+1] || null });
+}
+
+let currentSpread = 0;
+let isAnimating = false;
+let tocOpen = true;
+
+/* ══════════════ 目录面板 ══════════════ */
+function buildTocPanel() {
+  const list = document.getElementById('toc-panel-list');
+  list.innerHTML = '';
+
+  // 封面项
+  const coverItem = document.createElement('div');
+  coverItem.className = 'toc-panel-item' + (currentSpread === 0 ? ' active' : '');
+  coverItem.dataset.spread = 0;
+  coverItem.innerHTML = `<span class="tpi-title">封面</span><span class="tpi-page">—</span>`;
+  coverItem.addEventListener('click', () => goTo(0));
+  list.appendChild(coverItem);
+
+  // 目录项
+  const tocItem = document.createElement('div');
+  tocItem.className = 'toc-panel-item' + (currentSpread === 1 ? ' active' : '');
+  tocItem.dataset.spread = 1;
+  tocItem.innerHTML = `<span class="tpi-title">目录</span><span class="tpi-page">—</span>`;
+  tocItem.addEventListener('click', () => goTo(1));
+  list.appendChild(tocItem);
+
+  // 正文章节
+  let spreadIdx = 2;
+  b.chapters.forEach(ch => {
+    const chHead = document.createElement('div');
+    chHead.className = 'toc-panel-chapter';
+    chHead.textContent = ch[0];
+    list.appendChild(chHead);
+
+    ch[2].forEach(sub => {
+      const si = spreadIdx;
+      const item = document.createElement('div');
+      item.className = 'toc-panel-item' + (currentSpread === si ? ' active' : '');
+      item.dataset.spread = si;
+      item.innerHTML = `<span class="tpi-title">${sub[0]}</span><span class="tpi-page">${sub[1]}</span>`;
+      item.addEventListener('click', () => goTo(si));
+      list.appendChild(item);
+      spreadIdx++;
+    });
+  });
+}
+
+function updateTocActive() {
+  document.querySelectorAll('.toc-panel-item').forEach(el => {
+    el.classList.toggle('active', parseInt(el.dataset.spread) === currentSpread);
+  });
+}
+
+function toggleToc() {
+  tocOpen = !tocOpen;
+  document.getElementById('toc-panel').classList.toggle('collapsed', !tocOpen);
+  document.getElementById('toc-toggle-btn').classList.toggle('active', tocOpen);
+}
+
+/* ══════════════ 渲染页面 ══════════════ */
+function renderPage(el, pageData, pageNum) {
+  if (!el) return;
+  el.innerHTML = '';
+  el.className = el.className.replace(/\s*(cover-page|toc-page)/g, '').trim();
+
+  if (!pageData) {
+    el.innerHTML = `<div class="page-content"></div>
+      <div class="page-footer"><span class="book-title-small">${b.title}</span><span class="page-num"></span></div>`;
+    return;
+  }
+
+  if (pageData.type === 'cover') {
+    el.classList.add('cover-page');
+    el.style.setProperty('--book-c1', b.colors[0]);
+    el.style.setProperty('--book-c2', b.colors[1]);
+    el.innerHTML = `
+      <div class="cover-stripe"></div>
+      <div class="cover-icon">${b.icon}</div>
+      <div class="cover-line"></div>
+      <div class="cover-title">${b.title}</div>
+      <div class="cover-author">${b.author} · ${b.year}</div>
+      <div class="cover-pub">四川省教育电子音像出版社</div>`;
+    return;
+  }
+
+  if (pageData.type === 'toc') {
+    el.classList.add('toc-page');
+    let html = '<div class="page-content"><h3>目　　录</h3>';
+    pageData.lines.forEach(l => {
+      if (l.type === 'chapter') html += `<div class="toc-chapter">${l.text}</div>`;
+      else html += `<div class="toc-item"><span class="toc-title">${l.text}</span><span class="toc-page-num">${l.page}</span></div>`;
+    });
+    html += '</div>';
+    html += `<div class="page-footer"><span class="book-title-small">${b.title}</span><span class="page-num">${pageNum}</span></div>`;
+    el.innerHTML = html;
+    return;
+  }
+
+  if (pageData.type === 'content') {
+    let html = '<div class="page-content">';
+    pageData.paras.forEach((p, i) => {
+      if (p.includes('章') && i === 0 || p.includes('第') || p.includes('节') || p.includes('·') || p.includes('一、') || p.includes('二、') || p.includes('三、')) {
+        html += `<h3>${p}</h3>`;
+      } else {
+        html += `<p${i === 1 ? ' class="drop-cap"' : ''}>${p}</p>`;
+      }
+    });
+    html += '</div>';
+    html += `<div class="page-footer"><span class="book-title-small">${b.title}</span><span class="page-num">${pageNum}</span></div>`;
+    el.innerHTML = html;
+    return;
+  }
+
+  if (pageData.type === 'end') {
+    el.innerHTML = `<div class="page-content" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:14px;">
+      <div style="font-size:36px;">📖</div>
+      <div style="font-size:15px;font-weight:700;color:#2c1f0e;">— 全文终 —</div>
+      <div style="font-size:12px;color:#a08060;line-height:1.8;">四川省教育电子音像出版社<br/>版权所有，未经授权请勿转载</div>
+    </div>
+    <div class="page-footer"><span class="book-title-small">${b.title}</span><span class="page-num">${pageNum}</span></div>`;
+  }
+}
+
+/* ══════════════ 渲染展开 ══════════════ */
+function renderSpread(si) {
+  const spread = spreads[si];
+  const leftPageNum = si * 2 - 1;
+  const rightPageNum = si * 2;
+
+  renderPage(document.getElementById('static-left'), spread.left, leftPageNum > 0 ? leftPageNum : '');
+  renderPage(document.getElementById('static-right'), spread.right, rightPageNum > 0 ? rightPageNum : '');
+
+  document.getElementById('btn-prev').disabled = si === 0;
+  document.getElementById('btn-next').disabled = si === spreads.length - 1;
+  document.getElementById('page-indicator').textContent = `${si + 1} / ${spreads.length}`;
+
+  // 进度点
+  const footer = document.getElementById('reader-footer');
+  footer.innerHTML = '';
+  spreads.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'page-dot' + (i === si ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    footer.appendChild(dot);
+  });
+
+  updateTocActive();
+}
+
+/* ══════════════ 翻页动画 ══════════════ */
+function flip(direction) {
+  if (isAnimating) return;
+  const nextSpread = currentSpread + direction;
+  if (nextSpread < 0 || nextSpread >= spreads.length) return;
+
+  isAnimating = true;
+
+  const spread = spreads[currentSpread];
+  const nextSp = spreads[nextSpread];
+  const lp = currentSpread * 2 - 1, rp = currentSpread * 2;
+  const nl = nextSpread * 2 - 1, nr = nextSpread * 2;
+
+  if (direction === 1) {
+    const fl = document.getElementById('flip-right');
+    renderPage(document.getElementById('flip-right-front'), spread.right, rp > 0 ? rp : '');
+    renderPage(document.getElementById('flip-right-back'), nextSp.left, nl > 0 ? nl : '');
+    renderPage(document.getElementById('static-right'), nextSp.right, nr > 0 ? nr : '');
+    renderPage(document.getElementById('static-left'), spread.left, lp > 0 ? lp : '');
+    fl.style.display = '';
+    fl.className = 'flip-container flip-forward';
+    fl.offsetHeight;
+    fl.classList.add('is-flipping-forward');
+    setTimeout(() => {
+      fl.classList.remove('is-flipping-forward');
+      fl.style.display = 'none';
+      currentSpread = nextSpread;
+      renderSpread(currentSpread);
+      isAnimating = false;
+    }, 780);
+  } else {
+    const fl = document.getElementById('flip-left');
+    renderPage(document.getElementById('flip-left-front'), spread.left, lp > 0 ? lp : '');
+    renderPage(document.getElementById('flip-left-back'), nextSp.right, nr > 0 ? nr : '');
+    renderPage(document.getElementById('static-left'), nextSp.left, nl > 0 ? nl : '');
+    renderPage(document.getElementById('static-right'), spread.right, rp > 0 ? rp : '');
+    fl.style.display = '';
+    fl.className = 'flip-container flip-backward';
+    fl.offsetHeight;
+    fl.classList.add('is-flipping-backward');
+    setTimeout(() => {
+      fl.classList.remove('is-flipping-backward');
+      fl.style.display = 'none';
+      currentSpread = nextSpread;
+      renderSpread(currentSpread);
+      isAnimating = false;
+    }, 780);
+  }
+}
+
+function goTo(si) {
+  if (si === currentSpread || isAnimating) return;
+  currentSpread = si;
+  renderSpread(currentSpread);
+}
+
+/* ══════════════ 初始化 ══════════════ */
+document.getElementById('flip-left').style.display = 'none';
+document.getElementById('flip-right').style.display = 'none';
+buildTocPanel();
+renderSpread(0);
+
+/* ══════════════ 事件 ══════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') flip(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   flip(-1);
+});
+let touchX = 0;
+document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 60) flip(dx < 0 ? 1 : -1);
+});
+</script>
+</body>
+</html>

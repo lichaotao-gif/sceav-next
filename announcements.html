@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>通知公告 | 四川省教育电子音像出版社</title>
+  <meta name="description" content="四川省教育电子音像出版社通知公告，包含赛事活动、征稿启事、平台维护与出版服务公告。" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ══ Hero ══ */
+    .ann-hero {
+      position: relative;
+      overflow: hidden;
+      padding: 120px max(28px, calc((100vw - 1160px) / 2)) 72px;
+      color: #fff;
+    }
+    .ann-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse at 8% 30%,  rgba(139,92,246,.55)  0%, transparent 48%),
+        radial-gradient(ellipse at 90% 12%,  rgba(59,130,246,.45)   0%, transparent 42%),
+        radial-gradient(ellipse at 50% 95%,  rgba(99,102,241,.4)    0%, transparent 44%),
+        linear-gradient(135deg, #2d5fa8 0%, #3f48b0 30%, #5838b0 60%, #6a28a8 100%);
+    }
+    .ann-hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+      background-size: 52px 52px;
+    }
+
+    /* ── 装饰 ── */
+    .ann-decos { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+
+    .an-blob { position:absolute; border-radius:50%; filter:blur(110px); }
+    .an-blob-1 { width:560px; height:560px; background:rgba(139,92,246,.5); top:-160px; right:-100px; }
+    .an-blob-2 { width:400px; height:400px; background:rgba(59,130,246,.45); bottom:-100px; left:-80px; }
+    .an-blob-3 { width:300px; height:300px; background:rgba(196,181,253,.4); top:30%; right:20%; }
+
+    .an-hex {
+      position:absolute;
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+      border: none;
+      background: rgba(255,255,255,.12);
+    }
+    .an-hex-1 { width:120px; height:138px; top:10%; right:12%; animation:anhex 12s ease-in-out infinite; }
+    .an-hex-2 { width:72px; height:83px; top:50%; right:28%; animation:anhex 16s ease-in-out infinite reverse .5s; background:rgba(255,255,255,.09); }
+    .an-hex-3 { width:90px; height:104px; bottom:10%; right:8%; animation:anhex 20s ease-in-out infinite 1s; background:rgba(255,255,255,.1); }
+    @keyframes anhex { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-12px) rotate(10deg)} }
+
+    .an-ring {
+      position:absolute; border-radius:50%;
+      border:1.5px solid rgba(255,255,255,.2);
+    }
+    .an-ring-1 { width:400px; height:400px; top:-100px; right:-80px; animation:anspin 24s linear infinite; }
+    .an-ring-2 { width:260px; height:260px; top:-30px; right:40px; border-color:rgba(255,255,255,.14); animation:anspin 18s linear infinite reverse; }
+    .an-ring-3 { width:160px; height:160px; top:40px; right:130px; border-color:rgba(255,255,255,.1); animation:anspin 12s linear infinite; }
+    @keyframes anspin { to{transform:rotate(360deg)} }
+
+    .an-pulse-ring {
+      position:absolute; border-radius:50%;
+      border:1.5px solid rgba(255,255,255,.3);
+      top:50%; right:15%; transform:translate(50%,-50%);
+      animation:anpulse 3.5s ease-out infinite;
+    }
+    .an-pulse-ring:nth-child(2) { animation-delay:.9s; }
+    .an-pulse-ring:nth-child(3) { animation-delay:1.8s; }
+    @keyframes anpulse { 0%{width:20px;height:20px;opacity:.6} 100%{width:220px;height:220px;opacity:0} }
+
+    .an-dot { position:absolute; border-radius:50%; background:rgba(255,255,255,.55); }
+    .an-dot-1 { width:5px; height:5px; top:25%; right:18%; animation:andot 4s ease-in-out infinite; }
+    .an-dot-2 { width:4px; height:4px; top:45%; right:35%; animation:andot 5s ease-in-out infinite .7s; }
+    .an-dot-3 { width:6px; height:6px; top:65%; right:22%; background:rgba(196,181,253,.6); animation:andot 3.5s ease-in-out infinite 1.4s; }
+    .an-dot-4 { width:3px; height:3px; top:30%; right:42%; animation:andot 6s ease-in-out infinite 2s; }
+    @keyframes andot { 0%,100%{transform:scale(1);opacity:.6} 50%{transform:scale(3);opacity:.12} }
+    .ann-hero-inner {
+      position: relative; z-index: 1;
+      max-width: 700px;
+    }
+    .ann-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      font-weight: 700; color: rgba(255,255,255,.9);
+      margin-bottom: 18px;
+    }
+    .ann-eyebrow::before {
+      content: ''; display: block;
+      width: 20px; height: 2px;
+      background: rgba(255,255,255,.9); border-radius: 2px;
+    }
+    .ann-hero h1 {
+      font-size: clamp(36px, 4.5vw, 54px);
+      font-weight: 900; line-height: 1.15;
+      margin-bottom: 14px; color: #fff;
+    }
+    .ann-hero p.sub {
+      font-size: 18px; color: rgba(255,255,255,.78);
+      line-height: 1.8; max-width: 580px;
+      margin-bottom: 32px;
+    }
+
+    /* 搜索框 */
+    .ann-search {
+      display: flex; align-items: center;
+      width: min(560px, 100%);
+      background: rgba(255,255,255,.12);
+      border: 1.5px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+      transition: border-color .18s;
+    }
+    .ann-search:focus-within {
+      border-color: rgba(255,255,255,.45);
+    }
+    .ann-search svg {
+      flex-shrink: 0; margin-left: 18px;
+      color: rgba(255,255,255,.55);
+    }
+    .ann-search input {
+      flex: 1; border: 0; outline: 0;
+      background: transparent;
+      padding: 13px 14px;
+      font-size: 14px; color: #fff;
+    }
+    .ann-search input::placeholder { color: rgba(255,255,255,.45); }
+    .ann-search button {
+      flex-shrink: 0;
+      border: 0; outline: 0; cursor: pointer;
+      padding: 13px 24px;
+      background: #3730a3;
+      color: #fff;
+      font-size: 13px; font-weight: 700;
+      transition: opacity .15s;
+    }
+    .ann-search button:hover { opacity: .88; }
+
+    /* ══ 主体 ══ */
+    .ann-body {
+      background: #f0f2fb;
+      padding: 48px max(28px, calc((100vw - 1160px) / 2)) 88px;
+    }
+
+    /* 筛选栏 */
+    .ann-tabs {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 32px;
+    }
+    .ann-tab {
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 1.5px solid #cdd5f0;
+      background: #fff;
+      font-size: 13px; font-weight: 600; color: #3a4080;
+      cursor: pointer; transition: all .15s;
+    }
+    .ann-tab:hover { border-color: var(--secondary); color: var(--secondary); }
+    .ann-tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* 两栏布局 */
+    .ann-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* ── 置顶公告 ── */
+    .ann-pinned {
+      margin-bottom: 16px;
+      background: #fff;
+      border-radius: 14px;
+      border: 1.5px solid rgba(25,211,197,.35);
+      box-shadow: 0 4px 24px rgba(10,77,140,.08);
+      overflow: hidden;
+      display: flex;
+      text-decoration: none;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .ann-pinned:hover {
+      box-shadow: 0 10px 36px rgba(10,77,140,.14);
+      transform: translateY(-2px);
+    }
+    .ann-pinned-accent {
+      width: 5px; flex-shrink: 0;
+      background: linear-gradient(180deg, var(--accent), #0fb0a5);
+    }
+    .ann-pinned-body {
+      flex: 1; padding: 22px 24px;
+    }
+    .ann-pinned-top {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .pin-badge {
+      font-size: 10px; font-weight: 800; letter-spacing: .04em;
+      padding: 3px 9px; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), #0fb0a5);
+      color: #071a35;
+    }
+    .ann-pinned-top time {
+      font-size: 12px; color: #9aabbd; margin-left: auto;
+    }
+    .ann-pinned h2 {
+      font-size: 16px; font-weight: 800;
+      color: var(--dark); line-height: 1.5;
+      margin-bottom: 7px;
+    }
+    .ann-pinned p {
+      font-size: 13px; color: #7a8ca0; line-height: 1.7;
+    }
+
+    /* ── 普通列表 ── */
+    .ann-list { display: grid; gap: 10px; }
+
+    .ann-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 20px;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e4edf8;
+      text-decoration: none;
+      transition: box-shadow .18s, transform .18s, border-color .18s;
+    }
+    .ann-item:hover {
+      box-shadow: 0 6px 24px rgba(10,77,140,.1);
+      transform: translateY(-2px);
+      border-color: #c8daf5;
+    }
+
+    /* 左侧日期块 */
+    .ann-date {
+      flex-shrink: 0; width: 50px; text-align: center;
+      padding-top: 2px;
+    }
+    .ann-date-day {
+      font-size: 26px; font-weight: 900; line-height: 1;
+      color: var(--primary);
+    }
+    .ann-date-my {
+      font-size: 10px; color: #9aabbd; font-weight: 600;
+      margin-top: 3px; letter-spacing: .02em;
+    }
+
+    /* 分隔线 */
+    .ann-item-div {
+      width: 1px; flex-shrink: 0;
+      align-self: stretch;
+      background: #e8f0fa;
+    }
+
+    /* 右侧内容 */
+    .ann-item-body { flex: 1; min-width: 0; }
+    .ann-item-tags {
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 7px;
+    }
+    .ann-tag {
+      font-size: 10px; font-weight: 800;
+      padding: 2px 8px; border-radius: 999px;
+    }
+    .tag--notice   { background: #e8f3ff; color: #1468c8; }
+    .tag--platform { background: #eef3fb; color: #5566aa; }
+    .tag--contest  { background: #ede9fc; color: #5b21b6; }
+    .tag--submit   { background: #e8faf5; color: #0a7a60; }
+    .tag--publish  { background: #f3eeff; color: #7030c8; }
+    .tag--coop     { background: #e0e7ff; color: #3730a3; }
+    .tag--hot {
+      font-size: 10px; font-weight: 800;
+      padding: 2px 8px; border-radius: 999px;
+      background: #ffe4e4; color: #cc2200;
+    }
+
+    .ann-item-body h3 {
+      font-size: 15px; font-weight: 700;
+      color: #0e1f38; line-height: 1.5;
+      margin-bottom: 5px;
+      display: -webkit-box; -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .ann-item:hover .ann-item-body h3 { color: var(--secondary); }
+
+    .ann-item-body p {
+      font-size: 13px; color: #849ab5; line-height: 1.65;
+      display: -webkit-box; -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .ann-item-arrow {
+      flex-shrink: 0; color: #c5d5ea;
+      transition: color .15s, transform .15s;
+    }
+    .ann-item:hover .ann-item-arrow {
+      color: var(--secondary);
+      transform: translateX(3px);
+    }
+
+    /* 分页 */
+    .ann-pager {
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; margin-top: 28px;
+    }
+    .pager-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1.5px solid #cdd5f0;
+      background: #fff; font-size: 13px; font-weight: 600;
+      color: #557; cursor: pointer; transition: all .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pager-btn:hover, .pager-btn.active {
+      background: #3730a3; border-color: #3730a3;
+      color: #fff;
+    }
+    .pager-btn.prev-next { width: auto; padding: 0 14px; }
+
+    /* ══ 侧边栏 ══ */
+    .ann-side {
+      position: sticky; top: 90px;
+      display: grid; gap: 18px;
+    }
+
+    .side-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e4edf8;
+      overflow: hidden;
+    }
+    .side-card-head {
+      display: flex; align-items: center; gap: 8px;
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid #f0f5fc;
+    }
+    .side-card-head h3 {
+      font-size: 14px; font-weight: 800;
+      color: var(--dark);
+    }
+    .side-card-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .side-card-list { padding: 8px 0; }
+    .side-card-link {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 11px 20px;
+      text-decoration: none;
+      transition: background .15s;
+    }
+    .side-card-link:hover { background: #f5f9ff; }
+    .side-card-num {
+      flex-shrink: 0; width: 18px; height: 18px;
+      border-radius: 5px;
+      background: #e8f0fb;
+      color: var(--primary); font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .side-card-link:first-child .side-card-num { background: var(--primary); color: #fff; }
+    .side-card-link:nth-child(2) .side-card-num { background: #d4e4f8; color: var(--primary); }
+    .side-card-text {
+      font-size: 13px; font-weight: 600; color: #334;
+      line-height: 1.55;
+    }
+    .side-card-link:hover .side-card-text { color: var(--secondary); }
+
+    /* 分类统计卡 */
+    .side-cat-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: #f0f5fc;
+    }
+    .side-cat-item {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 16px 8px;
+      background: #fff;
+      text-decoration: none;
+      transition: background .15s;
+      gap: 4px;
+    }
+    .side-cat-item:hover { background: #f5f9ff; }
+    .side-cat-num {
+      font-size: 22px; font-weight: 900;
+      color: var(--primary);
+    }
+    .side-cat-label {
+      font-size: 11px; color: #8899aa; font-weight: 600;
+    }
+
+    /* ── 响应式 ── */
+    @media (max-width: 900px) {
+      .ann-layout { grid-template-columns: 1fr; }
+      .ann-side { position: static; }
+    }
+    @media (max-width: 600px) {
+      .ann-date-day { font-size: 20px; }
+      .ann-item { padding: 14px 16px; }
+      .ann-pinned-body { padding: 16px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ 导航 ══ -->
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="首页">
+      <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="四川省教育电子音像出版社标志" /></span>
+      <div class="brand-name">
+        <span class="brand-text">四川省教育电子音像出版社</span>
+        <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="announcements.html" class="nav-active">通知公告</a>
+      <a href="events.html">赛事活动</a>
+      <a href="courses.html">赛事服务</a>
+      <a href="textbooks.html">数字教材</a>
+      <a href="ebooks.html">电子书</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-login" type="button" data-login-open>登录 / 注册</button>
+    
+      <button class="nav-mobile-toggle" type="button" data-menu-toggle aria-label="展开菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <div class="mobile-menu" data-mobile-menu hidden>
+    <nav>
+        <a href="index.html" data-menu-close>首页</a>
+        <a href="announcements.html" data-menu-close>通知公告</a>
+        <a href="events.html" data-menu-close>赛事活动</a>
+        <a href="courses.html" data-menu-close>赛事服务</a>
+        <a href="textbooks.html" data-menu-close>数字教材</a>
+        <a href="ebooks.html" data-menu-close>电子书</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <button class="btn-login-mobile" type="button" data-login-open>登录 / 注册</button>
+    </div>
+  </div>
+
+  <!-- ══ Hero ══ -->
+  <section class="ann-hero">
+    <div class="ann-hero-bg"></div>
+    <div class="ann-decos" aria-hidden="true">
+      <div class="an-blob an-blob-1"></div>
+      <div class="an-blob an-blob-2"></div>
+      <div class="an-blob an-blob-3"></div>
+      <div class="an-ring an-ring-1"></div>
+      <div class="an-ring an-ring-2"></div>
+      <div class="an-ring an-ring-3"></div>
+      <div class="an-hex an-hex-1"></div>
+      <div class="an-hex an-hex-2"></div>
+      <div class="an-hex an-hex-3"></div>
+      <div class="an-pulse-ring"></div>
+      <div class="an-pulse-ring"></div>
+      <div class="an-pulse-ring"></div>
+      <div class="an-dot an-dot-1"></div>
+      <div class="an-dot an-dot-2"></div>
+      <div class="an-dot an-dot-3"></div>
+      <div class="an-dot an-dot-4"></div>
+    </div>
+    <div class="ann-hero-inner">
+      <p class="ann-eyebrow">Notice Center</p>
+      <h1>通知公告</h1>
+      <p class="sub">集中展示出版社动态、赛事通知、征稿启事、平台维护与出版服务公告。</p>
+      <form class="ann-search" onsubmit="return false">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" placeholder="搜索公告标题、关键词…" />
+        <button type="submit">检索</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ══ 主体 ══ -->
+  <div class="ann-body">
+
+    <!-- 筛选 Tab -->
+    <div class="ann-tabs" role="tablist">
+      <button class="ann-tab active" type="button">全部公告</button>
+      <button class="ann-tab" type="button">重要通知</button>
+      <button class="ann-tab" type="button">赛事活动</button>
+      <button class="ann-tab" type="button">出版服务</button>
+      <button class="ann-tab" type="button">征稿启事</button>
+      <button class="ann-tab" type="button">平台公告</button>
+    </div>
+
+    <div class="ann-layout">
+
+      <!-- 左侧列表 -->
+      <div>
+
+        <!-- 公告列表 -->
+        <div class="ann-list" id="ann-list">
+
+          <a class="ann-item" href="#" data-cat="platform">
+            <div class="ann-date">
+              <div class="ann-date-day">08</div>
+              <div class="ann-date-my">2026.05</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--platform">平台公告</span>
+              </div>
+              <h3>数字教材平台系统维护公告（2026年6月15日）</h3>
+              <p>维护期间部分数字教材、电子书与视频课程资源访问可能短暂受影响，请提前做好安排。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a class="ann-item" href="#" data-cat="contest">
+            <div class="ann-date">
+              <div class="ann-date-day">22</div>
+              <div class="ann-date-my">2026.04</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--contest">赛事活动</span>
+                <span class="ann-tag tag--hot">🔥 热点</span>
+              </div>
+              <h3>2025年科幻绘画作品征集活动获奖名单公示</h3>
+              <p>现对获奖作品、优秀指导教师及组织单位进行集中公示，公示期为7个工作日。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a class="ann-item" href="#" data-cat="submit">
+            <div class="ann-date">
+              <div class="ann-date-day">15</div>
+              <div class="ann-date-my">2026.04</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--submit">征稿启事</span>
+              </div>
+              <h3>《智能教育》2026年征稿启事</h3>
+              <p>围绕AI教育、数字教材、智慧课堂、教育数字化治理等方向长期征集学术稿件与实践案例。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a class="ann-item" href="#" data-cat="publish">
+            <div class="ann-date">
+              <div class="ann-date-day">28</div>
+              <div class="ann-date-my">2026.03</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--publish">出版服务</span>
+              </div>
+              <h3>出版物经营许可证年检结果通告</h3>
+              <p>出版社年度资质、出版服务与经营许可相关事项已通过年检，请相关合作单位知悉。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a class="ann-item" href="#" data-cat="coop">
+            <div class="ann-date">
+              <div class="ann-date-day">18</div>
+              <div class="ann-date-my">2026.03</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--coop">合作征集</span>
+              </div>
+              <h3>课程资源合作征集公告</h3>
+              <p>面向学校、教研机构与科技企业征集优质课程资源共建项目，欢迎提交合作意向书。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a class="ann-item" href="#" data-cat="notice">
+            <div class="ann-date">
+              <div class="ann-date-day">05</div>
+              <div class="ann-date-my">2026.03</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--notice">重要通知</span>
+              </div>
+              <h3>关于2026年上半年电子出版物评审工作安排的通知</h3>
+              <p>根据省教育厅相关部署，2026年上半年电子出版物评审工作定于4月至5月进行，请各申报单位做好材料准备。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+          <a class="ann-item" href="#" data-cat="platform">
+            <div class="ann-date">
+              <div class="ann-date-day">20</div>
+              <div class="ann-date-my">2026.02</div>
+            </div>
+            <div class="ann-item-div"></div>
+            <div class="ann-item-body">
+              <div class="ann-item-tags">
+                <span class="ann-tag tag--platform">平台公告</span>
+              </div>
+              <h3>电子书平台新功能上线公告：支持笔记导出与批注共享</h3>
+              <p>本次更新新增用户笔记导出（PDF/Word）及班级批注共享功能，欢迎体验反馈。</p>
+            </div>
+            <svg class="ann-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+
+        </div>
+
+        <!-- 分页 -->
+        <nav class="ann-pager" aria-label="分页">
+          <button class="pager-btn prev-next" type="button">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="pager-btn active" type="button">1</button>
+          <button class="pager-btn" type="button">2</button>
+          <button class="pager-btn" type="button">3</button>
+          <span style="color:#bcc;font-size:13px;padding:0 4px">…</span>
+          <button class="pager-btn" type="button">8</button>
+          <button class="pager-btn prev-next" type="button">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </nav>
+
+      </div><!-- /左栏 -->
+</div><!-- /ann-layout -->
+  </div><!-- /ann-body -->
+
+  <!-- ══ 页脚 ══ -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="" />
+          <span>四川省教育电子音像出版社</span>
+        </div>
+        <p class="footer-slogan">数字出版 · 教育服务 · 融合创新</p>
+        <p class="footer-en">Sichuan Audio-Visual Press Co., Ltd.</p>
+        <div class="footer-badges"><span>互联网出版许可</span><span>电子出版许可</span><span>网络出版服务</span></div>
+      </div>
+      <div class="footer-nav-group">
+        <div class="footer-nav"><h4>关于我们</h4><a href="index.html#about">发展历程</a><a href="index.html#about">机构介绍</a><a href="index.html#about">荣誉资质</a><a href="index.html#about">联系我们</a></div>
+        <div class="footer-nav"><h4>业务服务</h4><a href="textbooks.html">数字教材</a><a href="ebooks.html">电子书</a><a href="courses.html">赛事服务</a><a href="index.html#fusion">融合出版</a></div>
+        <div class="footer-nav"><h4>赛事活动</h4><a href="events.html">科幻征文大赛</a><a href="events.html">科幻征文</a><a href="events.html">AI绘本大赛</a><a href="events.html">活动公告</a></div>
+        <div class="footer-nav"><h4>新闻中心</h4><a href="index.html#news">出版社动态</a><a href="announcements.html">通知公告</a><a href="index.html#news">行业资讯</a><a href="index.html#news">媒体报道</a></div>
+      </div>
+      <div class="footer-contact">
+        <h4>联系我们</h4>
+        <p>四川省成都市锦江区学道街42号</p>
+        <p>028-86669129 / 86728072 / 86678676</p>
+        <p>sceav@sceav.online</p>
+        <p class="footer-icp">蜀ICP备19016579号<br />川公网安备 51010402000773号</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 四川省教育电子音像出版社 版权所有</p>
+      <p>主管单位：四川省教育厅 &nbsp;|&nbsp; 主办单位：四川省教育信息化与大数据中心</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Tab 筛选
+    document.querySelectorAll('.ann-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.ann-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+    // 分页点击
+    document.querySelectorAll('.pager-btn:not(.prev-next)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pager-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

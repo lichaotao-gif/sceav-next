@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>赛事服务 | 四川省教育电子音像出版社</title>
+  <meta name="description" content="四川省教育电子音像出版社赛事服务，提供各类赛事参赛素材、集训平台、教程资料购买。" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ═══ 赛事服务页 Banner ═══ */
+    .courses-hero {
+      position: relative; overflow: hidden;
+      padding: 120px max(28px, calc((100vw - 1160px) / 2)) 72px;
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .courses-hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        
+        radial-gradient(ellipse at 8% 30%,  rgba(59,130,246,.55)   0%, transparent 48%),
+        radial-gradient(ellipse at 90% 12%, rgba(14,165,233,.45)   0%, transparent 42%),
+        radial-gradient(ellipse at 50% 95%, rgba(6,182,212,.4)     0%, transparent 44%),
+        linear-gradient(135deg, #1e3a8a 0%, #1250a0 30%, #0a6898 60%, #0e7490 100%);
+    }
+    .courses-hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .courses-decos { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .c-blob { position:absolute; border-radius:50%; filter:blur(90px); }
+    .c-blob-1 { width:500px; height:500px; background:rgba(59,130,246,.45); top:-140px; right:-100px; }
+    .c-blob-2 { width:360px; height:360px; background:rgba(6,182,212,.38); bottom:-80px; right:18%; }
+    .c-ring { position:absolute; border-radius:50%; border:1.5px solid rgba(255,255,255,.2); }
+    .c-ring-1 { width:380px; height:380px; top:-100px; right:-80px; animation:cring 20s linear infinite; }
+    .c-ring-2 { width:240px; height:240px; top:-20px; right:40px; border-color:rgba(255,255,255,.16); animation:cring 14s linear infinite reverse; }
+    .c-ring-3 { width:140px; height:140px; top:60px; right:140px; border-color:rgba(255,255,255,.12); animation:cring 9s linear infinite; }
+    @keyframes cring { to { transform:rotate(360deg); } }
+    .c-play { position:absolute; width:0; height:0; border-style:solid; }
+    .c-play-1 { border-width:28px 0 28px 48px; border-color:transparent transparent transparent rgba(255,255,255,.2); top:20%; right:16%; animation:cfloat 8s ease-in-out infinite; }
+    .c-play-2 { border-width:18px 0 18px 30px; border-color:transparent transparent transparent rgba(255,255,255,.16); top:62%; right:36%; animation:cfloat 11s ease-in-out infinite reverse; }
+    .c-play-3 { border-width:38px 0 38px 64px; border-color:transparent transparent transparent rgba(255,255,255,.13); top:76%; right:6%; animation:cfloat 14s ease-in-out infinite .5s; }
+    .c-node { position:absolute; border-radius:50%; background:rgba(110,231,183,.6); }
+    .c-node-1 { width:8px; height:8px; top:36%; right:20%; animation:cnode 3s ease-in-out infinite; }
+    .c-node-2 { width:5px; height:5px; top:54%; right:42%; animation:cnode 4.2s ease-in-out infinite .7s; }
+    .c-node-3 { width:7px; height:7px; top:26%; right:46%; animation:cnode 5s ease-in-out infinite 1.4s; }
+    .c-node-4 { width:4px; height:4px; top:70%; right:28%; animation:cnode 3.5s ease-in-out infinite 2s; }
+    @keyframes cfloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+    @keyframes cnode  { 0%,100%{transform:scale(1);opacity:.5} 50%{transform:scale(2.8);opacity:.12} }
+    .courses-hero-inner { position: relative; z-index: 1; max-width: 760px; }
+    .courses-hero .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0; border: none; background: none; border-radius: 0;
+      font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      font-weight: 700; color: rgba(255,255,255,.9); margin-bottom: 18px;
+    }
+    .courses-hero .eyebrow::before {
+      content: ''; display: block; width: 20px; height: 2px;
+      background: rgba(255,255,255,.9); border-radius: 2px; flex-shrink: 0;
+    }
+    .courses-hero h1 {
+      font-size: clamp(36px,4.5vw,54px); font-weight: 900; line-height: 1.15;
+      margin-bottom: 14px; color: #fff; text-shadow: none;
+    }
+    .courses-hero p.sub {
+      font-size: 18px; color: rgba(255,255,255,.78);
+      line-height: 1.8; max-width: 580px; margin-bottom: 28px;
+    }
+    .hero-stats { display: flex; gap: 36px; flex-wrap: wrap; margin-top: 0; }
+    .hero-stat { text-align: left; }
+    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: #7dd3fc; line-height: 1; }
+    .hero-stat span { font-size: 12px; color: rgba(255,255,255,.6); }
+
+    /* ═══ 主体 ═══ */
+    .services-body {
+      background: #f0f4fc;
+      padding: 48px max(28px, calc((100vw - 1240px) / 2)) 88px;
+      min-height: 60vh;
+    }
+
+    /* 搜索 + 筛选 */
+    .services-toolbar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+      margin-bottom: 32px;
+    }
+    .services-search {
+      display: flex; align-items: center; gap: 8px;
+      background: #fff; border: 1.5px solid #b8c8e8;
+      border-radius: 999px; padding: 10px 18px;
+      flex: 0 0 320px; transition: border-color .18s;
+    }
+    .services-search:focus-within { border-color: #3b82f6; }
+    .services-search svg { flex-shrink: 0; color: #6080b8; }
+    .services-search input {
+      border: none; outline: none; background: transparent;
+      font-size: 14px; color: #333; width: 100%;
+    }
+    .services-search input::placeholder { color: #6080b8; }
+    .services-count { margin-left: auto; font-size: 13px; color: #999; }
+
+    /* 赛事筛选 select */
+    .comp-select-wrap {
+      position: relative; flex-shrink: 0;
+    }
+    .comp-select-wrap svg {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; color: #6080b8;
+    }
+    .comp-select {
+      appearance: none; -webkit-appearance: none;
+      padding: 0 34px 0 14px; height: 40px;
+      border: 1.5px solid #b8c8e8; border-radius: 10px;
+      background: #fff; font-size: 13px; font-weight: 600; color: #2563a8;
+      cursor: pointer; outline: none; transition: border-color .15s;
+      min-width: 160px;
+    }
+    .comp-select:focus { border-color: #3b82f6; }
+
+    /* 商品网格 */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    /* 商品卡片 */
+    .product-card {
+      background: #fff; border-radius: 16px; border: 1px solid #d0dcf4;
+      border: 1px solid #f0e4d0;
+      box-shadow: 0 2px 16px rgba(180,80,0,.06);
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(180,80,0,.14);
+    }
+    .product-cover {
+      width: 100%; aspect-ratio: 4/3;
+      overflow: hidden; flex-shrink: 0;
+      background: #eef3fc;
+    }
+    .product-cover svg { width: 100%; height: 100%; display: block; }
+    .product-info { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
+    .comp-tag {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 700;
+      margin-bottom: 8px; width: fit-content;
+    }
+    .comp-tag-0 { background: #dbeafe; color: #1e40af; }  /* 科幻征集 */
+    .comp-tag-1 { background: #d1fae5; color: #065f46; }  /* AI绘本 */
+    .comp-tag-2 { background: #e0e7ff; color: #3730a3; }  /* 科幻绘画 */
+    .comp-tag-3 { background: #cffafe; color: #0e7490; }  /* 科幻征文 */
+    .product-title {
+      font-size: 14px; font-weight: 700; color: #1e1208;
+      line-height: 1.5; margin-bottom: auto;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .product-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 14px; padding-top: 12px;
+      border-top: 1px solid #f5ece0;
+    }
+    .product-price { display: flex; align-items: baseline; gap: 3px; }
+    .product-price .p-main {
+      font-size: 20px; font-weight: 900; color: #dc2626;
+      line-height: 1;
+    }
+    .product-price .p-main::before { content: '¥'; font-size: 13px; }
+    .product-price .p-orig { font-size: 12px; color: #ccc; text-decoration: line-through; }
+    .btn-buy-card {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #2563eb;
+      color: #fff; font-weight: 700; font-size: 12px;
+      padding: 7px 16px; border-radius: 999px;
+      border: none; cursor: pointer;
+      text-decoration: none; white-space: nowrap;
+      transition: box-shadow .18s, transform .18s;
+    }
+    .btn-buy-card:hover { background: #1d4ed8; box-shadow: 0 4px 16px rgba(37,99,235,.35); transform: translateY(-1px); }
+
+    /* 空结果 */
+    .no-results {
+      grid-column: 1/-1; text-align: center;
+      padding: 80px 20px; color: #6080b8;
+    }
+    .no-results svg { margin-bottom: 16px; opacity: .4; }
+    .no-results p { font-size: 16px; }
+
+    @media (max-width: 1100px) { .products-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 760px)  { .products-grid { grid-template-columns: repeat(2,1fr); } .services-search { flex: 1 1 100%; } }
+    @media (max-width: 480px)  { .products-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="site-header" data-header>
+    <a class="brand" href="index.html" aria-label="首页">
+      <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="标志" /></span>
+      <div class="brand-name">
+        <span class="brand-text">四川省教育电子音像出版社</span>
+        <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+      </div>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="index.html">首页</a>
+      <a href="announcements.html">通知公告</a>
+      <a href="events.html">赛事活动</a>
+      <a href="courses.html" class="nav-active">赛事服务</a>
+      <a href="textbooks.html">数字教材</a>
+      <a href="ebooks.html">电子书</a>
+    </nav>
+    <div class="header-actions">
+      <button class="btn-login" type="button" data-login-open>登录 / 注册</button>
+      <button class="nav-mobile-toggle" type="button" data-menu-toggle aria-label="展开菜单"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" data-mobile-menu hidden>
+    <nav>
+      <a href="index.html" data-menu-close>首页</a>
+      <a href="announcements.html" data-menu-close>通知公告</a>
+      <a href="events.html" data-menu-close>赛事活动</a>
+      <a href="courses.html" data-menu-close>赛事服务</a>
+      <a href="textbooks.html" data-menu-close>数字教材</a>
+      <a href="ebooks.html" data-menu-close>电子书</a>
+    </nav>
+    <div class="mobile-menu-footer">
+      <button class="btn-login-mobile" type="button" data-login-open>登录 / 注册</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- ═══ HERO ═══ -->
+    <section class="courses-hero">
+      <div class="courses-hero-bg"></div>
+      <div class="courses-decos" aria-hidden="true">
+        <div class="c-blob c-blob-1"></div>
+        <div class="c-blob c-blob-2"></div>
+        <div class="c-ring c-ring-1"></div>
+        <div class="c-ring c-ring-2"></div>
+        <div class="c-ring c-ring-3"></div>
+        <div class="c-play c-play-1"></div>
+        <div class="c-play c-play-2"></div>
+        <div class="c-play c-play-3"></div>
+        <div class="c-node c-node-1"></div>
+        <div class="c-node c-node-2"></div>
+        <div class="c-node c-node-3"></div>
+        <div class="c-node c-node-4"></div>
+      </div>
+      <div class="courses-hero-inner">
+        <p class="eyebrow">Competition Services</p>
+        <h1>赛事服务</h1>
+        <p class="sub">为每一项赛事提供专业素材支持，涵盖集训平台、教程指导、绘画工具与写作资料，助力参赛者发挥最佳水平。</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><strong>4</strong><span>支持赛事</span></div>
+          <div class="hero-stat"><strong>20+</strong><span>精选素材</span></div>
+          <div class="hero-stat"><strong>5000+</strong><span>用户购买</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 主体 ═══ -->
+    <section class="services-body">
+
+      <!-- 搜索 + 筛选同行 -->
+      <div class="services-toolbar" style="margin-bottom:36px;">
+        <div class="comp-select-wrap">
+          <select class="comp-select" id="comp-select">
+            <option value="all">全部赛事</option>
+            <option value="省级科幻类作品征集活动">省级科幻类作品征集活动</option>
+            <option value="AI绘本大赛">AI绘本大赛</option>
+            <option value="科幻绘画大赛">科幻绘画大赛</option>
+            <option value="科幻征文大赛">科幻征文大赛</option>
+          </select>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="services-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-input" placeholder="搜索素材名称…" autocomplete="off" />
+        </div>
+        <span class="services-count" id="result-count"></span>
+      </div>
+
+      <!-- 商品网格 -->
+      <div class="products-grid" id="products-grid"></div>
+
+    </section>
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer" id="contact">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="" />
+          <span>四川省教育电子音像出版社</span>
+        </div>
+        <p class="footer-slogan">数字出版 · 教育服务 · 融合创新</p>
+        <p class="footer-en">Sichuan Audio-Visual Press Co., Ltd.</p>
+        <div class="footer-badges"><span>互联网出版许可</span><span>电子出版许可</span><span>网络出版服务</span></div>
+      </div>
+      <div class="footer-nav-group">
+        <div class="footer-nav">
+          <h4>关于我们</h4>
+          <a href="index.html#about">发展历程</a><a href="index.html#about">机构介绍</a><a href="index.html#about">荣誉资质</a><a href="index.html#about">联系我们</a>
+        </div>
+        <div class="footer-nav">
+          <h4>业务服务</h4>
+          <a href="textbooks.html">数字教材</a><a href="ebooks.html">电子书</a><a href="courses.html">赛事服务</a><a href="index.html#fusion">融合出版</a>
+        </div>
+        <div class="footer-nav">
+          <h4>赛事活动</h4>
+          <a href="events.html">科幻征文大赛</a><a href="events.html">AI绘本大赛</a><a href="events.html">科幻绘画大赛</a><a href="events.html">活动公告</a>
+        </div>
+        <div class="footer-nav">
+          <h4>新闻中心</h4>
+          <a href="index.html#news">出版社动态</a><a href="announcements.html">通知公告</a><a href="index.html#news">行业资讯</a><a href="index.html#news">媒体报道</a>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <h4>联系我们</h4>
+        <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> 四川省成都市锦江区学道街42号</p>
+        <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 028-86669129</p>
+        <p><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> sceav@sceav.online</p>
+        <p class="footer-icp">蜀ICP备19016579号<br/>川公网安备 51010402000773号</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 四川省教育电子音像出版社 版权所有</p>
+      <p>主管单位：四川省教育厅 &nbsp;|&nbsp; 主办单位：四川省教育信息化与大数据中心</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  /* ══════════════════════════════════════════
+     商品数据
+  ══════════════════════════════════════════ */
+  const PRODUCTS = [
+    {
+      id: 1,
+      title: '集训与实训平台',
+      comp: '省级科幻类作品征集活动',
+      compIdx: 0,
+      price: 598,
+      orig: null,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="c1sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fef9c3"/>
+            <stop offset="60%" stop-color="#bfdbfe"/>
+            <stop offset="100%" stop-color="#93c5fd"/>
+          </linearGradient>
+          <linearGradient id="c1floor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#e2e8f0"/>
+            <stop offset="100%" stop-color="#cbd5e1"/>
+          </linearGradient>
+          <linearGradient id="c1board" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1e40af"/>
+            <stop offset="100%" stop-color="#1d4ed8"/>
+          </linearGradient>
+          <linearGradient id="c1win" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#bae6fd"/>
+            <stop offset="100%" stop-color="#7dd3fc"/>
+          </linearGradient>
+          <filter id="c1shadow">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="rgba(0,0,0,.15)"/>
+          </filter>
+        </defs>
+
+        <!-- 天空背景 -->
+        <rect width="320" height="240" fill="url(#c1sky)"/>
+
+        <!-- 太阳 -->
+        <circle cx="272" cy="36" r="22" fill="#fde047" opacity=".9"/>
+        <circle cx="272" cy="36" r="28" fill="#fef08a" opacity=".35"/>
+
+        <!-- 云朵 -->
+        <ellipse cx="60" cy="30" rx="28" ry="12" fill="white" opacity=".85"/>
+        <ellipse cx="46" cy="32" rx="18" ry="10" fill="white" opacity=".85"/>
+        <ellipse cx="76" cy="33" rx="18" ry="9" fill="white" opacity=".85"/>
+        <ellipse cx="200" cy="22" rx="22" ry="9" fill="white" opacity=".7"/>
+        <ellipse cx="188" cy="24" rx="14" ry="8" fill="white" opacity=".7"/>
+        <ellipse cx="216" cy="24" rx="14" ry="7" fill="white" opacity=".7"/>
+
+        <!-- 地面 -->
+        <rect x="0" y="175" width="320" height="65" fill="#86efac"/>
+        <rect x="0" y="185" width="320" height="55" fill="#4ade80"/>
+        <rect x="0" y="195" width="320" height="45" fill="#22c55e"/>
+
+        <!-- 教室建筑主体 -->
+        <rect x="30" y="85" width="260" height="115" rx="4" fill="#f8fafc" filter="url(#c1shadow)"/>
+        <!-- 屋顶 -->
+        <polygon points="22,88 160,42 298,88" fill="#e2e8f0"/>
+        <polygon points="22,88 160,42 298,88" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+        <!-- 屋顶装饰三角 -->
+        <polygon points="130,68 160,50 190,68" fill="#bfdbfe" stroke="#93c5fd" stroke-width="1"/>
+
+        <!-- 大门 -->
+        <rect x="132" y="148" width="56" height="52" rx="3" fill="#1e40af"/>
+        <rect x="136" y="152" width="22" height="44" rx="2" fill="#1d4ed8"/>
+        <rect x="162" y="152" width="22" height="44" rx="2" fill="#1d4ed8"/>
+        <circle cx="157" cy="176" r="3" fill="#fbbf24"/>
+        <circle cx="163" cy="176" r="3" fill="#fbbf24"/>
+
+        <!-- 窗户左 -->
+        <rect x="48" y="108" width="52" height="42" rx="3" fill="url(#c1win)" stroke="#93c5fd" stroke-width="1.5"/>
+        <line x1="74" y1="108" x2="74" y2="150" stroke="#93c5fd" stroke-width="1"/>
+        <line x1="48" y1="129" x2="100" y2="129" stroke="#93c5fd" stroke-width="1"/>
+        <!-- 窗帘 -->
+        <rect x="48" y="108" width="12" height="42" rx="2" fill="#fde68a" opacity=".7"/>
+
+        <!-- 窗户右 -->
+        <rect x="220" y="108" width="52" height="42" rx="3" fill="url(#c1win)" stroke="#93c5fd" stroke-width="1.5"/>
+        <line x1="246" y1="108" x2="246" y2="150" stroke="#93c5fd" stroke-width="1"/>
+        <line x1="220" y1="129" x2="272" y2="129" stroke="#93c5fd" stroke-width="1"/>
+        <rect x="260" y="108" width="12" height="42" rx="2" fill="#fde68a" opacity=".7"/>
+
+        <!-- 黑板（门上方装饰） -->
+        <rect x="112" y="95" width="96" height="44" rx="3" fill="url(#c1board)"/>
+        <rect x="116" y="99" width="88" height="36" rx="2" fill="#1e3a8a"/>
+        <!-- 黑板上的内容 -->
+        <line x1="124" y1="109" x2="152" y2="109" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
+        <line x1="124" y1="117" x2="146" y2="117" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/>
+        <line x1="124" y1="124" x2="156" y2="124" stroke="rgba(255,255,255,.4)" stroke-width="1.2"/>
+        <text x="170" y="122" font-size="14" fill="#fbbf24" font-family="Arial,sans-serif" font-weight="900">A+</text>
+
+        <!-- 台阶 -->
+        <rect x="118" y="195" width="84" height="8" rx="2" fill="#cbd5e1"/>
+        <rect x="124" y="200" width="72" height="6" rx="2" fill="#e2e8f0"/>
+
+        <!-- 人物1：老师（左侧，站姿） -->
+        <!-- 头 -->
+        <circle cx="88" cy="163" r="11" fill="#fcd9a0"/>
+        <!-- 头发 -->
+        <ellipse cx="88" cy="155" rx="11" ry="6" fill="#92400e"/>
+        <!-- 身体 -->
+        <rect x="80" y="174" width="16" height="22" rx="4" fill="#3b82f6"/>
+        <!-- 腿 -->
+        <rect x="81" y="194" width="6" height="14" rx="2" fill="#1e3a8a"/>
+        <rect x="89" y="194" width="6" height="14" rx="2" fill="#1e3a8a"/>
+        <!-- 鞋 -->
+        <ellipse cx="84" cy="208" rx="5" ry="3" fill="#1e293b"/>
+        <ellipse cx="92" cy="208" rx="5" ry="3" fill="#1e293b"/>
+        <!-- 手臂/书 -->
+        <rect x="66" y="178" width="14" height="10" rx="2" fill="#fef3c7" stroke="#fbbf24" stroke-width="1"/>
+        <line x1="69" y1="181" x2="77" y2="181" stroke="#f59e0b" stroke-width="1"/>
+        <line x1="69" y1="184" x2="77" y2="184" stroke="#f59e0b" stroke-width="1"/>
+
+        <!-- 人物2：学生（右侧，站姿，背书包） -->
+        <circle cx="232" cy="165" r="10" fill="#fcd9a0"/>
+        <ellipse cx="232" cy="157" rx="10" ry="5.5" fill="#1e293b"/>
+        <!-- 身体 -->
+        <rect x="225" y="175" width="14" height="20" rx="4" fill="#f43f5e"/>
+        <!-- 书包 -->
+        <rect x="238" y="176" width="10" height="14" rx="3" fill="#8b5cf6"/>
+        <rect x="239" y="178" width="8" height="5" rx="1" fill="#7c3aed"/>
+        <!-- 腿 -->
+        <rect x="226" y="193" width="5" height="13" rx="2" fill="#1e3a8a"/>
+        <rect x="233" y="193" width="5" height="13" rx="2" fill="#1e3a8a"/>
+        <ellipse cx="228" cy="206" rx="4" ry="2.5" fill="#1e293b"/>
+        <ellipse cx="235" cy="206" rx="4" ry="2.5" fill="#1e293b"/>
+
+        <!-- 人物3：学生（左侧小，坐姿） -->
+        <circle cx="50" cy="193" r="8" fill="#fcd9a0"/>
+        <ellipse cx="50" cy="186" rx="8" ry="4.5" fill="#d97706"/>
+        <rect x="44" y="201" width="12" height="14" rx="3" fill="#10b981"/>
+        <rect x="38" y="208" width="8" height="4" rx="1" fill="#6b7280"/><!-- 小凳子腿 -->
+
+        <!-- 装饰花草 -->
+        <circle cx="16" cy="196" r="7" fill="#4ade80"/>
+        <circle cx="10" cy="192" r="5" fill="#86efac"/>
+        <circle cx="22" cy="192" r="5" fill="#86efac"/>
+        <rect x="15" y="196" width="3" height="12" fill="#15803d"/>
+
+        <circle cx="304" cy="196" r="7" fill="#4ade80"/>
+        <circle cx="298" cy="192" r="5" fill="#86efac"/>
+        <circle cx="310" cy="192" r="5" fill="#86efac"/>
+        <rect x="303" y="196" width="3" height="12" fill="#15803d"/>
+
+        <!-- 底部草地纹理小点 -->
+        <circle cx="70" cy="220" r="2" fill="#16a34a" opacity=".5"/>
+        <circle cx="140" cy="228" r="2" fill="#16a34a" opacity=".4"/>
+        <circle cx="210" cy="222" r="2" fill="#16a34a" opacity=".5"/>
+        <circle cx="260" cy="230" r="1.5" fill="#16a34a" opacity=".4"/>
+      </svg>`
+    },
+    {
+      id: 2,
+      title: '科幻创作与AI绘本制作指南（全彩精装版）',
+      comp: 'AI绘本大赛',
+      compIdx: 1,
+      price: 68,
+      orig: 98,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="c2bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0c1445"/><stop offset="100%" stop-color="#1a2a7a"/></linearGradient>
+          <linearGradient id="c2acc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#f43f5e"/><stop offset="100%" stop-color="#fb7185"/></linearGradient>
+        </defs>
+        <rect width="320" height="240" fill="url(#c2bg)"/>
+        <circle cx="240" cy="50" r="70" fill="rgba(244,63,94,.08)"/>
+        <circle cx="240" cy="50" r="40" fill="rgba(244,63,94,.12)"/>
+        <!-- 书本 -->
+        <rect x="60" y="50" width="110" height="145" rx="6" fill="#1e3a8a" stroke="#3b82f6" stroke-width="1.5"/>
+        <rect x="60" y="50" width="12" height="145" rx="3 0 0 3" fill="#2563eb"/>
+        <rect x="80" y="72" width="72" height="4" rx="2" fill="rgba(255,255,255,.5)"/>
+        <rect x="80" y="84" width="56" height="3" rx="2" fill="rgba(255,255,255,.25)"/>
+        <rect x="80" y="93" width="64" height="3" rx="2" fill="rgba(255,255,255,.25)"/>
+        <circle cx="116" cy="130" r="22" fill="rgba(244,63,94,.15)" stroke="#f43f5e" stroke-width="1.5"/>
+        <text x="116" y="136" text-anchor="middle" font-size="18" fill="#f43f5e" font-family="Arial,sans-serif">AI</text>
+        <!-- 第二本书 -->
+        <rect x="180" y="70" width="90" height="120" rx="6" fill="#312e81" stroke="#818cf8" stroke-width="1.5"/>
+        <rect x="180" y="70" width="10" height="120" rx="3 0 0 3" fill="#4f46e5"/>
+        <rect x="198" y="88" width="56" height="3" rx="2" fill="rgba(255,255,255,.4)"/>
+        <rect x="198" y="98" width="44" height="3" rx="2" fill="rgba(255,255,255,.2)"/>
+        <rect x="198" y="108" width="52" height="3" rx="2" fill="rgba(255,255,255,.2)"/>
+        <path d="M198 128 L252 128 L252 156 L225 148 L198 156Z" fill="rgba(129,140,248,.15)" stroke="#818cf8" stroke-width="1"/>
+        <text x="225" y="144" text-anchor="middle" font-size="11" fill="#a5b4fc" font-family="Arial,sans-serif">绘本</text>
+        <!-- 星星装饰 -->
+        <circle cx="50" cy="200" r="3" fill="#fbbf24" opacity=".8"/>
+        <circle cx="280" cy="190" r="2" fill="#f43f5e" opacity=".7"/>
+        <circle cx="150" cy="215" r="2.5" fill="#818cf8" opacity=".8"/>
+        <text x="160" y="228" text-anchor="middle" font-size="12" fill="rgba(255,255,255,.4)" font-family="Arial,sans-serif" font-weight="700" letter-spacing="2">AI GUIDE</text>
+      </svg>`
+    },
+    {
+      id: 3,
+      title: '专业水彩铅笔套装（48色艺术家级）',
+      comp: '科幻绘画大赛',
+      compIdx: 2,
+      price: 128,
+      orig: 185,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="240" fill="#fef9f0"/>
+        <rect x="0" y="180" width="320" height="60" fill="#fef3c7"/>
+        <!-- 铅笔们 -->
+        <rect x="40" y="30" width="22" height="160" rx="4" fill="#e74c3c" transform="rotate(-8,51,110)"/>
+        <polygon points="40,190 62,190 51,215" fill="#f5d5a0" transform="rotate(-8,51,110)"/>
+        <rect x="40" y="30" width="22" height="8" rx="2 2 0 0" fill="#c0392b" transform="rotate(-8,51,110)"/>
+        <rect x="75" y="30" width="22" height="160" rx="4" fill="#2980b9" transform="rotate(-3,86,110)"/>
+        <polygon points="75,190 97,190 86,215" fill="#f5d5a0" transform="rotate(-3,86,110)"/>
+        <rect x="75" y="30" width="22" height="8" rx="2 2 0 0" fill="#1a6a99" transform="rotate(-3,86,110)"/>
+        <rect x="110" y="28" width="22" height="162" rx="4" fill="#27ae60"/>
+        <polygon points="110,190 132,190 121,215" fill="#f5d5a0"/>
+        <rect x="110" y="28" width="22" height="8" rx="2 2 0 0" fill="#1e8449"/>
+        <rect x="145" y="28" width="22" height="162" rx="4" fill="#8e44ad" transform="rotate(3,156,110)"/>
+        <polygon points="145,190 167,190 156,215" fill="#f5d5a0" transform="rotate(3,156,110)"/>
+        <rect x="145" y="28" width="22" height="8" rx="2 2 0 0" fill="#6c3483" transform="rotate(3,156,110)"/>
+        <rect x="182" y="28" width="22" height="162" rx="4" fill="#e67e22" transform="rotate(6,193,110)"/>
+        <polygon points="182,190 204,190 193,215" fill="#f5d5a0" transform="rotate(6,193,110)"/>
+        <rect x="182" y="28" width="22" height="8" rx="2 2 0 0" fill="#c0612a" transform="rotate(6,193,110)"/>
+        <rect x="218" y="28" width="22" height="162" rx="4" fill="#f39c12" transform="rotate(10,229,110)"/>
+        <polygon points="218,190 240,190 229,215" fill="#f5d5a0" transform="rotate(10,229,110)"/>
+        <rect x="218" y="28" width="22" height="8" rx="2 2 0 0" fill="#c27d0e" transform="rotate(10,229,110)"/>
+        <!-- 标签 -->
+        <rect x="256" y="72" width="48" height="28" rx="6" fill="#fff" stroke="#e8d5c0" stroke-width="1.5"/>
+        <text x="280" y="92" text-anchor="middle" font-size="11" font-weight="800" fill="#b45309" font-family="Arial,sans-serif">48色</text>
+        <text x="160" y="228" text-anchor="middle" font-size="12" fill="#b45309" font-family="Arial,sans-serif" font-weight="700" letter-spacing="2">WATERCOLOR PENCIL</text>
+      </svg>`
+    },
+    {
+      id: 4,
+      title: 'A4专业冷压水彩纸本（300g/m²·20张）',
+      comp: '科幻绘画大赛',
+      compIdx: 2,
+      price: 45,
+      orig: 68,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="240" fill="#f0fdf4"/>
+        <!-- 纸本 -->
+        <rect x="60" y="28" width="200" height="184" rx="4" fill="#fff" stroke="#d1fae5" stroke-width="2"/>
+        <rect x="60" y="28" width="200" height="20" rx="4 4 0 0" fill="#059669"/>
+        <circle cx="88" cy="38" r="4" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="106" cy="38" r="4" fill="none" stroke="#fff" stroke-width="2"/>
+        <circle cx="124" cy="38" r="4" fill="none" stroke="#fff" stroke-width="2"/>
+        <text x="200" y="43" text-anchor="middle" font-size="9" font-weight="700" fill="rgba(255,255,255,.9)" font-family="Arial,sans-serif">COLD PRESS</text>
+        <!-- 纸张纹理线 -->
+        <line x1="80" y1="70" x2="240" y2="70" stroke="#e5f9ee" stroke-width="1"/>
+        <line x1="80" y1="82" x2="240" y2="82" stroke="#e5f9ee" stroke-width="1"/>
+        <line x1="80" y1="94" x2="240" y2="94" stroke="#e5f9ee" stroke-width="1"/>
+        <!-- 水彩晕染效果 -->
+        <circle cx="140" cy="148" r="52" fill="rgba(147,197,253,.35)"/>
+        <circle cx="170" cy="155" r="42" fill="rgba(134,239,172,.3)"/>
+        <circle cx="130" cy="165" r="35" fill="rgba(253,186,116,.25)"/>
+        <text x="160" y="160" text-anchor="middle" font-size="13" fill="rgba(5,150,105,.7)" font-weight="700" font-family="Arial,sans-serif">300g/m²</text>
+        <!-- 角落折痕 -->
+        <path d="M240,28 L240,48 L220,28Z" fill="#d1fae5"/>
+        <text x="160" y="228" text-anchor="middle" font-size="12" fill="#059669" font-family="Arial,sans-serif" font-weight="700" letter-spacing="1">WATERCOLOR PAPER</text>
+      </svg>`
+    },
+    {
+      id: 5,
+      title: '数字绘画板入门套装（含手写笔+教程）',
+      comp: 'AI绘本大赛',
+      compIdx: 1,
+      price: 299,
+      orig: 399,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="c5bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e1b4b"/><stop offset="100%" stop-color="#312e81"/></linearGradient></defs>
+        <rect width="320" height="240" fill="url(#c5bg)"/>
+        <!-- 绘画板 -->
+        <rect x="50" y="50" width="220" height="155" rx="12" fill="#1a1a2e" stroke="#4f46e5" stroke-width="2"/>
+        <rect x="62" y="62" width="196" height="120" rx="8" fill="#0f0f23" stroke="#312e81" stroke-width="1"/>
+        <!-- 屏幕内容 - 绘画中 -->
+        <circle cx="160" cy="115" r="35" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.4)" stroke-width="1"/>
+        <path d="M135,115 Q145,90 160,88 Q175,90 185,115 Q175,135 160,138 Q145,135 135,115Z" fill="rgba(244,63,94,.2)" stroke="#f43f5e" stroke-width="1.5"/>
+        <path d="M148,108 Q160,100 172,108" stroke="#818cf8" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <!-- 手写笔 -->
+        <rect x="255" y="40" width="10" height="130" rx="5" fill="#6366f1" transform="rotate(15,260,105)"/>
+        <polygon points="255,165 265,165 260,185" fill="#a5b4fc" transform="rotate(15,260,105)"/>
+        <rect x="255" y="40" width="10" height="14" rx="5 5 0 0" fill="#4338ca" transform="rotate(15,260,105)"/>
+        <!-- 按钮 -->
+        <circle cx="80" cy="195" r="6" fill="#4f46e5" stroke="#818cf8" stroke-width="1"/>
+        <circle cx="98" cy="195" r="6" fill="#7c3aed" stroke="#a78bfa" stroke-width="1"/>
+        <text x="160" y="228" text-anchor="middle" font-size="12" fill="rgba(129,140,248,.7)" font-family="Arial,sans-serif" font-weight="700" letter-spacing="2">DIGITAL TABLET</text>
+      </svg>`
+    },
+    {
+      id: 6,
+      title: '科幻故事写作指导手册（青少年版）',
+      comp: '科幻征文大赛',
+      compIdx: 3,
+      price: 39,
+      orig: 58,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="c6bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fef9ee"/><stop offset="100%" stop-color="#fef3c7"/></linearGradient></defs>
+        <rect width="320" height="240" fill="url(#c6bg)"/>
+        <!-- 书页效果 -->
+        <rect x="55" y="22" width="145" height="196" rx="4 0 0 4" fill="#fff" stroke="#e8d5c0" stroke-width="1.5"/>
+        <rect x="120" y="22" width="145" height="196" rx="0 4 4 0" fill="#fffbf0" stroke="#e8d5c0" stroke-width="1.5"/>
+        <!-- 装订线 -->
+        <line x1="120" y1="22" x2="120" y2="218" stroke="#d6b896" stroke-width="2.5"/>
+        <!-- 文字行 -->
+        <rect x="70" y="48" width="38" height="5" rx="2" fill="#d97706" opacity=".8"/>
+        <rect x="70" y="62" width="90" height="3.5" rx="2" fill="#92400e" opacity=".4"/>
+        <rect x="70" y="72" width="80" height="3.5" rx="2" fill="#92400e" opacity=".3"/>
+        <rect x="70" y="82" width="85" height="3.5" rx="2" fill="#92400e" opacity=".3"/>
+        <rect x="70" y="92" width="70" height="3.5" rx="2" fill="#92400e" opacity=".3"/>
+        <rect x="70" y="108" width="30" height="4" rx="2" fill="#b45309" opacity=".6"/>
+        <rect x="70" y="120" width="88" height="3" rx="2" fill="#92400e" opacity=".3"/>
+        <rect x="70" y="130" width="76" height="3" rx="2" fill="#92400e" opacity=".3"/>
+        <!-- 右页 - 宇宙插图 -->
+        <circle cx="193" cy="120" r="55" fill="rgba(15,23,42,.06)"/>
+        <circle cx="193" cy="120" r="36" fill="rgba(30,58,138,.08)" stroke="rgba(99,102,241,.2)" stroke-width="1"/>
+        <circle cx="193" cy="120" r="16" fill="rgba(245,158,11,.15)" stroke="#f59e0b" stroke-width="1.5"/>
+        <!-- 星球环 -->
+        <ellipse cx="193" cy="120" rx="42" ry="10" fill="none" stroke="rgba(245,158,11,.3)" stroke-width="1.5"/>
+        <!-- 星星 -->
+        <circle cx="148" cy="80" r="2" fill="#fbbf24"/>
+        <circle cx="235" cy="92" r="1.5" fill="#a5b4fc"/>
+        <circle cx="160" cy="158" r="2" fill="#fbbf24"/>
+        <circle cx="228" cy="160" r="1.5" fill="#a5b4fc"/>
+        <text x="193" y="200" text-anchor="middle" font-size="10" fill="#92400e" font-family="Arial,sans-serif" font-weight="700">写作指导</text>
+      </svg>`
+    },
+    {
+      id: 7,
+      title: '青少年AI创作工具使用指南',
+      comp: 'AI绘本大赛',
+      compIdx: 1,
+      price: 58,
+      orig: 88,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="c7bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/></linearGradient>
+          <linearGradient id="c7acc" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#06b6d4"/><stop offset="100%" stop-color="#818cf8"/></linearGradient>
+        </defs>
+        <rect width="320" height="240" fill="url(#c7bg)"/>
+        <!-- 电路背景 -->
+        <path d="M0,80 H80 V40 H160" stroke="rgba(6,182,212,.12)" stroke-width="1.5" fill="none"/>
+        <path d="M320,160 H240 V200 H160" stroke="rgba(129,140,248,.12)" stroke-width="1.5" fill="none"/>
+        <!-- AI字母大字 -->
+        <text x="160" y="110" text-anchor="middle" font-size="72" font-weight="900" fill="none" stroke="url(#c7acc)" stroke-width="2" font-family="Arial,sans-serif" opacity=".6">AI</text>
+        <text x="160" y="110" text-anchor="middle" font-size="72" font-weight="900" fill="rgba(6,182,212,.12)" font-family="Arial,sans-serif">AI</text>
+        <!-- 连接节点 -->
+        <circle cx="80" cy="140" r="8" fill="none" stroke="#06b6d4" stroke-width="1.5"/>
+        <circle cx="80" cy="140" r="3" fill="#06b6d4"/>
+        <circle cx="160" cy="150" r="10" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+        <circle cx="160" cy="150" r="4" fill="#818cf8"/>
+        <circle cx="240" cy="135" r="8" fill="none" stroke="#06b6d4" stroke-width="1.5"/>
+        <circle cx="240" cy="135" r="3" fill="#06b6d4"/>
+        <line x1="88" y1="140" x2="150" y2="150" stroke="rgba(6,182,212,.4)" stroke-width="1.5"/>
+        <line x1="170" y1="150" x2="232" y2="135" stroke="rgba(129,140,248,.4)" stroke-width="1.5"/>
+        <!-- 底部标签 -->
+        <rect x="88" y="185" width="144" height="28" rx="14" fill="url(#c7acc)" opacity=".15" stroke="url(#c7acc)" style="stroke-opacity:.4"/>
+        <text x="160" y="204" text-anchor="middle" font-size="12" font-weight="700" fill="#67e8f9" font-family="Arial,sans-serif" letter-spacing="2">YOUTH · AI · GUIDE</text>
+      </svg>`
+    },
+    {
+      id: 8,
+      title: '科幻主题素材图库（数字版·500+素材）',
+      comp: '省级科幻类作品征集活动',
+      compIdx: 0,
+      price: 128,
+      orig: null,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="c8bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#030712"/><stop offset="100%" stop-color="#0f172a"/></linearGradient></defs>
+        <rect width="320" height="240" fill="url(#c8bg)"/>
+        <!-- 星空 -->
+        <circle cx="40" cy="30" r="1.5" fill="#fff" opacity=".8"/>
+        <circle cx="85" cy="18" r="1" fill="#fff" opacity=".6"/>
+        <circle cx="140" cy="35" r="2" fill="#fff" opacity=".7"/>
+        <circle cx="200" cy="22" r="1" fill="#fff" opacity=".5"/>
+        <circle cx="268" cy="40" r="1.5" fill="#fff" opacity=".8"/>
+        <circle cx="300" cy="18" r="1" fill="#fff" opacity=".6"/>
+        <circle cx="22" cy="60" r="1" fill="#a5b4fc" opacity=".7"/>
+        <circle cx="280" cy="55" r="1.5" fill="#fbbf24" opacity=".6"/>
+        <!-- 图库框格 -->
+        <rect x="24" y="56" width="84" height="63" rx="6" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.4)" stroke-width="1.5"/>
+        <circle cx="66" cy="80" r="16" fill="rgba(99,102,241,.2)" stroke="#818cf8" stroke-width="1"/>
+        <path d="M44,100 L56,85 L66,95 L76,78 L108,100Z" fill="rgba(99,102,241,.3)"/>
+        <rect x="116" y="56" width="84" height="63" rx="6" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.35)" stroke-width="1.5"/>
+        <path d="M150,98 L158,72 L166,98Z" fill="rgba(245,158,11,.4)" stroke="#fbbf24" stroke-width="1"/>
+        <circle cx="158" cy="67" r="8" fill="rgba(245,158,11,.3)"/>
+        <rect x="208" y="56" width="84" height="63" rx="6" fill="rgba(244,63,94,.12)" stroke="rgba(244,63,94,.35)" stroke-width="1.5"/>
+        <ellipse cx="250" cy="85" rx="22" ry="16" fill="rgba(244,63,94,.2)" stroke="#f43f5e" stroke-width="1"/>
+        <circle cx="250" cy="85" r="6" fill="rgba(244,63,94,.5)"/>
+        <!-- 下排 -->
+        <rect x="24" y="129" width="84" height="63" rx="6" fill="rgba(16,185,129,.12)" stroke="rgba(16,185,129,.35)" stroke-width="1.5"/>
+        <path d="M40,175 Q55,148 66,155 Q77,162 84,142 Q91,132 108,155 L108,175Z" fill="rgba(16,185,129,.25)"/>
+        <rect x="116" y="129" width="84" height="63" rx="6" fill="rgba(139,92,246,.12)" stroke="rgba(139,92,246,.35)" stroke-width="1.5"/>
+        <polygon points="150,168 158,142 166,168" fill="rgba(139,92,246,.4)" stroke="#a78bfa" stroke-width="1"/>
+        <rect x="208" y="129" width="84" height="63" rx="6" fill="rgba(6,182,212,.12)" stroke="rgba(6,182,212,.35)" stroke-width="1.5"/>
+        <circle cx="250" cy="158" r="18" fill="none" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <circle cx="250" cy="158" r="8" fill="rgba(6,182,212,.3)"/>
+        <text x="160" y="220" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.3)" font-family="Arial,sans-serif" font-weight="700" letter-spacing="3">500+ ASSETS</text>
+      </svg>`
+    },
+    {
+      id: 9,
+      title: '水彩画基础教程（全3册·科幻主题专版）',
+      comp: '科幻绘画大赛',
+      compIdx: 2,
+      price: 156,
+      orig: 228,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="240" fill="#fff8f0"/>
+        <!-- 三本书 叠放 -->
+        <rect x="48" y="70" width="105" height="140" rx="5" fill="#ef4444" transform="rotate(-8,100,140)"/>
+        <rect x="48" y="70" width="14" height="140" rx="3 0 0 3" fill="#dc2626" transform="rotate(-8,100,140)"/>
+        <text x="95" y="145" text-anchor="middle" font-size="13" font-weight="900" fill="rgba(255,255,255,.9)" font-family="Arial,sans-serif" transform="rotate(-8,95,145)">第一册</text>
+        <text x="95" y="162" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.6)" font-family="Arial,sans-serif" transform="rotate(-8,95,162)">基础篇</text>
+
+        <rect x="90" y="60" width="105" height="140" rx="5" fill="#f59e0b" transform="rotate(-1,142,130)"/>
+        <rect x="90" y="60" width="14" height="140" rx="3 0 0 3" fill="#d97706" transform="rotate(-1,142,130)"/>
+        <text x="138" y="135" text-anchor="middle" font-size="13" font-weight="900" fill="rgba(255,255,255,.9)" font-family="Arial,sans-serif" transform="rotate(-1,138,135)">第二册</text>
+        <text x="138" y="152" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.6)" font-family="Arial,sans-serif" transform="rotate(-1,138,152)">技法篇</text>
+
+        <rect x="135" y="50" width="105" height="140" rx="5" fill="#10b981" transform="rotate(7,187,120)"/>
+        <rect x="135" y="50" width="14" height="140" rx="3 0 0 3" fill="#059669" transform="rotate(7,187,120)"/>
+        <text x="183" y="125" text-anchor="middle" font-size="13" font-weight="900" fill="rgba(255,255,255,.9)" font-family="Arial,sans-serif" transform="rotate(7,183,125)">第三册</text>
+        <text x="183" y="142" text-anchor="middle" font-size="9" fill="rgba(255,255,255,.6)" font-family="Arial,sans-serif" transform="rotate(7,183,142)">创作篇</text>
+
+        <!-- 调色盘 -->
+        <circle cx="270" cy="140" r="42" fill="#fffbf0" stroke="#f0e0c0" stroke-width="2"/>
+        <circle cx="258" cy="128" r="8" fill="#ef4444"/>
+        <circle cx="276" cy="122" r="8" fill="#f59e0b"/>
+        <circle cx="288" cy="136" r="8" fill="#10b981"/>
+        <circle cx="280" cy="152" r="8" fill="#3b82f6"/>
+        <circle cx="260" cy="154" r="8" fill="#8b5cf6"/>
+        <circle cx="249" cy="143" r="8" fill="#f97316"/>
+        <circle cx="270" cy="140" r="10" fill="#fff" stroke="#e0d0c0" stroke-width="1.5"/>
+        <text x="160" y="226" text-anchor="middle" font-size="11" fill="#b45309" font-family="Arial,sans-serif" font-weight="700" letter-spacing="2">WATERCOLOR TUTORIAL</text>
+      </svg>`
+    },
+    {
+      id: 10,
+      title: '科幻写作素材包（电子版·主题词库+范文）',
+      comp: '科幻征文大赛',
+      compIdx: 3,
+      price: 29,
+      orig: 49,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="c10bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fefce8"/><stop offset="100%" stop-color="#fef9c3"/></linearGradient></defs>
+        <rect width="320" height="240" fill="url(#c10bg)"/>
+        <!-- 文档图标 -->
+        <rect x="90" y="30" width="140" height="175" rx="6" fill="#fff" stroke="#fde68a" stroke-width="2"/>
+        <path d="M200,30 L230,60 L200,60Z" fill="#fde68a"/>
+        <rect x="200" y="30" width="30" height="30" rx="0 6 0 0" fill="#fde68a"/>
+        <!-- 文字行 -->
+        <rect x="108" y="72" width="50" height="5" rx="2" fill="#b45309" opacity=".7"/>
+        <rect x="108" y="86" width="104" height="4" rx="2" fill="#78350f" opacity=".35"/>
+        <rect x="108" y="97" width="88" height="4" rx="2" fill="#78350f" opacity=".3"/>
+        <rect x="108" y="108" width="96" height="4" rx="2" fill="#78350f" opacity=".3"/>
+        <rect x="108" y="124" width="40" height="4" rx="2" fill="#b45309" opacity=".5"/>
+        <rect x="108" y="135" width="100" height="4" rx="2" fill="#78350f" opacity=".3"/>
+        <rect x="108" y="146" width="80" height="4" rx="2" fill="#78350f" opacity=".3"/>
+        <rect x="108" y="157" width="92" height="4" rx="2" fill="#78350f" opacity=".3"/>
+        <!-- 标签 -->
+        <rect x="108" y="174" width="52" height="18" rx="9" fill="#fde68a" stroke="#fbbf24" stroke-width="1"/>
+        <text x="134" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309" font-family="Arial,sans-serif">素材包</text>
+        <rect x="168" y="174" width="52" height="18" rx="9" fill="#fde68a" stroke="#fbbf24" stroke-width="1"/>
+        <text x="194" y="187" text-anchor="middle" font-size="10" font-weight="700" fill="#b45309" font-family="Arial,sans-serif">电子版</text>
+        <!-- 装饰 -->
+        <circle cx="48" cy="80" r="18" fill="rgba(251,191,36,.2)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="48" y="86" text-anchor="middle" font-size="16" font-family="Arial,sans-serif">✍️</text>
+        <circle cx="272" cy="160" r="22" fill="rgba(251,191,36,.15)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="272" y="168" text-anchor="middle" font-size="20" font-family="Arial,sans-serif">🚀</text>
+        <text x="160" y="228" text-anchor="middle" font-size="11" fill="#92400e" font-family="Arial,sans-serif" font-weight="700" letter-spacing="2">SCI-FI WRITING PACK</text>
+      </svg>`
+    },
+    {
+      id: 11,
+      title: '专业绘图铅笔套装（12支HB-8B全套）',
+      comp: '科幻绘画大赛',
+      compIdx: 2,
+      price: 68,
+      orig: 98,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="240" fill="#faf5ff"/>
+        <!-- 铅笔盒 -->
+        <rect x="36" y="150" width="248" height="58" rx="8" fill="#7c3aed" stroke="#6d28d9" stroke-width="1.5"/>
+        <rect x="36" y="150" width="248" height="16" rx="8 8 0 0" fill="#6d28d9"/>
+        <text x="160" y="163" text-anchor="middle" font-size="10" font-weight="700" fill="rgba(255,255,255,.8)" font-family="Arial,sans-serif" letter-spacing="2">DRAWING PENCILS</text>
+        <!-- 铅笔 -->
+        <rect x="52" y="36" width="14" height="130" rx="4" fill="#6b7280"/>
+        <polygon points="52,166 66,166 59,188" fill="#f0d0a0"/>
+        <circle cx="59" cy="36" r="7" fill="#9ca3af"/>
+        <rect x="74" y="44" width="14" height="122" rx="4" fill="#374151"/>
+        <polygon points="74,166 88,166 81,188" fill="#f0d0a0"/>
+        <circle cx="81" cy="44" r="7" fill="#4b5563"/>
+        <rect x="96" y="38" width="14" height="128" rx="4" fill="#1f2937"/>
+        <polygon points="96,166 110,166 103,188" fill="#f0d0a0"/>
+        <circle cx="103" cy="38" r="7" fill="#374151"/>
+        <rect x="118" y="42" width="14" height="124" rx="4" fill="#111827"/>
+        <polygon points="118,166 132,166 125,188" fill="#f0d0a0"/>
+        <circle cx="125" cy="42" r="7" fill="#1f2937"/>
+        <rect x="140" y="36" width="14" height="130" rx="4" fill="#1e1b4b"/>
+        <polygon points="140,166 154,166 147,188" fill="#f0d0a0"/>
+        <circle cx="147" cy="36" r="7" fill="#312e81"/>
+        <!-- 标注 -->
+        <rect x="172" y="60" width="110" height="92" rx="8" fill="#fff" stroke="#e9d5ff" stroke-width="1.5"/>
+        <text x="227" y="82" text-anchor="middle" font-size="11" fill="#7c3aed" font-weight="700" font-family="Arial,sans-serif">铅笔硬度</text>
+        <text x="188" y="100" font-size="10" fill="#6d28d9" font-family="Arial,sans-serif">HB · 1B · 2B</text>
+        <text x="188" y="116" font-size="10" fill="#6d28d9" font-family="Arial,sans-serif">3B · 4B · 5B</text>
+        <text x="188" y="132" font-size="10" fill="#6d28d9" font-family="Arial,sans-serif">6B · 7B · 8B</text>
+        <text x="160" y="226" text-anchor="middle" font-size="11" fill="#7c3aed" font-family="Arial,sans-serif" font-weight="700" letter-spacing="2">PROFESSIONAL SET</text>
+      </svg>`
+    },
+    {
+      id: 12,
+      title: 'AI绘本创作工作坊（线上直播课·12课时）',
+      comp: 'AI绘本大赛',
+      compIdx: 1,
+      price: 198,
+      orig: 298,
+      url: 'https://www.jd.com',
+      cover: `<svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="c12bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e1b4b"/></linearGradient>
+          <linearGradient id="c12btn" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#f43f5e"/><stop offset="100%" stop-color="#fb923c"/></linearGradient>
+        </defs>
+        <rect width="320" height="240" fill="url(#c12bg)"/>
+        <!-- 屏幕/播放器 -->
+        <rect x="30" y="38" width="260" height="150" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+        <rect x="30" y="38" width="260" height="12" rx="10 10 0 0" fill="#1e293b"/>
+        <circle cx="44" cy="44" r="3" fill="#ef4444"/>
+        <circle cx="56" cy="44" r="3" fill="#f59e0b"/>
+        <circle cx="68" cy="44" r="3" fill="#10b981"/>
+        <!-- 直播内容 -->
+        <rect x="42" y="62" width="236" height="114" rx="4" fill="#0a0f1e"/>
+        <!-- 主讲画面 -->
+        <rect x="42" y="62" width="170" height="114" rx="4 0 0 4" fill="#111827"/>
+        <circle cx="127" cy="110" r="28" fill="rgba(99,102,241,.2)" stroke="#6366f1" stroke-width="1.5"/>
+        <circle cx="127" cy="95" r="10" fill="rgba(99,102,241,.4)"/>
+        <path d="M107,119 Q107,108 127,108 Q147,108 147,119" fill="rgba(99,102,241,.3)" stroke="#6366f1" stroke-width="1"/>
+        <!-- 互动区 -->
+        <rect x="212" y="62" width="66" height="114" rx="0 4 4 0" fill="#0d1424"/>
+        <rect x="216" y="70" width="58" height="14" rx="3" fill="rgba(244,63,94,.15)" stroke="rgba(244,63,94,.3)" stroke-width="1"/>
+        <text x="245" y="81" text-anchor="middle" font-size="8" fill="#f43f5e" font-family="Arial,sans-serif">直播中</text>
+        <rect x="216" y="88" width="58" height="4" rx="2" fill="rgba(255,255,255,.1)"/>
+        <rect x="216" y="96" width="46" height="4" rx="2" fill="rgba(255,255,255,.08)"/>
+        <rect x="216" y="104" width="52" height="4" rx="2" fill="rgba(255,255,255,.08)"/>
+        <!-- 进度条 -->
+        <rect x="42" y="168" width="236" height="8" rx="0 0 4 4" fill="#1e293b"/>
+        <rect x="42" y="168" width="120" height="8" rx="0 0 0 4" fill="url(#c12btn)"/>
+        <!-- 底部信息 -->
+        <rect x="100" y="198" width="120" height="28" rx="14" fill="url(#c12btn)" opacity=".15" stroke="url(#c12btn)" style="stroke-opacity:.4"/>
+        <text x="160" y="217" text-anchor="middle" font-size="11" font-weight="700" fill="#fb923c" font-family="Arial,sans-serif" letter-spacing="1">12课时 · 直播课</text>
+      </svg>`
+    }
+  ];
+
+  /* ══ 赛事tag颜色 ══ */
+  const tagClass = ['comp-tag-0','comp-tag-1','comp-tag-2','comp-tag-3'];
+
+  /* ══ 渲染商品 ══ */
+  function renderProducts(list) {
+    const grid = document.getElementById('products-grid');
+    const count = document.getElementById('result-count');
+    count.textContent = `共 ${list.length} 件素材`;
+    if (list.length === 0) {
+      grid.innerHTML = `<div class="no-results">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>未找到相关素材</p>
+      </div>`;
+      return;
+    }
+    grid.innerHTML = list.map(p => `
+      <div class="product-card" data-id="${p.id}">
+        <div class="product-cover">${p.cover}</div>
+        <div class="product-info">
+          <p class="product-title">${p.title}</p>
+          <span class="comp-tag ${tagClass[p.compIdx]}">${p.comp}</span>
+          <div class="product-foot">
+            <div class="product-price">
+              <span class="p-main">${p.price}</span>
+              ${p.orig ? `<span class="p-orig">¥${p.orig}</span>` : ''}
+            </div>
+            <a class="btn-buy-card" href="${p.url}" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              立即购买
+            </a>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ══ 筛选逻辑 ══ */
+  let activeComp = 'all';
+  let searchVal  = '';
+
+  function applyFilter() {
+    let list = PRODUCTS;
+    if (activeComp !== 'all') list = list.filter(p => p.comp === activeComp);
+    if (searchVal) list = list.filter(p => p.title.includes(searchVal) || p.comp.includes(searchVal));
+    renderProducts(list);
+  }
+
+  /* 赛事筛选 */
+  document.getElementById('comp-select').addEventListener('change', e => {
+    activeComp = e.target.value;
+    applyFilter();
+  });
+
+  /* 搜索 */
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchVal = e.target.value.trim();
+    applyFilter();
+  });
+
+  /* 初始渲染 */
+  applyFilter();
+  </script>
+</body>
+</html>
