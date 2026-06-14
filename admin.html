@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>后台管理（原型） | 四川省教育电子音像出版社</title>
+<style>
+  :root{
+    /* brand (与主站一致) */
+    --primary:#0a4d8c; --primary-600:#0a4d8c; --primary-700:#083f73; --primary-dark:#072f5a;
+    --secondary:#0f7bcf; --accent:#19d3c5; --accent-dark:#0fb0a5;
+    /* surfaces */
+    --bg:#eef3f9; --surface:#ffffff; --surface-2:#f7fafd;
+    --ink:#0f2742; --ink-2:#3a5273; --muted:#6b829e; --faint:#9fb2c8;
+    --border:#e1eaf3; --border-strong:#cfddec;
+    /* semantic */
+    --success:#0a9c5d; --success-bg:#e6f8f0; --danger:#d92d20; --danger-bg:#fdecea;
+    --warn:#b9770a; --warn-bg:#fdf3e2; --info:#3257c5; --info-bg:#eef1fe;
+    /* sidebar */
+    --side:#0a2c52; --side-2:#072342; --side-ink:#b9cce2; --side-ink-dim:#7e98b6;
+    /* effects */
+    --ring:0 0 0 3px rgba(15,123,207,.25);
+    --shadow-xs:0 1px 2px rgba(9,30,56,.06);
+    --shadow-sm:0 2px 8px rgba(9,30,56,.07),0 1px 2px rgba(9,30,56,.05);
+    --shadow-md:0 12px 34px rgba(9,30,56,.13);
+    --r-sm:9px; --r-md:12px; --r-lg:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.5}
+  button{font-family:inherit;cursor:pointer;border:none;color:inherit}
+  input,textarea,select{font-family:inherit;font-size:14px;color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  svg{display:block;flex:none}
+  .num,.tnum{font-variant-numeric:tabular-nums}
+  :focus-visible{outline:2px solid var(--secondary);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  /* ---------- Login ---------- */
+  #login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:50;
+    background:radial-gradient(1200px 600px at 20% -10%,#0f7bcf33,transparent),
+               linear-gradient(135deg,var(--primary-dark),#0a2c52)}
+  .login-card{background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow-md);
+    padding:40px 36px 32px;width:min(390px,92vw);text-align:center}
+  .login-logo{width:52px;height:52px;border-radius:14px;margin:0 auto 16px;display:flex;align-items:center;
+    justify-content:center;color:#fff;background:linear-gradient(135deg,var(--secondary),var(--primary))}
+  .login-card h1{font-size:19px;margin-bottom:4px;color:var(--ink);letter-spacing:.2px}
+  .login-card>p{font-size:12.5px;color:var(--muted);margin-bottom:24px}
+  .login-field{text-align:left;margin-bottom:14px}
+  .login-field label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+  .login-card input{width:100%;padding:11px 13px;border:1px solid var(--border-strong);
+    border-radius:var(--r-sm);outline:none;transition:.18s}
+  .login-card input:focus{border-color:var(--secondary);box-shadow:var(--ring)}
+  .login-card .btn-login{width:100%;padding:12px;border-radius:var(--r-sm);margin-top:6px;
+    background:var(--primary);color:#fff;font-size:15px;font-weight:600;transition:.18s}
+  .login-card .btn-login:hover{background:var(--primary-700)}
+  .login-hint{margin-top:16px;font-size:12px;color:var(--faint)}
+
+  /* ---------- Layout ---------- */
+  #app{display:none}
+  .layout{display:flex;min-height:100vh}
+  aside{width:236px;background:linear-gradient(180deg,var(--side),var(--side-2));color:var(--side-ink);
+    display:flex;flex-direction:column;position:fixed;top:0;bottom:0;left:0;z-index:20}
+  .brand{display:flex;align-items:center;gap:11px;padding:18px 18px;
+    border-bottom:1px solid rgba(255,255,255,.08)}
+  .brand-mark{width:38px;height:38px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;
+    color:#fff;background:linear-gradient(135deg,var(--secondary),var(--accent))}
+  .brand-text{font-size:14px;font-weight:700;color:#fff;line-height:1.35}
+  .brand-text small{display:block;font-weight:400;font-size:10.5px;color:var(--side-ink-dim);margin-top:2px;letter-spacing:.3px}
+  .nav-label{padding:18px 20px 8px;font-size:10.5px;font-weight:600;letter-spacing:1px;
+    text-transform:uppercase;color:var(--side-ink-dim)}
+  nav{flex:1;padding:6px 12px;overflow:auto}
+  .nav-item{position:relative;display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;
+    font-size:13.5px;color:var(--side-ink);cursor:pointer;margin-bottom:2px;transition:background .16s,color .16s}
+  .nav-item .ico{width:18px;height:18px;opacity:.85}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav-item.active{background:rgba(25,211,197,.14);color:#fff;font-weight:600}
+  .nav-item.active .ico{opacity:1;color:var(--accent)}
+  .nav-item.active::before{content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:3px;
+    border-radius:0 3px 3px 0;background:var(--accent)}
+  .sidebar-foot{padding:12px;border-top:1px solid rgba(255,255,255,.08)}
+  .sidebar-foot button{display:flex;align-items:center;justify-content:center;gap:8px;
+    background:rgba(255,255,255,.08);color:#fff;width:100%;padding:10px;border-radius:9px;font-size:13px;
+    transition:.16s}
+  .sidebar-foot button:hover{background:rgba(255,255,255,.16)}
+
+  main{margin-left:236px;flex:1;width:calc(100% - 236px);display:flex;flex-direction:column;min-height:100vh}
+  .topbar{position:sticky;top:0;z-index:15;display:flex;align-items:center;gap:14px;
+    padding:16px 28px;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border)}
+  .topbar .actions{margin-left:auto}
+  #backBtn{flex:none}
+  .topbar h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:.2px}
+  .topbar .sub{font-size:12.5px;color:var(--muted);margin-top:2px}
+  #view{padding:24px 28px 40px}
+  .actions{display:flex;gap:9px;align-items:center}
+
+  /* ---------- Buttons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:var(--r-sm);
+    font-size:13px;font-weight:600;transition:background .16s,border-color .16s,box-shadow .16s,color .16s;
+    white-space:nowrap;line-height:1}
+  .btn svg{width:15px;height:15px}
+  .btn-primary{background:var(--primary);color:#fff;box-shadow:var(--shadow-xs)}
+  .btn-primary:hover{background:var(--primary-700)}
+  .btn-ghost{background:var(--surface);color:var(--ink-2);border:1px solid var(--border-strong)}
+  .btn-ghost:hover{border-color:var(--secondary);color:var(--primary)}
+  .btn-danger{background:var(--surface);color:var(--danger);border:1px solid #f3c7c2}
+  .btn-danger:hover{background:var(--danger-bg)}
+  .btn-sm{padding:6px 10px;font-size:12px;border-radius:7px}
+  .btn-sm svg{width:14px;height:14px}
+  .icon-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+    border-radius:8px;background:var(--surface);border:1px solid var(--border-strong);color:var(--ink-2);transition:.16s}
+  .icon-btn svg{width:15px;height:15px}
+  .icon-btn:hover{border-color:var(--secondary);color:var(--primary);background:var(--surface-2)}
+  .icon-btn.danger:hover{border-color:#f3c7c2;color:var(--danger);background:var(--danger-bg)}
+
+  /* ---------- Dashboard ---------- */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:24px}
+  .stat-card{position:relative;background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow-sm);overflow:hidden}
+  .stat-card .chip{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    color:var(--primary);background:var(--info-bg);margin-bottom:14px}
+  .stat-card .chip svg{width:20px;height:20px}
+  .stat-card .num{font-size:28px;font-weight:700;color:var(--ink);line-height:1}
+  .stat-card .lbl{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .stat-card .go{position:absolute;top:16px;right:16px;color:var(--faint);opacity:0;transition:.16s}
+  .stat-card:hover .go{opacity:1}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+    padding:20px 22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
+  .panel h3{font-size:14.5px;margin-bottom:8px;color:var(--ink);display:flex;align-items:center;gap:8px}
+  .panel h3 svg{width:16px;height:16px;color:var(--secondary)}
+  .panel p{font-size:13px;color:var(--ink-2);line-height:1.75}
+  .panel code{background:var(--surface-2);border:1px solid var(--border);border-radius:5px;
+    padding:1px 6px;font-size:12px;color:var(--primary)}
+
+  /* ---------- Table ---------- */
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+    box-shadow:var(--shadow-sm);overflow:hidden}
+  .toolbar{display:flex;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);align-items:center}
+  .search-wrap{position:relative;flex:1;max-width:300px}
+  .search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--faint)}
+  .toolbar input.search{width:100%;padding:8px 12px 8px 33px;border:1px solid var(--border-strong);
+    border-radius:var(--r-sm);outline:none;transition:.16s}
+  .toolbar input.search:focus{border-color:var(--secondary);box-shadow:var(--ring)}
+  .toolbar select{padding:8px 28px 8px 11px;border:1px solid var(--border-strong);border-radius:var(--r-sm);
+    outline:none;cursor:pointer;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%236b829e' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 10px center;-webkit-appearance:none;appearance:none}
+  .toolbar select:focus{border-color:var(--secondary);box-shadow:var(--ring)}
+  .table-scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:12px 16px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
+  th{font-size:11.5px;color:var(--muted);font-weight:600;background:var(--surface-2);letter-spacing:.3px;
+    position:sticky;top:0;white-space:nowrap}
+  td{color:var(--ink-2)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr{transition:background .12s}
+  tbody tr:hover{background:var(--surface-2)}
+  .tag{display:inline-block;background:var(--info-bg);color:var(--info);padding:2px 9px;border-radius:6px;font-size:11px;margin:1px 2px;font-weight:500}
+  .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:600}
+  .badge::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+  .badge.new,.badge.open{background:var(--success-bg);color:var(--success)}
+  .badge.hot,.badge.ended{background:var(--danger-bg);color:var(--danger)}
+  .badge.free,.badge.soon{background:var(--warn-bg);color:var(--warn)}
+  .row-actions{display:flex;gap:6px;justify-content:flex-end}
+  .empty{padding:56px 20px;text-align:center;color:var(--muted);font-size:13.5px}
+  .empty svg{width:38px;height:38px;color:var(--faint);margin:0 auto 12px}
+  td.cover{width:80px}
+  .mini-cover{width:38px;height:50px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+    font-size:18px;color:#fff;box-shadow:var(--shadow-xs)}
+
+  /* ---------- Drawer ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(9,30,56,.5);display:none;z-index:60;opacity:0;transition:opacity .2s}
+  .overlay.show{display:block;opacity:1}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,96vw);background:var(--surface);
+    box-shadow:var(--shadow-md);transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:61;
+    display:flex;flex-direction:column}
+  .drawer.show{transform:translateX(0)}
+  .drawer-head{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+  .drawer-head h3{font-size:16px;color:var(--ink)}
+  .drawer-head .x{display:flex;width:32px;height:32px;border-radius:8px;align-items:center;justify-content:center;
+    color:var(--muted);background:none;transition:.16s}
+  .drawer-head .x:hover{background:var(--surface-2);color:var(--ink)}
+  .drawer-body{flex:1;overflow:auto;padding:20px 22px}
+  .drawer-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+
+  /* ---------- Forms ---------- */
+  .form-card{max-width:880px}
+  .field{margin-bottom:16px}
+  .field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--ink-2)}
+  .field label .req{color:var(--danger);margin-left:3px}
+  .field .hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px}
+  .field input,.field textarea,.field select{width:100%;padding:9px 12px;border:1px solid var(--border-strong);
+    border-radius:var(--r-sm);outline:none;resize:vertical;transition:.16s;background:var(--surface)}
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--secondary);box-shadow:var(--ring)}
+  .field input[type=color]{height:40px;padding:4px;cursor:pointer}
+  .field textarea{min-height:96px;line-height:1.65}
+  .field-row{display:flex;gap:14px}
+  .field-row .field{flex:1}
+  .form-section{display:flex;align-items:center;gap:8px;margin:24px 0 14px;font-size:13px;font-weight:700;
+    color:var(--ink);padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .form-section::before{content:"";width:3px;height:14px;border-radius:2px;background:var(--secondary)}
+  .form-section:first-child{margin-top:0}
+  .upload-wrap{display:flex;flex-direction:column;gap:9px;align-items:flex-start}
+  .upload-img{width:180px;max-width:100%;border:1.5px dashed var(--border-strong);border-radius:var(--r-md);
+    background:var(--surface-2);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--faint)}
+  .upload-img img{width:100%;height:100%;object-fit:cover}
+  .upload-img .ph{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;padding:18px}
+  .upload-img .ph svg{width:24px;height:24px}
+  .upload-btns{display:flex;gap:8px}
+  .file-row{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+    background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-size:13px}
+  .file-row .fname{display:flex;align-items:center;gap:8px;min-width:0}
+  .file-row .fname svg{width:16px;height:16px;color:var(--secondary)}
+  .rep-item{width:100%;border:1px solid var(--border);border-radius:var(--r-md);padding:16px;margin-bottom:10px;background:var(--surface-2)}
+  .rep-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:700;font-size:12.5px;color:var(--primary)}
+  .rep-head .seq{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;
+    background:var(--primary);color:#fff;font-size:11px;margin-right:7px}
+  /* 富内容编辑器 */
+  .rc-editor{width:100%;border:1px solid var(--border);border-radius:var(--r-md);padding:12px;background:var(--surface-2)}
+  .rc-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;margin-bottom:10px}
+  .rc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;
+    font-size:12px;font-weight:600;color:var(--primary)}
+  .rc-head .icon-btn{width:28px;height:28px}
+  .rc-ops{display:flex;gap:5px}
+  .rc-add{display:flex;gap:8px;flex-wrap:wrap;padding-top:4px}
+  .rep-item.dragging{opacity:.45;border-color:var(--secondary)}
+  .rep-item.drop-target{border-color:var(--secondary);box-shadow:var(--ring)}
+  .rep-handle{display:inline-flex;align-items:center;cursor:grab;color:var(--faint);margin-right:2px}
+  .rep-handle:active{cursor:grabbing}
+  .rep-head .left{display:flex;align-items:center;gap:4px}
+
+  /* 学生 / 作品收集 */
+  .stu{line-height:1.4}
+  .stu b{font-weight:600;color:var(--ink)}
+  .stu small{display:block;color:var(--muted);font-size:11.5px;margin-top:1px}
+  .work-cell{display:flex;align-items:center;gap:10px}
+  .work-thumb{width:42px;height:42px;border-radius:8px;flex:none;overflow:hidden;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:var(--shadow-xs);transition:.16s}
+  .work-thumb:hover{transform:scale(1.05)}
+  .work-thumb img{width:100%;height:100%;object-fit:cover}
+  .reviewer{display:inline-flex;align-items:center;gap:6px}
+  .reviewer .av{width:22px;height:22px;border-radius:50%;background:var(--info-bg);color:var(--info);
+    display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex:none}
+  .badge.pending{background:var(--warn-bg);color:var(--warn)}
+  .badge.reviewed{background:var(--info-bg);color:var(--info)}
+  .badge.shortlisted{background:var(--success-bg);color:var(--success)}
+
+  /* Lightbox */
+  .lightbox-card{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(680px,94vw);
+    max-height:90vh;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow-md);
+    display:flex;flex-direction:column;overflow:hidden}
+  .lightbox-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+  .lightbox-head h3{font-size:15px;color:var(--ink)}
+  .lightbox-head .x{display:flex;width:32px;height:32px;border-radius:8px;align-items:center;justify-content:center;color:var(--muted);background:none;transition:.16s}
+  .lightbox-head .x:hover{background:var(--surface-2);color:var(--ink)}
+  .lightbox-body{padding:20px;overflow:auto}
+  .lightbox-body img{width:100%;border-radius:var(--r-md);display:block}
+  .lb-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px;margin-bottom:16px}
+  .lb-meta div{font-size:13px}
+  .lb-meta span{color:var(--muted);margin-right:6px}
+  .lb-file{display:flex;align-items:center;gap:12px;padding:18px;border:1px dashed var(--border-strong);
+    border-radius:var(--r-md);background:var(--surface-2);font-size:13.5px;color:var(--ink-2)}
+  .lb-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+  .lb-fitem{border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:var(--surface)}
+  .lb-fitem img{width:100%;height:130px;object-fit:cover;display:block}
+  .lb-fph{height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    background:var(--surface-2);color:var(--muted);font-size:12px}
+  .lb-fitem figcaption{display:flex;align-items:center;gap:6px;padding:9px 11px;font-size:12px;color:var(--ink-2);
+    border-top:1px solid var(--border);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+  /* 专家管理 */
+  .expert-add{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;background:var(--surface-2);
+    border:1px solid var(--border);border-radius:var(--r-md);padding:14px;margin-bottom:14px}
+  .expert-add .f{flex:1;min-width:120px}
+  .expert-add .f label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:5px}
+  .expert-add input{width:100%;padding:8px 11px;border:1px solid var(--border-strong);border-radius:var(--r-sm);outline:none;transition:.16s}
+  .expert-add input:focus{border-color:var(--secondary);box-shadow:var(--ring)}
+  .expert-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);
+    border-radius:var(--r-md);margin-bottom:9px}
+  .expert-row .av{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+    font-weight:600;color:#fff;background:linear-gradient(135deg,var(--secondary),var(--primary))}
+  .expert-row .info{flex:1;min-width:0}
+  .expert-row .info b{font-size:14px;color:var(--ink)}
+  .expert-row .info small{display:block;color:var(--muted);font-size:12px;margin-top:1px}
+  .expert-row .cnt{font-size:12px;color:var(--info);background:var(--info-bg);padding:3px 9px;border-radius:20px;font-weight:600;white-space:nowrap}
+  .expert-row .ops{display:flex;gap:6px}
+  .expert-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;
+    padding-top:14px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
+
+  /* 评审详情 */
+  .review-card{display:flex;gap:16px;align-items:stretch}
+  .rv-score{flex:none;width:118px;border-radius:var(--r-md);color:#fff;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;padding:16px;background:linear-gradient(135deg,var(--secondary),var(--primary))}
+  .rv-score b{font-size:42px;line-height:1;font-weight:700}
+  .rv-score span{font-size:12.5px;opacity:.85;margin-top:5px}
+  .rv-side{flex:1;display:flex;flex-direction:column;justify-content:center;gap:12px}
+  .rv-line{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);
+    border-bottom:1px solid var(--border);padding-bottom:11px}
+  .rv-line>span:last-child{color:var(--ink);font-weight:500}
+  .rv-comment{font-size:14px;line-height:1.85;color:var(--ink-2);background:var(--surface-2);
+    border:1px solid var(--border);border-radius:var(--r-md);padding:16px 18px}
+  .src-tag{display:inline-block;padding:2px 9px;border-radius:6px;font-size:11px;font-weight:600;white-space:nowrap}
+  .src-tag.individual{background:var(--info-bg);color:var(--info)}
+  .src-tag.org{background:#fef3e2;color:#b9770a}
+  .review-empty{text-align:center;color:var(--muted);padding:38px 16px}
+  .review-empty svg{color:var(--faint);margin:0 auto 10px}
+  .review-empty small{display:block;margin-top:8px}
+
+  /* ---------- Toast ---------- */
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(16px);
+    background:var(--ink);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;display:flex;align-items:center;gap:9px;
+    opacity:0;pointer-events:none;transition:.25s;z-index:80;box-shadow:var(--shadow-md)}
+  .toast svg{width:16px;height:16px;color:var(--accent)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media(max-width:900px){
+    aside{width:66px}
+    .brand-text,.nav-label,.nav-item span:not(.ico),.sidebar-foot button span{display:none}
+    .brand{justify-content:center;padding:18px 0}
+    .nav-item{justify-content:center;padding:11px 0}
+    .nav-item.active::before{display:none}
+    main{margin-left:66px;width:calc(100% - 66px)}
+    .topbar,#view{padding-left:16px;padding-right:16px}
+    .field-row{flex-direction:column;gap:0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN ============ -->
+<div id="login">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+    </div>
+    <h1>内容管理后台</h1>
+    <p>四川省教育电子音像出版社 · 原型</p>
+    <div class="login-field"><label>账号</label><input id="loginUser" placeholder="请输入账号" value="admin" /></div>
+    <div class="login-field"><label>密码</label><input id="loginPass" type="password" placeholder="请输入密码" value="" /></div>
+    <button class="btn-login" onclick="doLogin()">登 录</button>
+    <div class="login-hint">原型演示账号：admin / admin</div>
+  </div>
+</div>
+
+<!-- ============ APP ============ -->
+<div id="app">
+<div class="layout">
+  <aside>
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+      </div>
+      <div class="brand-text">四川教育电子音像<small>内容管理后台 · 原型</small></div>
+    </div>
+    <div class="nav-label">内容管理</div>
+    <nav id="nav"></nav>
+    <div class="sidebar-foot">
+      <button onclick="logout()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span>退出登录</span>
+      </button>
+    </div>
+  </aside>
+  <main>
+    <div class="topbar">
+      <button id="backBtn" class="btn btn-ghost" style="display:none" onclick="onBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg><span id="backLabel">返回列表</span></button>
+      <div>
+        <h2 id="pageTitle">仪表盘</h2>
+        <div class="sub" id="pageSub"></div>
+      </div>
+      <div class="actions" id="pageActions"></div>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+</div>
+
+<!-- Drawer (form) -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <h3 id="drawerTitle">编辑</h3>
+    <button class="x" onclick="closeDrawer()" aria-label="关闭">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot">
+    <button class="btn btn-ghost" onclick="closeDrawer()">取消</button>
+    <button class="btn btn-primary" onclick="saveForm()">保存</button>
+  </div>
+</div>
+
+<!-- Lightbox (作品预览) -->
+<div class="overlay" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lightbox-card">
+    <div class="lightbox-head">
+      <h3 id="lbTitle">作品预览</h3>
+      <button class="x" onclick="closeLightbox()" aria-label="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-body" id="lbBody"></div>
+  </div>
+</div>
+
+<!-- 评审专家管理 -->
+<div class="overlay" id="expertOverlay" onclick="if(event.target===this)closeExperts()">
+  <div class="lightbox-card" style="width:min(600px,94vw)">
+    <div class="lightbox-head">
+      <h3>评审专家管理</h3>
+      <button class="x" onclick="closeExperts()" aria-label="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-body" id="expertBody"></div>
+  </div>
+</div>
+
+<!-- 手动添加作品 -->
+<div class="overlay" id="subOverlay" onclick="if(event.target===this)closeAddSubmission()">
+  <div class="lightbox-card" style="width:min(640px,94vw)">
+    <div class="lightbox-head">
+      <h3>手动添加作品</h3>
+      <button class="x" onclick="closeAddSubmission()" aria-label="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-body" id="subFormBody"></div>
+    <div class="drawer-foot">
+      <button class="btn btn-ghost" onclick="closeAddSubmission()">取消</button>
+      <button class="btn btn-primary" onclick="saveNewSubmission()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   图标系统（Lucide 风格内联 SVG，取代 emoji）
+============================================================ */
+const ICON_PATHS={
+  dashboard:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+  book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
+  trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>',
+  video:'<path d="m22 8-6 4 6 4V8z"/><rect x="2" y="6" width="14" height="12" rx="2"/>',
+  megaphone:'<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+  image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+  plus:'<path d="M5 12h14"/><path d="M12 5v14"/>',
+  edit:'<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>',
+  trash:'<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/>',
+  upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>',
+  search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  grip:'<circle cx="9" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="18" r="1"/>',
+  eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  folder:'<path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>',
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  shuffle:'<path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="m15 15 6 6"/><path d="M4 4l5 5"/>',
+  up:'<path d="m18 15-6-6-6 6"/>',
+  down:'<path d="m6 9 6 6 6-6"/>',
+  cart:'<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
+  save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/>',
+  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+  rocket:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+  inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+};
+function ICON(name,size){
+  const p=ICON_PATHS[name]||ICON_PATHS.info;
+  return `<svg viewBox="0 0 24 24" width="${size||18}" height="${size||18}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+}
+const MODULE_ICONS={books:'book',events:'trophy',services:'cart',announcements:'megaphone',banners:'image'};
+
+/* ============================================================
+   数据模型定义（schema）—— 后台所有模块由此驱动
+   后续接后端时，把 store 的读写换成 API 调用即可。
+============================================================ */
+const SCHEMAS = {
+  books: {
+    title:'电子书', icon:'📖', sub:'管理电子书库的图书条目',
+    fullpage:true,
+    // 列表展示的列
+    columns:[
+      {key:'_cover', label:'封面'},
+      {key:'title', label:'书名'},
+      {key:'author', label:'作者'},
+      {key:'cat', label:'分类', map:{textbook:'数字教材',research:'研究著作',contest:'赛事作品',annals:'年鉴志书',heritage:'非遗文化'}},
+      {key:'year', label:'年份'},
+      {key:'_bookfile', label:'书籍文件', bookfile:true},
+      {key:'badge', label:'标记', type:'badge'},
+    ],
+    search:['title','author'],
+    filter:{key:'cat', label:'分类', options:{textbook:'数字教材',research:'研究著作',contest:'赛事作品',annals:'年鉴志书',heritage:'非遗文化'}},
+    // 表单字段
+    fields:[
+      {key:'_g1', label:'基本信息', type:'divider'},
+      {key:'title', label:'书名', type:'text', required:true},
+      {key:'cover', label:'封面图片', type:'image', ratio:'3 / 4', hint:'建议 600×800px，比例 3∶4（竖版书封）'},
+      {row:[{key:'author', label:'作者', type:'text'},{key:'cat', label:'分类', type:'select', options:{textbook:'数字教材',research:'研究著作',contest:'赛事作品',annals:'年鉴志书',heritage:'非遗文化'}}]},
+      {row:[{key:'year', label:'年份', type:'text'},{key:'pages', label:'页数', type:'text', hint:'如 312页'}]},
+      {row:[{key:'badge', label:'标记', type:'select', options:{'':'无',new:'新书',hot:'热门',free:'免费'}},{key:'icon', label:'无封面时占位图标', type:'text', hint:'emoji，如 📖'}]},
+      {row:[{key:'color1', label:'占位色 起', type:'color'},{key:'color2', label:'占位色 止', type:'color'}]},
+      {key:'tags', label:'标签', type:'tags', hint:'逗号分隔'},
+      {key:'_g2', label:'内容简介与试读', type:'divider'},
+      {key:'intro', label:'简介', type:'textarea'},
+      {key:'preview', label:'试读内容', type:'textarea'},
+      {key:'_g3', label:'电子书文件', type:'divider'},
+      {key:'bookFiles', label:'书籍文件', type:'files', accept:'.pdf,.epub,application/pdf,application/epub+zip', hint:'上传整本电子书，支持 PDF / EPUB（可同时上传两种格式）'},
+    ],
+  },
+  events: {
+    title:'赛事活动', icon:'🏆', sub:'管理征集活动与赛事（字段对应主站赛事卡片）',
+    fullpage:true,
+    columns:[
+      {key:'_cover', label:'封面', evt:true},
+      {key:'title', label:'赛事名称'},
+      {key:'status', label:'状态', type:'badge', map:{open:'报名中',soon:'即将开始',ended:'已结束'}},
+      {key:'deadline', label:'报名截止'},
+      {key:'audience', label:'参赛对象'},
+      {key:'_count', label:'报名人数', count:true},
+      {key:'_works', label:'收集作品', works:true},
+    ],
+    search:['title','organizer'],
+    filter:{key:'status', label:'状态', options:{open:'报名中',soon:'即将开始',ended:'已结束'}},
+    fields:[
+      {key:'_g1', label:'基本信息', type:'divider'},
+      {key:'title', label:'赛事名称', type:'text', required:true},
+      {key:'cover', label:'赛事封面', type:'image', ratio:'420 / 148', hint:'建议 840×296px，比例约 2.85∶1（横版 Banner）'},
+      {key:'summary', label:'赛事描述', type:'textarea', hint:'卡片正文（列表卡片上的简短介绍）'},
+      {row:[{key:'status', label:'状态', type:'select', options:{open:'报名中',soon:'即将开始',ended:'已结束'}},{key:'deadline', label:'报名截止', type:'text', hint:'如 2026年8月15日'}]},
+      {key:'audience', label:'参赛对象', type:'text', hint:'如 全国中小学生'},
+      {key:'count', label:'报名人数', type:'countsource'},
+      {key:'link', label:'详情页链接', type:'text', hint:'如 event-detail.html'},
+      {key:'_g2', label:'大赛介绍', type:'divider'},
+      {key:'detail', label:'大赛介绍', type:'richcontent', hint:'支持文字 / 图片 / 视频混排，可拖动排序'},
+      {key:'_g3', label:'赛程安排', type:'divider'},
+      {key:'schedule', label:'赛程流程（可拖拽排序）', type:'repeater', itemName:'流程', addLabel:'+ 添加流程', draggable:true,
+        item:[
+          {key:'title', label:'标题', hint:'阶段名称，如 大赛启动'},
+          {key:'subtitle', label:'副标题', hint:'多为时间，如 2026年4月1日'},
+        ]},
+      {key:'_gc', label:'绑定课程', type:'divider'},
+      {key:'courseTitle', label:'课程名称', type:'text', hint:'与赛事关联的一节视频课，如 科幻创作技法'},
+      {key:'courseVideo', label:'课程视频', type:'video', hint:'上传一节视频课（MP4 / WebM）；原型仅本地预览，正式环境对接云存储'},
+      {key:'_g4', label:'主办单位信息', type:'divider'},
+      {row:[{key:'organizer', label:'主办单位', type:'text'},{key:'coOrganizer', label:'承办单位', type:'text'}]},
+      {row:[{key:'email', label:'官方邮箱', type:'text', hint:'如 sceav@sceav.online'},{key:'phone', label:'咨询电话', type:'text', hint:'如 028-86669129'}]},
+      {key:'_g6', label:'相关附件', type:'divider'},
+      {key:'files', label:'赛事附件', type:'files', hint:'报名表 / 章程等，可多个，支持 Word / Excel / PPT / PDF'},
+    ],
+  },
+  services: {
+    title:'赛事服务', icon:'🛒', sub:'管理参赛素材商品（集训平台 / 教程 / 工具 / 资料），对应前端「赛事服务」页',
+    fullpage:true,
+    columns:[
+      {key:'_cover', label:'封面', svc:true},
+      {key:'title', label:'素材名称'},
+      {key:'comp', label:'所属赛事'},
+      {key:'cat', label:'类型', map:{platform:'集训平台',course:'教程指导',tool:'绘画工具',material:'写作资料',other:'其他'}},
+      {key:'_price', label:'价格', price2:true},
+    ],
+    search:['title','comp'],
+    filter:{key:'cat', label:'类型', options:{platform:'集训平台',course:'教程指导',tool:'绘画工具',material:'写作资料',other:'其他'}},
+    fields:[
+      {key:'_g1', label:'基本信息', type:'divider'},
+      {key:'title', label:'素材名称', type:'text', required:true, hint:'如 集训与实训平台'},
+      {key:'cover', label:'素材封面', type:'image', ratio:'4 / 3', hint:'建议 320×240px，比例 4∶3'},
+      {row:[{key:'comp', label:'所属赛事', type:'text', hint:'关联的赛事名称'},{key:'cat', label:'素材类型', type:'select', options:{platform:'集训平台',course:'教程指导',tool:'绘画工具',material:'写作资料',other:'其他'}}]},
+      {key:'tagColor', label:'赛事标签颜色', type:'select', options:{'0':'蓝色','1':'绿色','2':'靛蓝','3':'青色'}, hint:'对应前端赛事彩色标签'},
+      {key:'_g2', label:'价格与购买', type:'divider'},
+      {row:[{key:'price', label:'现价（元）', type:'number'},{key:'orig', label:'原价（元）', type:'number', hint:'选填，显示划线价'}]},
+      {key:'url', label:'购买链接', type:'text', hint:'如 https://www.jd.com/...（京东/天猫等）'},
+      {key:'_g3', label:'素材说明', type:'divider'},
+      {key:'desc', label:'素材简介', type:'textarea', hint:'选填'},
+    ],
+  },
+  announcements: {
+    title:'通知公告', icon:'📢', sub:'管理站点通知公告，字段对应前端通知公告页',
+    fullpage:true,
+    columns:[
+      {key:'title', label:'标题'},
+      {key:'cat', label:'分类', map:{notice:'重要通知',contest:'赛事活动',publish:'出版服务',submit:'征稿启事',platform:'平台公告',coop:'合作征集'}},
+      {key:'date', label:'发布日期'},
+      {key:'pinned', label:'置顶', type:'bool'},
+      {key:'hot', label:'热点', type:'bool'},
+    ],
+    search:['title'],
+    filter:{key:'cat', label:'分类', options:{notice:'重要通知',contest:'赛事活动',publish:'出版服务',submit:'征稿启事',platform:'平台公告',coop:'合作征集'}},
+    fields:[
+      {key:'_g1', label:'基本信息', type:'divider'},
+      {key:'title', label:'公告标题', type:'text', required:true},
+      {row:[{key:'cat', label:'分类', type:'select', options:{notice:'重要通知',contest:'赛事活动',publish:'出版服务',submit:'征稿启事',platform:'平台公告',coop:'合作征集'}},{key:'date', label:'发布日期', type:'date'}]},
+      {row:[{key:'pinned', label:'是否置顶', type:'select', options:{'':'否','1':'是'}},{key:'hot', label:'标记热点', type:'select', options:{'':'否','1':'是'}}]},
+      {key:'_g2', label:'公告正文', type:'divider'},
+      {key:'content', label:'正文内容', type:'richcontent', hint:'富文本：支持文字 / 图片 / 视频混排，可排序'},
+    ],
+  },
+  banners: {
+    title:'首页轮播', icon:'🖼️', sub:'管理首页 Hero 轮播图（对应主站首页轮播）',
+    fullpage:true,
+    columns:[
+      {key:'_cover', label:'图片', ban:true},
+      {key:'order', label:'顺序'},
+      {key:'badge', label:'角标'},
+      {key:'title', label:'标题'},
+      {key:'link', label:'按钮链接'},
+    ],
+    search:['title'],
+    fields:[
+      {key:'_g1', label:'基本信息', type:'divider'},
+      {row:[{key:'order', label:'排序', type:'number', hint:'数字越小越靠前'},{key:'badge', label:'角标文字', type:'text', hint:'如 2026 年度赛事（选填）'}]},
+      {key:'title', label:'主标题', type:'text', required:true},
+      {key:'subtitle', label:'副标题', type:'text'},
+      {key:'_g2', label:'轮播图片', type:'divider'},
+      {key:'cover', label:'轮播图', type:'image', ratio:'700 / 520', hint:'建议 1400×1040px，比例约 4∶3（横版，约 700×520 的 2 倍图更清晰）'},
+      {key:'_g3', label:'按钮', type:'divider'},
+      {row:[{key:'btnText', label:'按钮文字', type:'text', hint:'如 立即报名'},{key:'link', label:'按钮链接', type:'text', hint:'如 events.html'}]},
+    ],
+  },
+};
+
+/* ---------- 种子数据（原型用，存在 localStorage） ---------- */
+const SEED = {
+  books:[
+    {id:1,title:'乡村教育振兴：四川经验与路径',author:'贺建文 主编',cat:'research',year:'2023',pages:'312页',badge:'',icon:'🌾',color1:'#854d0e',color2:'#92400e',tags:'乡村教育,政策研究,四川',intro:'全面梳理四川省推进乡村教育振兴的政策举措与实践探索。',preview:'',bookFiles:[{name:'乡村教育振兴.pdf'},{name:'乡村教育振兴.epub'}]},
+    {id:2,title:'2025年省级科幻类作品征集获奖作品集',author:'活动组委会 编',cat:'contest',year:'2023',pages:'188页',badge:'',icon:'🚀',color1:'#0369a1',color2:'#0c4a6e',tags:'获奖作品,科幻创作,青少年',intro:'收录2025年省级科幻类作品征集活动各类别获奖作品。',preview:'',bookFiles:[{name:'科幻获奖作品集.pdf'}]},
+    {id:3,title:'四川教育年鉴 2023',author:'四川省教育厅 编',cat:'annals',year:'2024',pages:'480页',badge:'new',icon:'📊',color1:'#1e3a5f',color2:'#0a2240',tags:'年鉴,官方,四川教育',intro:'系统记录2023年度四川省教育发展状况。',preview:'',bookFiles:[]},
+    {id:4,title:'四川非物质文化遗产图典',author:'省文化厅 省教厅 联编',cat:'heritage',year:'2023',pages:'428页',badge:'hot',icon:'🎎',color1:'#b91c1c',color2:'#991b1b',tags:'非遗,图典,四川',intro:'精选四川省136项非物质文化遗产项目。',preview:'',bookFiles:[{name:'非遗图典.epub'}]},
+  ],
+  events:[
+    {id:1,title:'全国中小学生绘画书法作品大赛',summary:'弘扬中华传统书画艺术，鼓励中小学生以笔墨表达对生活与自然的感悟，培养审美与艺术素养。设绘画组、书法组、硬笔书法组三个参赛方向。',status:'open',deadline:'2026年8月15日',audience:'全国中小学生',countMode:'custom',countValue:'8,924',link:'event-detail.html',detail:'本大赛旨在弘扬中华优秀传统文化，提升中小学生的书画艺术素养与审美能力。',organizer:'四川省教育电子音像出版社',coOrganizer:'四川省电化教育馆',email:'sceav@sceav.online',phone:'028-86669129',
+      schedule:[
+        {title:'启动报名',subtitle:'2026年5月1日'},
+        {title:'作品提交',subtitle:'2026年5月1日—8月15日'},
+        {title:'评审颁奖',subtitle:'2026年9月'},
+      ]},
+    {id:2,title:'2026年省级科幻类作品征集活动',summary:'面向全省中小学生征集科幻类绘画、写作、数字创意作品，激发青少年的科学想象力与创造力。',status:'open',deadline:'2026年6月30日',audience:'全省中小学生',countMode:'system',countValue:'',link:'event-detail.html',detail:'2026年省级科幻类作品征集活动由四川省教育电子音像出版社主办，面向全省中小学生开放参与。活动旨在激发青少年对科学与未来的想象，通过科幻创作培育具有创新精神的新一代少年。',organizer:'四川省教育信息化与大数据中心',coOrganizer:'四川省教育电子音像出版社',email:'sceav@sceav.online',phone:'028-86669129',
+      schedule:[
+        {title:'大赛启动',subtitle:'2026年4月1日'},
+        {title:'报名征集阶段',subtitle:'2026年4月1日—7月31日'},
+        {title:'初审阶段',subtitle:'2026年8月1日—8月20日'},
+        {title:'终评与公示',subtitle:'2026年8月21日—9月10日'},
+        {title:'颁奖典礼',subtitle:'2026年9月下旬'},
+      ]},
+    {id:3,title:'第十一届中小学生书法大赛',summary:'弘扬传统书法文化，面向全省中小学生，设软笔、硬笔两大类别，传承汉字之美。',status:'soon',deadline:'2026年9月1日',audience:'全省中小学生',countMode:'custom',countValue:'0',link:'event-detail.html',detail:'第十一届中小学生书法大赛以"翰墨书香·传承经典"为主题，旨在引导青少年练习书法、亲近传统文化，提升汉字书写水平与审美素养。',organizer:'四川省教育电子音像出版社',coOrganizer:'四川省书法家协会',email:'sceav@sceav.online',phone:'028-86669130',courseTitle:'楷书入门：基本笔画与结构',
+      schedule:[
+        {title:'征稿启动',subtitle:'2026年9月1日'},
+        {title:'作品提交',subtitle:'2026年9月1日—11月30日'},
+        {title:'评审公示',subtitle:'2026年12月'},
+      ]},
+    {id:4,title:'2026"蓝色海洋"青少年科普绘画大赛',summary:'以海洋生态与蓝色家园为主题，鼓励青少年用画笔描绘对海洋科学与环境保护的理解。',status:'open',deadline:'2026年7月20日',audience:'全省中小学生',countMode:'custom',countValue:'5,612',link:'event-detail.html',detail:'大赛聚焦海洋生态保护与科普教育，设低、中、高三个学段组，优秀作品将结集出版并参与线下巡展。',organizer:'四川省教育电子音像出版社',coOrganizer:'四川省海洋与渔业研究所',email:'ocean@sceav.online',phone:'028-86669131',courseTitle:'海洋科普绘画创作指导',
+      schedule:[
+        {title:'启动报名',subtitle:'2026年5月10日'},
+        {title:'作品征集',subtitle:'2026年5月10日—7月20日'},
+        {title:'专家评审',subtitle:'2026年7月21日—8月10日'},
+        {title:'颁奖巡展',subtitle:'2026年9月'},
+      ]},
+    {id:5,title:'四川省中小学生信息素养提升实践活动',summary:'面向中小学生开展编程、人工智能、数字创作等信息技术类竞赛，培养数字时代核心素养。',status:'open',deadline:'2026年6月15日',audience:'全省中小学生',countMode:'system',countValue:'',link:'event-detail.html',detail:'活动设创意编程、智能设计、数字故事等赛项，鼓励学生运用信息技术解决真实问题，提升计算思维与创新能力。',organizer:'四川省教育信息化与大数据中心',coOrganizer:'四川省电化教育馆',email:'it@sceav.online',phone:'028-86669132',courseTitle:'Scratch 创意编程第一课',
+      schedule:[
+        {title:'报名启动',subtitle:'2026年3月20日'},
+        {title:'校级初赛',subtitle:'2026年4月'},
+        {title:'省级决赛',subtitle:'2026年6月'},
+      ]},
+    {id:6,title:'第五届中小学生经典诵读大会',summary:'以诵读中华经典为载体，弘扬优秀传统文化，提升学生语言表达与人文素养。',status:'soon',deadline:'2026年10月10日',audience:'全省中小学生',countMode:'custom',countValue:'0',link:'event-detail.html',detail:'大会设个人诵读与集体诵读两类，倡导以声传情、以读化人，决赛优秀节目将进行线上展播。',organizer:'四川省教育电子音像出版社',coOrganizer:'四川省语言文字工作委员会',email:'reading@sceav.online',phone:'028-86669133',courseTitle:'',schedule:[]},
+    {id:7,title:'2025年青少年AI创意绘本设计大赛',summary:'人工智能与儿童创意相结合，征集AI辅助创作的原创绘本作品。',status:'ended',deadline:'2025年11月30日',audience:'全国中小学生',countMode:'custom',countValue:'3,287',link:'event-detail.html',detail:'首届青少年AI创意绘本设计大赛圆满收官，共收到来自全国各地作品 3,287 件，50 件获奖作品已结集出版。',organizer:'四川省教育电子音像出版社',coOrganizer:'四川省人工智能学会',email:'ai@sceav.online',phone:'028-86669134',courseTitle:'AI绘本创作工具入门',
+      schedule:[
+        {title:'大赛启动',subtitle:'2025年8月1日'},
+        {title:'作品征集',subtitle:'2025年8月1日—11月30日'},
+        {title:'评审颁奖',subtitle:'2025年12月'},
+      ]},
+    {id:8,title:'四川省中小学劳动教育成果展示活动',summary:'征集劳动教育课程实践成果、学生劳动作品与典型案例，推动劳动教育落地。',status:'ended',deadline:'2025年9月30日',audience:'全省中小学校',countMode:'custom',countValue:'1,956',link:'event-detail.html',detail:'活动面向全省中小学校征集劳动教育优秀成果，涵盖课程设计、实践基地、学生作品三大类，遴选典型案例汇编推广。',organizer:'四川省教育厅',coOrganizer:'四川省教育电子音像出版社',email:'labor@sceav.online',phone:'028-86669135',courseTitle:'',schedule:[
+        {title:'成果征集',subtitle:'2025年6月—9月'},
+        {title:'评审展示',subtitle:'2025年10月'},
+      ]},
+  ],
+  /* 字段对应前端报名表单：姓名 / 手机号 / 行政区(省市区) / 单位 / 作品数量 / 附件(最多10个)
+     reviewer / status / score 为后台评审附加字段 */
+  submissions:[
+    {id:1,eventId:1,name:'王梓萌',phone:'138****2156',province:'四川省',city:'广元市',district:'利州区',unit:'广元市利州区实验小学',workCount:2,
+      files:[{name:'山乡新貌.jpg'},{name:'创作说明.docx'}],reviewer:'刘晨光',status:'reviewed',score:'92',comment:'构图饱满，笔墨老练，乡土气息浓厚，主题表达到位。建议在色彩层次与远近虚实上再作打磨，整体已属上乘。',submittedAt:'2026-05-12 14:23'},
+    {id:2,eventId:1,name:'李佳宁',phone:'139****8842',province:'四川省',city:'成都市',district:'双流区',unit:'成都市双流区实验中学',workCount:1,
+      files:[{name:'候鸟归来.png'}],reviewer:'刘晨光',status:'reviewed',score:'88',comment:'主题鲜明，画面富有感染力，候鸟的动态捕捉生动。部分细节处理略显仓促，可在线条收尾上更精细。',submittedAt:'2026-05-14 09:10'},
+    {id:3,eventId:1,source:'org',name:'陈浩然（带队老师）',phone:'137****5521',province:'四川省',city:'绵阳市',district:'涪城区',unit:'绵阳市南山小学',workCount:3,
+      files:[{name:'书法作品1.jpg'},{name:'书法作品2.jpg'},{name:'参赛登记表.pdf'}],reviewer:'张明华',status:'pending',score:'',submittedAt:'2026-05-18 16:45'},
+    {id:4,eventId:1,name:'张昕瑜',phone:'135****3309',province:'四川省',city:'成都市',district:'青羊区',unit:'成都市七中附小',workCount:1,
+      files:[{name:'春日.jpg'}],reviewer:'',status:'pending',score:'',submittedAt:'2026-05-20 11:02'},
+    {id:5,eventId:2,name:'林可心',phone:'136****7788',province:'四川省',city:'成都市',district:'武侯区',unit:'成都市实验小学',workCount:1,
+      files:[{name:'时间邮递员.docx'}],reviewer:'周天宇',status:'shortlisted',score:'95',comment:'想象力出众，叙事完整，时间线设计巧妙，语言富有童趣又不失思考深度，是本届难得的佳作，推荐入围。',submittedAt:'2026-04-22 10:30'},
+    {id:6,eventId:2,name:'赵子轩',phone:'138****1290',province:'四川省',city:'绵阳市',district:'游仙区',unit:'绵阳市实验中学',workCount:2,
+      files:[{name:'星际信使.mp4'},{name:'设计文档.pptx'}],reviewer:'周天宇',status:'reviewed',score:'90',comment:'创意新颖，数字技术呈现成熟，视听效果完整。结构上略显松散，部分情节衔接可再紧凑。',submittedAt:'2026-04-25 15:18'},
+    {id:7,eventId:2,source:'org',name:'孙悦（指导教师）',phone:'139****4567',province:'四川省',city:'自贡市',district:'自流井区',unit:'自贡市蜀光小学',workCount:4,
+      files:[{name:'未来城市1.jpg'},{name:'未来城市2.jpg'},{name:'未来城市3.png'},{name:'作品阐述.pdf'}],reviewer:'',status:'pending',score:'',submittedAt:'2026-04-28 08:55'},
+  ],
+  /* 评审专家：姓名 + 电话 + 评审链接 token（专家凭链接登录，只评审分配给自己的作品） */
+  experts:[
+    {id:1,eventId:1,name:'刘晨光',phone:'13800010001',token:'rvw7k3a1x9'},
+    {id:2,eventId:1,name:'张明华',phone:'13800010002',token:'rvw2m8b5q4'},
+    {id:3,eventId:2,name:'周天宇',phone:'13800010003',token:'rvw9p1c7t2'},
+  ],
+  services:[
+    {id:1,title:'集训与实训平台',comp:'省级科幻类作品征集活动',cat:'platform',tagColor:'0',price:'598',orig:'',url:'https://www.jd.com',cover:'',desc:'面向参赛选手的在线集训与实训平台，含课程、练习与模拟评测。'},
+    {id:2,title:'科幻绘画创作教程（视频）',comp:'青少年AI创意绘本设计大赛',cat:'course',tagColor:'1',price:'128',orig:'168',url:'https://www.jd.com',cover:'',desc:'名师示范科幻题材绘画的构图、配色与表现技法。'},
+    {id:3,title:'专业绘画工具套装',comp:'全国中小学生绘画书法作品大赛',cat:'tool',tagColor:'2',price:'68',orig:'88',url:'https://www.jd.com',cover:'',desc:'参赛推荐的马克笔/水彩套装，适合中小学生使用。'},
+    {id:4,title:'科幻征文写作资料包',comp:'全国中小学生科幻征文大赛',cat:'material',tagColor:'3',price:'45',orig:'',url:'https://www.jd.com',cover:'',desc:'优秀范文、写作框架与素材合集，助力科幻征文创作。'},
+  ],
+  announcements:[
+    {id:1,title:'数字教材平台系统维护公告（2026年6月15日）',cat:'platform',date:'2026-05-08',pinned:'1',hot:'',content:'为提升平台服务质量，数字教材平台将于 2026 年 6 月 15 日 00:00—06:00 进行系统升级维护，期间暂停访问，敬请谅解。'},
+    {id:2,title:'2025年科幻绘画作品征集活动获奖名单公示',cat:'contest',date:'2026-04-22',pinned:'',hot:'1',content:'2025 年科幻绘画作品征集活动评审工作已结束，现将获奖名单予以公示，公示期为 5 个工作日。'},
+    {id:3,title:'《智能教育》2026年征稿启事',cat:'submit',date:'2026-04-15',pinned:'',hot:'',content:'《智能教育》面向全省教育工作者征集稿件，欢迎围绕教育数字化、人工智能教育应用等主题踊跃投稿。'},
+    {id:4,title:'出版物经营许可证年检结果通告',cat:'publish',date:'2026-03-28',pinned:'',hot:'',content:'我社出版物经营许可证年检已通过，特此通告。'},
+    {id:5,title:'关于征集2026年度教育数字化合作伙伴的公告',cat:'coop',date:'2026-03-10',pinned:'',hot:'',content:'为推进教育数字化转型，现面向社会征集 2026 年度合作伙伴，详情见正文。'},
+  ],
+  banners:[
+    {id:1,order:'1',badge:'2026 年度赛事',title:'2026 省级科幻类作品征集',subtitle:'面向全省中小学生，激发科学想象力',cover:'assets/ocean-design-competition.png',btnText:'立即报名',link:'events.html'},
+    {id:2,order:'2',badge:'数字出版',title:'数字出版 · 教育创新 · 融合发展',subtitle:'打造综合型数字内容服务平台',cover:'assets/hero-ocean-ai-education.png',btnText:'了解更多',link:'index.html'},
+  ],
+};
+
+/* ============================================================
+   数据存取层（原型：localStorage；接后端时换成 fetch）
+============================================================ */
+const STORE_KEY='sceav_admin_data';
+function loadStore(){
+  let d=localStorage.getItem(STORE_KEY);
+  if(d){try{const o=JSON.parse(d);[...Object.keys(SCHEMAS),'submissions','experts'].forEach(k=>{if(!o[k])o[k]=JSON.parse(JSON.stringify(SEED[k]||[]))});return o}catch(e){}}
+  saveStore(SEED); return JSON.parse(JSON.stringify(SEED));
+}
+function saveStore(d){localStorage.setItem(STORE_KEY,JSON.stringify(d))}
+let DB=loadStore();
+function nextId(arr){return arr.reduce((m,x)=>Math.max(m,x.id||0),0)+1}
+
+/* ============================================================
+   登录
+============================================================ */
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value.trim();
+  if(u==='admin'&&p==='admin'){
+    sessionStorage.setItem('sceav_admin_login','1');
+    showApp();
+  }else{ toast('账号或密码错误（原型用 admin/admin）'); }
+}
+function logout(){ sessionStorage.removeItem('sceav_admin_login'); location.reload(); }
+function showApp(){
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  buildNav(); go('dashboard');
+}
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+
+/* ============================================================
+   导航
+============================================================ */
+let current='dashboard';
+function buildNav(){
+  const nav=document.getElementById('nav');
+  let html=`<div class="nav-item" data-k="dashboard" onclick="go('dashboard')"><span class="ico">${ICON('dashboard')}</span><span>仪表盘</span></div>`;
+  for(const k in SCHEMAS){
+    const s=SCHEMAS[k];
+    html+=`<div class="nav-item" data-k="${k}" onclick="go('${k}')"><span class="ico">${ICON(MODULE_ICONS[k])}</span><span>${s.title}</span></div>`;
+  }
+  nav.innerHTML=html;
+}
+let backCtx=null; // 'form' | 'submissions'
+function go(k){
+  current=k; backCtx=null;
+  document.getElementById('backBtn').style.display='none';
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.k===k));
+  if(k==='dashboard') renderDashboard();
+  else renderList(k);
+}
+function onBack(){ if(backCtx==='submissions') go('events'); else cancelForm(); }
+
+/* ============================================================
+   仪表盘
+============================================================ */
+function renderDashboard(){
+  document.getElementById('pageTitle').textContent='仪表盘';
+  document.getElementById('pageSub').textContent='内容总览';
+  document.getElementById('pageActions').innerHTML=
+    `<button class="btn btn-ghost" onclick="exportJSON()">${ICON('download',15)}导出数据</button>
+     <button class="btn btn-ghost" onclick="importJSON()">${ICON('upload',15)}导入数据</button>
+     <button class="btn btn-danger" onclick="resetData()">${ICON('refresh',15)}重置数据</button>`;
+  let cards='';
+  for(const k in SCHEMAS){
+    cards+=`<div class="stat-card" onclick="go('${k}')" style="cursor:pointer">
+      <div class="chip">${ICON(MODULE_ICONS[k],20)}</div>
+      <div class="num tnum">${DB[k].length}</div>
+      <div class="lbl">${SCHEMAS[k].title}</div>
+      <span class="go">${ICON('plus',16)}</span>
+    </div>`;
+  }
+  document.getElementById('view').innerHTML=`
+    <div class="stat-grid">${cards}</div>
+    <div class="panel">
+      <h3>${ICON('info',16)}这是一个纯前端原型</h3>
+      <p>所有数据保存在浏览器本地（localStorage），刷新不会丢失，可随意增删改调试交互与字段结构。<br>
+      左侧每个模块都支持 新增 / 编辑 / 删除 / 搜索 / 筛选。调好后用「导出数据」拿到 JSON，即可作为接后端时的数据结构依据。</p>
+    </div>
+    <div class="panel">
+      <h3>${ICON('rocket',16)}下一步（接入真实服务）</h3>
+      <p>1. 把 <code>loadStore / saveStore</code> 换成后端 API（GET/POST/PUT/DELETE）。<br>
+      2. 登录改为真实鉴权（Token）。<br>
+      3. 图片字段接入文件上传。<br>
+      4. 主站页面改为从同一数据源 fetch，实现「后台改、前台变」。</p>
+    </div>`;
+}
+
+/* ============================================================
+   列表
+============================================================ */
+let listState={search:'',filter:''};
+function renderList(k){
+  const s=SCHEMAS[k];
+  document.getElementById('pageTitle').textContent=s.title;
+  document.getElementById('pageSub').textContent=s.sub;
+  document.getElementById('pageActions').innerHTML=
+    `<button class="btn btn-primary" onclick="openForm('${k}')">${ICON('plus',15)}新增${s.title}</button>`;
+  listState={search:'',filter:''};
+  let toolbar=`<div class="toolbar">`;
+  if(s.search) toolbar+=`<div class="search-wrap">${ICON('search',15)}<input class="search" placeholder="搜索…" oninput="listState.search=this.value;drawRows('${k}')"></div>`;
+  if(s.filter){
+    let opts=`<option value="">全部${s.filter.label}</option>`;
+    for(const o in s.filter.options) opts+=`<option value="${o}">${s.filter.options[o]}</option>`;
+    toolbar+=`<select onchange="listState.filter=this.value;drawRows('${k}')">${opts}</select>`;
+  }
+  toolbar+=`</div>`;
+  let thead='<tr>';
+  s.columns.forEach(c=>thead+=`<th>${c.label}</th>`);
+  thead+='<th style="text-align:right">操作</th></tr>';
+  document.getElementById('view').innerHTML=
+    `<div class="card">${toolbar}<div class="table-scroll"><table><thead>${thead}</thead><tbody id="rows"></tbody></table></div></div>`;
+  drawRows(k);
+}
+function drawRows(k){
+  const s=SCHEMAS[k];
+  let rows=DB[k].slice();
+  if(s.filter && listState.filter) rows=rows.filter(r=>String(r[s.filter.key])===listState.filter);
+  if(s.search && listState.search){
+    const q=listState.search.toLowerCase();
+    rows=rows.filter(r=>s.search.some(f=>String(r[f]||'').toLowerCase().includes(q)));
+  }
+  const tb=document.getElementById('rows');
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="${s.columns.length+1}"><div class="empty">${ICON('inbox',38)}暂无数据</div></td></tr>`;return}
+  tb.innerHTML=rows.map(r=>{
+    let tds='';
+    s.columns.forEach(c=>{
+      tds+='<td'+(c.key==='_cover'?' class="cover"':'')+'>'+cellHTML(c,r)+'</td>';
+    });
+    const extra = k==='events'
+      ? `<button class="icon-btn" title="作品收集" onclick="renderSubmissions(${r.id})">${ICON('folder',15)}</button>` : '';
+    tds+=`<td><div class="row-actions">${extra}
+      <button class="icon-btn" title="编辑" onclick="openForm('${k}',${r.id})">${ICON('edit',15)}</button>
+      <button class="icon-btn danger" title="删除" onclick="del('${k}',${r.id})">${ICON('trash',15)}</button></div></td>`;
+    return `<tr>${tds}</tr>`;
+  }).join('');
+}
+function cellHTML(c,r){
+  const v=r[c.key];
+  if(c.key==='_cover'){
+    const wide=c.evt||c.svc||c.ban;
+    const dim=wide?'width:64px;height:44px':'width:38px;height:50px';
+    if(r.cover) return `<div class="mini-cover" style="${dim};overflow:hidden"><img src="${r.cover}" style="width:100%;height:100%;object-fit:cover"></div>`;
+    if(wide) return `<div class="mini-cover" style="${dim};background:linear-gradient(135deg,${r.color1||'#0a4d8c'},${r.color2||'#072f5a'})">${ICON(c.svc?'cart':c.ban?'image':'trophy',18)}</div>`;
+    return `<div class="mini-cover" style="${dim};background:linear-gradient(135deg,${r.color1||'#0a4d8c'},${r.color2||'#072f5a'})">${r.icon||'📘'}</div>`;
+  }
+  if(c.price2){
+    if(!r.price&&r.price!==0) return '<span style="color:var(--muted)">—</span>';
+    return `<span style="color:#d92d20;font-weight:700">¥${esc(r.price)}</span>${r.orig?` <span style="color:var(--muted);text-decoration:line-through;font-size:11px">¥${esc(r.orig)}</span>`:''}`;
+  }
+  if(c.count){
+    if(r.countMode==='system') return `<span class="tag">系统获取</span>`;
+    return r.countValue?`<span class="tnum">${esc(r.countValue)}</span>`:'<span style="color:var(--muted)">—</span>';
+  }
+  if(c.works){
+    const n=(DB.submissions||[]).filter(x=>x.eventId===r.id).length;
+    return `<a onclick="renderSubmissions(${r.id})" style="cursor:pointer;color:var(--primary);font-weight:600">${n} 件作品 ›</a>`;
+  }
+  if(c.bookfile){const fs=r.bookFiles||[];if(!fs.length)return '<span style="color:var(--muted)">未上传</span>';
+    return fs.map(f=>`<span class="tag" style="text-transform:uppercase">${esc((f.name.split('.').pop()||'file'))}</span>`).join('');}
+  if(c.type==='hasvideo') return r.video&&r.video.name?'<span class="badge new">已上传</span>':'<span style="color:var(--muted)">—</span>';
+  if(c.type==='filecount'){const n=(r.files||[]).length;return n?`<span class="tag">${n} 个</span>`:'<span style="color:var(--muted)">—</span>'}
+  if(c.type==='badge'){
+    if(!v) return '<span style="color:var(--muted)">—</span>';
+    const label=(c.map&&c.map[v])||{new:'新书',hot:'热门',free:'免费'}[v]||v;
+    return `<span class="badge ${v}">${label}</span>`;
+  }
+  if(c.type==='bool') return v?'<span class="badge new">是</span>':'<span style="color:var(--muted)">—</span>';
+  if(c.map) return c.map[v]||v||'—';
+  if(c.key==='tags') return (String(v||'').split(',').filter(Boolean).map(t=>`<span class="tag">${t}</span>`).join(''))||'—';
+  return (v===''||v==null)?'<span style="color:var(--muted)">—</span>':v;
+}
+
+/* ============================================================
+   表单（简单模块→抽屉；fullpage→整页）
+============================================================ */
+let editing={key:null,id:null};
+let formModel={};                 // 当前编辑中的记录（含图片/视频/附件）
+let formContainerId='drawerBody'; // 字段渲染容器
+let objURLs={};                   // 视频本地预览用的临时 URL（不持久化）
+
+function openForm(k,id){
+  editing={key:k,id:id||null};
+  const s=SCHEMAS[k];
+  const rec=id?DB[k].find(x=>x.id===id):{};
+  formModel=JSON.parse(JSON.stringify(rec||{}));
+  objURLs={};
+  if(s.fullpage) renderFormPage(s,id); else openDrawer(s,id);
+}
+function buildFieldsHTML(s){
+  let html='';
+  s.fields.forEach(f=>{
+    if(f.row){html+='<div class="field-row">'+f.row.map(fieldHTML).join('')+'</div>';}
+    else html+=fieldHTML(f);
+  });
+  return html;
+}
+function openDrawer(s,id){
+  document.getElementById('drawerTitle').textContent=(id?'编辑':'新增')+s.title;
+  formContainerId='drawerBody';
+  document.getElementById('drawerBody').innerHTML=buildFieldsHTML(s);
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('drawer').classList.add('show');
+}
+function renderFormPage(s,id){
+  formContainerId='formFields';
+  backCtx='form';
+  document.getElementById('backBtn').style.display='';
+  document.getElementById('backLabel').textContent='返回列表';
+  document.getElementById('pageTitle').textContent=(id?'编辑':'新增')+s.title;
+  document.getElementById('pageSub').textContent=s.sub;
+  document.getElementById('pageActions').innerHTML=
+    `<button class="btn btn-primary" onclick="saveForm()">${ICON('save',15)}保存</button>`;
+  document.getElementById('view').innerHTML=
+    `<div class="panel form-card"><div id="formFields">${buildFieldsHTML(s)}</div>
+     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:22px;border-top:1px solid var(--border);padding-top:18px">
+       <button class="btn btn-ghost" onclick="cancelForm()">取消</button>
+       <button class="btn btn-primary" onclick="saveForm()">${ICON('save',15)}保存</button></div></div>`;
+}
+function cancelForm(){ go(editing.key); }
+
+function fieldHTML(f){
+  if(f.type==='divider') return `<div class="form-section">${f.label}</div>`;
+  if(f.type==='countsource') return countSourceField(f);
+  const v=formModel[f.key]!==undefined?formModel[f.key]:'';
+  const hint=f.hint?`<span class="hint">${f.hint}</span>`:'';
+  let input='';
+  if(f.type==='textarea') input=`<textarea data-k="${f.key}">${esc(v)}</textarea>`;
+  else if(f.type==='select'){
+    let opts='';for(const o in f.options)opts+=`<option value="${o}" ${String(v)===o?'selected':''}>${f.options[o]}</option>`;
+    input=`<select data-k="${f.key}">${opts}</select>`;
+  }
+  else if(f.type==='color') input=`<input type="color" data-k="${f.key}" value="${v||'#0a4d8c'}">`;
+  else if(f.type==='date') input=`<input type="date" data-k="${f.key}" value="${esc(v)}">`;
+  else if(f.type==='image') input=imageField(f,v);
+  else if(f.type==='video') input=videoField(f,v);
+  else if(f.type==='files') input=filesField(f,Array.isArray(v)?v:[]);
+  else if(f.type==='repeater') input=repeaterField(f,Array.isArray(v)?v:[]);
+  else if(f.type==='richcontent') input=richField(f);
+  else input=`<input type="text" data-k="${f.key}" value="${esc(v)}">`;
+  const req=f.required?'<span class="req">*</span>':'';
+  return `<div class="field"><label>${f.label}${req}${hint}</label>${input}</div>`;
+}
+
+/* ---- 报名人数来源（自定义 / 系统获取，灵活运营） ---- */
+function countSourceField(f){
+  const mode=formModel.countMode||'custom';
+  const val=formModel.countValue||'';
+  const sel=`<select data-k="countMode" onchange="onFieldChange()">
+      <option value="custom" ${mode==='custom'?'selected':''}>自定义填写</option>
+      <option value="system" ${mode==='system'?'selected':''}>系统自动获取</option>
+    </select>`;
+  const inp = mode==='system'
+    ? `<input value="由系统实时统计报名数据（接后端后生效）" disabled>`
+    : `<input type="text" data-k="countValue" value="${esc(val)}" placeholder="如 8,924">`;
+  return `<div class="field"><label>报名人数<span class="hint">可按活动灵活选择来源</span></label>
+    <div class="field-row" style="gap:12px">
+      <div class="field" style="flex:0 0 180px;margin:0">${sel}</div>
+      <div class="field" style="flex:1;margin:0">${inp}</div>
+    </div></div>`;
+}
+function onFieldChange(){ syncInputs(); refreshForm(); }
+
+/* ---- 图片上传 ---- */
+function imageField(f,v){
+  const box=`<div class="upload-img" style="aspect-ratio:${f.ratio||'1 / 1'}">`+
+    (v?`<img src="${v}" alt="">`:`<span class="ph">${ICON('image',24)}未上传</span>`)+`</div>`;
+  const btns=`<div class="upload-btns">
+      <button type="button" class="btn btn-ghost btn-sm" onclick="pickImage('${f.key}')">${ICON('upload',14)}${v?'更换图片':'上传图片'}</button>
+      ${v?`<button type="button" class="btn btn-danger btn-sm" onclick="clearField('${f.key}')">${ICON('trash',14)}移除</button>`:''}
+    </div>`;
+  return `<div class="upload-wrap">${box}${btns}</div>`;
+}
+function pickImage(key){
+  const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=()=>{const file=inp.files[0];if(!file)return;
+    const rd=new FileReader();rd.onload=()=>{formModel[key]=rd.result;refreshForm()};rd.readAsDataURL(file)};
+  inp.click();
+}
+
+/* ---- 视频上传（原型仅记录文件名 + 本地预览，不持久化文件） ---- */
+function videoField(f,v){
+  const has=v&&v.name;
+  const preview=objURLs[f.key]?`<video src="${objURLs[f.key]}" controls style="width:100%;border-radius:10px;margin-bottom:8px"></video>`:'';
+  const info=has?`<div class="file-row"><span class="fname">${ICON('video',16)}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(v.name)}</span><small style="color:var(--muted)">${v.size||''}</small></span>
+      <button type="button" class="icon-btn danger" title="移除" onclick="clearField('${f.key}')">${ICON('trash',15)}</button></div>`:'';
+  return `<div class="upload-wrap">${preview}${info}
+    <button type="button" class="btn btn-ghost btn-sm" onclick="pickVideo('${f.key}')">${ICON('upload',14)}${has?'更换视频':'上传视频'}</button></div>`;
+}
+function pickVideo(key){
+  const inp=document.createElement('input');inp.type='file';inp.accept='video/*';
+  inp.onchange=()=>{const file=inp.files[0];if(!file)return;
+    formModel[key]={name:file.name,size:fmtSize(file.size),type:file.type};
+    objURLs[key]=URL.createObjectURL(file);refreshForm()};
+  inp.click();
+}
+
+/* ---- 附件上传（多个，office + pdf；原型仅记录元信息） ---- */
+const OFFICE_PDF='.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation';
+function filesField(f,list){
+  const rows=list.map((x,i)=>`<div class="file-row"><span class="fname">${fileIcon(x.name)}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(x.name)}</span><small style="color:var(--muted)">${x.size||''}</small></span>
+      <button type="button" class="icon-btn danger" title="删除" onclick="removeFile('${f.key}',${i})">${ICON('trash',15)}</button></div>`).join('');
+  return `<div class="upload-wrap">${rows||'<div style="color:var(--muted);font-size:13px">暂无附件</div>'}
+    <button type="button" class="btn btn-ghost btn-sm" onclick="pickFiles('${f.key}')">${ICON('plus',14)}添加附件</button></div>`;
+}
+function pickFiles(key){
+  const f=flatFields(SCHEMAS[editing.key]).find(x=>x.key===key);
+  const inp=document.createElement('input');inp.type='file';inp.multiple=true;inp.accept=(f&&f.accept)||OFFICE_PDF;
+  inp.onchange=()=>{if(!inp.files.length)return;
+    formModel[key]=formModel[key]||[];
+    [...inp.files].forEach(file=>formModel[key].push({name:file.name,size:fmtSize(file.size),type:file.type}));
+    refreshForm()};
+  inp.click();
+}
+function removeFile(key,i){formModel[key].splice(i,1);refreshForm()}
+function clearField(key){delete formModel[key];delete objURLs[key];refreshForm()}
+
+/* ---- 可重复流程（赛程安排等） ---- */
+function repeaterField(f,list){
+  const name=f.itemName||'项';
+  const drag=f.draggable;
+  const items=list.map((it,i)=>{
+    const subs=f.item.map(sf=>{
+      const sv=it[sf.key]!==undefined?it[sf.key]:'';
+      const h=sf.hint?`<span class="hint">${sf.hint}</span>`:'';
+      const inp=sf.type==='textarea'
+        ? `<textarea data-rep="${f.key}" data-idx="${i}" data-sub="${sf.key}">${esc(sv)}</textarea>`
+        : `<input type="text" data-rep="${f.key}" data-idx="${i}" data-sub="${sf.key}" value="${esc(sv)}">`;
+      return `<div class="field" style="margin-bottom:10px"><label>${sf.label}${h}</label>${inp}</div>`;
+    }).join('');
+    const handle=drag?`<span class="rep-handle" draggable="true"
+        ondragstart="repDragStart(event,'${f.key}',${i})" ondragend="repDragEnd(event)" title="拖拽排序">${ICON('grip',16)}</span>`:'';
+    const dnd=drag?`ondragover="repDragOver(event,this)" ondragleave="this.classList.remove('drop-target')" ondrop="repDrop(event,'${f.key}',${i},this)"`:'';
+    return `<div class="rep-item" ${dnd}><div class="rep-head"><span class="left">${handle}<span class="seq tnum">${i+1}</span>${name}</span>
+      <button type="button" class="icon-btn danger" title="删除" onclick="removeRepeat('${f.key}',${i})">${ICON('trash',15)}</button></div>${subs}</div>`;
+  }).join('');
+  return `<div class="upload-wrap" style="width:100%">${items||`<div style="color:var(--muted);font-size:13px">暂无${name}</div>`}
+    <button type="button" class="btn btn-ghost btn-sm" onclick="addRepeat('${f.key}')">${ICON('plus',14)}${(f.addLabel||'添加').replace(/^\+\s*/,'')}</button></div>`;
+}
+function addRepeat(key){syncInputs();formModel[key]=formModel[key]||[];formModel[key].push({});refreshForm()}
+function removeRepeat(key,i){syncInputs();formModel[key].splice(i,1);refreshForm()}
+/* 拖拽排序 */
+let dragState=null;
+function repDragStart(e,key,i){dragState={key,from:i};e.dataTransfer.effectAllowed='move';
+  const item=e.target.closest('.rep-item');if(item)item.classList.add('dragging');}
+function repDragEnd(e){const item=e.target.closest('.rep-item');if(item)item.classList.remove('dragging');dragState=null;}
+function repDragOver(e,el){if(!dragState)return;e.preventDefault();e.dataTransfer.dropEffect='move';el.classList.add('drop-target');}
+function repDrop(e,key,to,el){e.preventDefault();el.classList.remove('drop-target');
+  if(!dragState||dragState.key!==key||dragState.from===to)return;
+  syncInputs();
+  const arr=formModel[key]||[];const [moved]=arr.splice(dragState.from,1);arr.splice(to,0,moved);
+  formModel[key]=arr;dragState=null;refreshForm();}
+
+/* ---- 富内容编辑器（文字 / 图片 / 视频 混排） ---- */
+function rcNormalize(key){
+  let b=formModel[key];
+  if(typeof b==='string') b = b?[{type:'text',value:b}]:[];
+  if(!Array.isArray(b)) b=[];
+  formModel[key]=b; return b;
+}
+function richField(f){
+  const blocks=rcNormalize(f.key);
+  const items=blocks.map((b,i)=>{
+    const head=`<div class="rc-head"><span>${{text:'文字段落',image:'图片',video:'视频'}[b.type]||'内容'} ${i+1}</span>
+      <div class="rc-ops">
+        <button type="button" class="icon-btn" title="上移" onclick="rcMove('${f.key}',${i},-1)">${ICON('up',14)}</button>
+        <button type="button" class="icon-btn" title="下移" onclick="rcMove('${f.key}',${i},1)">${ICON('down',14)}</button>
+        <button type="button" class="icon-btn danger" title="删除" onclick="rcDel('${f.key}',${i})">${ICON('trash',14)}</button>
+      </div></div>`;
+    let body='';
+    if(b.type==='text'){
+      body=`<textarea data-rc="${f.key}" data-idx="${i}" placeholder="请输入正文段落…">${esc(b.value||'')}</textarea>`;
+    }else if(b.type==='image'){
+      body=`<div class="upload-wrap">
+        <div class="upload-img" style="width:240px;aspect-ratio:16/10">${b.src?`<img src="${b.src}">`:`<span class="ph">${ICON('image',24)}未上传</span>`}</div>
+        <div class="upload-btns"><button type="button" class="btn btn-ghost btn-sm" onclick="rcPickImage('${f.key}',${i})">${ICON('upload',14)}${b.src?'更换图片':'上传图片'}</button></div>
+        <input type="text" data-rc="${f.key}" data-idx="${i}" data-cap="1" value="${esc(b.caption||'')}" placeholder="图片说明（选填）" style="margin-top:2px">
+      </div>`;
+    }else if(b.type==='video'){
+      const has=b.name;
+      const prev=rcURLs[f.key+'_'+i]?`<video src="${rcURLs[f.key+'_'+i]}" controls style="width:100%;max-width:320px;border-radius:10px;margin-bottom:8px"></video>`:'';
+      body=`<div class="upload-wrap">${prev}
+        ${has?`<div class="file-row"><span class="fname">${ICON('video',16)}${esc(b.name)} <small style="color:var(--muted)">${b.size||''}</small></span></div>`:''}
+        <button type="button" class="btn btn-ghost btn-sm" onclick="rcPickVideo('${f.key}',${i})">${ICON('upload',14)}${has?'更换视频':'上传视频'}</button></div>`;
+    }
+    return `<div class="rc-block">${head}${body}</div>`;
+  }).join('');
+  return `<div class="rc-editor">
+    ${items||'<div style="color:var(--muted);font-size:13px;padding:6px 0">暂无内容，请从下方添加文字 / 图片 / 视频</div>'}
+    <div class="rc-add">
+      <button type="button" class="btn btn-ghost btn-sm" onclick="rcAdd('${f.key}','text')">${ICON('plus',14)}文字段落</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="rcAdd('${f.key}','image')">${ICON('image',14)}图片</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="rcAdd('${f.key}','video')">${ICON('video',14)}视频</button>
+    </div>
+  </div>`;
+}
+let rcURLs={};
+function rcAdd(key,type){syncInputs();rcNormalize(key).push(type==='text'?{type:'text',value:''}:type==='image'?{type:'image',src:'',caption:''}:{type:'video'});refreshForm();}
+function rcDel(key,i){syncInputs();formModel[key].splice(i,1);refreshForm();}
+function rcMove(key,i,dir){syncInputs();const a=formModel[key],j=i+dir;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];refreshForm();}
+function rcPickImage(key,i){const inp=document.createElement('input');inp.type='file';inp.accept='image/*';
+  inp.onchange=()=>{const f=inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{syncInputs();formModel[key][i].src=rd.result;refreshForm();};rd.readAsDataURL(f);};inp.click();}
+function rcPickVideo(key,i){const inp=document.createElement('input');inp.type='file';inp.accept='video/*';
+  inp.onchange=()=>{const f=inp.files[0];if(!f)return;syncInputs();formModel[key][i]={type:'video',name:f.name,size:fmtSize(f.size)};rcURLs[key+'_'+i]=URL.createObjectURL(f);refreshForm();};inp.click();}
+
+/* 重渲染表单前先把输入同步进 formModel，避免丢失 */
+function syncInputs(){
+  document.querySelectorAll('#'+formContainerId+' [data-k]').forEach(el=>formModel[el.dataset.k]=el.value);
+  document.querySelectorAll('#'+formContainerId+' [data-rc]').forEach(el=>{
+    const key=el.dataset.rc, idx=+el.dataset.idx;
+    if(formModel[key]&&formModel[key][idx]){ if(el.dataset.cap) formModel[key][idx].caption=el.value; else formModel[key][idx].value=el.value; }
+  });
+  const reps={};
+  document.querySelectorAll('#'+formContainerId+' [data-rep]').forEach(el=>{
+    const key=el.dataset.rep, idx=+el.dataset.idx, sub=el.dataset.sub;
+    (reps[key]=reps[key]||[]); (reps[key][idx]=reps[key][idx]||{});
+    reps[key][idx][sub]=el.value;
+  });
+  Object.keys(reps).forEach(k=>formModel[k]=reps[k]);
+}
+function refreshForm(){
+  syncInputs();
+  document.getElementById(formContainerId).innerHTML=buildFieldsHTML(SCHEMAS[editing.key]);
+}
+
+function saveForm(){
+  const k=editing.key,s=SCHEMAS[k];
+  syncInputs();
+  for(const f of flatFields(s)){
+    if(f.required && !String(formModel[f.key]||'').trim()){toast('请填写：'+f.label);return}
+  }
+  const data={...formModel};
+  try{
+    if(editing.id){
+      const i=DB[k].findIndex(x=>x.id===editing.id);
+      DB[k][i]={...DB[k][i],...data}; toast('已保存修改');
+    }else{
+      data.id=nextId(DB[k]); DB[k].push(data); toast('已新增');
+    }
+    saveStore(DB);
+  }catch(e){ toast('保存失败：图片过大超出本地存储上限（原型限制）'); return; }
+  if(s.fullpage) go(k); else { closeDrawer(); current==='dashboard'?renderDashboard():drawRows(k); }
+}
+function flatFields(s){let a=[];s.fields.forEach(f=>f.row?a.push(...f.row):a.push(f));return a}
+function closeDrawer(){
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('drawer').classList.remove('show');
+}
+function del(k,id){
+  if(!confirm('确定删除这条数据？')) return;
+  DB[k]=DB[k].filter(x=>x.id!==id); saveStore(DB);
+  drawRows(k); toast('已删除');
+}
+
+/* ============================================================
+   作品收集列表（每个赛事 → 学生提交作品）
+============================================================ */
+let subState={eventId:null,search:'',status:'',reviewer:'',source:''};
+const SUB_STATUS={pending:'待评审',reviewed:'已评审',shortlisted:'入围'};
+const SUB_SOURCE={individual:'个人提交',org:'组织团队'};
+function renderSubmissions(eventId){
+  const ev=DB.events.find(e=>e.id===eventId); if(!ev) return;
+  current='events'; backCtx='submissions';
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.k==='events'));
+  document.getElementById('backBtn').style.display='';
+  document.getElementById('backLabel').textContent='返回赛事';
+  document.getElementById('pageTitle').textContent='作品收集 · '+ev.title;
+  const all=(DB.submissions||[]).filter(x=>x.eventId===eventId);
+  document.getElementById('pageSub').textContent=`共 ${all.length} 件提交`;
+  document.getElementById('pageActions').innerHTML=
+    `<button class="btn btn-ghost" onclick="openExperts(${eventId})">${ICON('users',15)}评审专家</button>
+     <button class="btn btn-primary" onclick="openAddSubmission(${eventId})">${ICON('plus',15)}增加作品</button>`;
+  // 评审专家筛选项
+  const reviewers=[...new Set(all.map(x=>x.reviewer).filter(Boolean))];
+  subState={eventId,search:'',status:'',reviewer:'',source:''};
+  let revOpts='<option value="">全部评审专家</option>'+reviewers.map(r=>`<option value="${r}">${r}</option>`).join('');
+  let statOpts='<option value="">全部状态</option>'+Object.keys(SUB_STATUS).map(s=>`<option value="${s}">${SUB_STATUS[s]}</option>`).join('');
+  let srcOpts='<option value="">全部来源</option>'+Object.keys(SUB_SOURCE).map(s=>`<option value="${s}">${SUB_SOURCE[s]}</option>`).join('');
+  document.getElementById('view').innerHTML=`
+    <div class="card">
+      <div class="toolbar">
+        <div class="search-wrap">${ICON('search',15)}<input class="search" placeholder="搜索姓名 / 单位 / 手机号…" oninput="subState.search=this.value;drawSubs()"></div>
+        <select onchange="subState.source=this.value;drawSubs()">${srcOpts}</select>
+        <select onchange="subState.status=this.value;drawSubs()">${statOpts}</select>
+        <select onchange="subState.reviewer=this.value;drawSubs()">${revOpts}</select>
+      </div>
+      <div class="table-scroll"><table><thead><tr>
+        <th>报名者</th><th>来源</th><th>所在地区</th><th>单位名称</th><th>作品数</th><th>提交附件</th><th>评审专家</th><th>状态</th><th>提交时间</th><th style="text-align:right">操作</th>
+      </tr></thead><tbody id="subRows"></tbody></table></div>
+    </div>`;
+  drawSubs();
+}
+function isImg(n){return /\.(jpg|jpeg|png|gif|webp)$/i.test(n||'')}
+function isVid(n){return /\.(mp4|webm|mov)$/i.test(n||'')}
+const PH_PALETTE=[['#0369a1','#0c4a6e'],['#854d0e','#92400e'],['#1e1b4b','#312e81'],['#be185d','#9d174d'],['#065f46','#064e3b'],['#0f7bcf','#0a4d8c'],['#1c1917','#44403c']];
+function phImg(idx,label){
+  const [c1,c2]=PH_PALETTE[idx%PH_PALETTE.length];
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='450'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='${c1}'/><stop offset='1' stop-color='${c2}'/></linearGradient></defs><rect width='600' height='450' fill='url(#g)'/><text x='300' y='240' font-size='30' fill='rgba(255,255,255,.92)' text-anchor='middle' font-family='sans-serif'>${label}</text></svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+}
+function drawSubs(){
+  let rows=(DB.submissions||[]).filter(x=>x.eventId===subState.eventId);
+  if(subState.status) rows=rows.filter(x=>x.status===subState.status);
+  if(subState.reviewer) rows=rows.filter(x=>x.reviewer===subState.reviewer);
+  if(subState.source) rows=rows.filter(x=>(x.source||'individual')===subState.source);
+  if(subState.search){const q=subState.search.toLowerCase();
+    rows=rows.filter(x=>[x.name,x.unit,x.phone].some(v=>String(v||'').toLowerCase().includes(q)));}
+  const tb=document.getElementById('subRows');
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="10"><div class="empty">${ICON('inbox',38)}暂无提交作品</div></td></tr>`;return}
+  tb.innerHTML=rows.map(x=>{
+    const files=x.files||[];
+    const first=files[0];
+    const thumb=first&&isImg(first.name)
+      ? `<div class="work-thumb" onclick="previewWork(${x.id})"><img src="${phImg(x.id,'作品')}"></div>`
+      : `<div class="work-thumb" onclick="previewWork(${x.id})" style="background:var(--surface-2);color:var(--secondary);border:1px solid var(--border)">${ICON('folder',18)}</div>`;
+    const reviewer=x.reviewer
+      ? `<span class="reviewer"><span class="av">${esc(x.reviewer.slice(0,1))}</span>${esc(x.reviewer)}</span>`
+      : `<span style="color:var(--muted)">未分配</span>`;
+    const src=(x.source||'individual');
+    return `<tr>
+      <td><div class="stu"><b>${esc(x.name)}</b><small>${esc(x.phone||'—')}</small></div></td>
+      <td><span class="src-tag ${src}">${SUB_SOURCE[src]}</span></td>
+      <td>${esc([x.province,x.city,x.district].filter(Boolean).join(' · ')||'—')}</td>
+      <td>${esc(x.unit||'—')}</td>
+      <td class="tnum">${esc(x.workCount||files.length||0)}</td>
+      <td><div class="work-cell">${thumb}<a onclick="previewWork(${x.id})" style="cursor:pointer;color:var(--primary)">${files.length} 个文件</a></div></td>
+      <td>${reviewer}</td>
+      <td><span class="badge ${x.status}" style="cursor:pointer" title="查看评分与评语" onclick="showReview(${x.id})">${SUB_STATUS[x.status]||x.status}${x.score?' '+esc(x.score)+'分':''}</span></td>
+      <td class="tnum" style="white-space:nowrap;color:var(--muted)">${esc(x.submittedAt||'')}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" title="查看作品" onclick="previewWork(${x.id})">${ICON('eye',15)}</button>
+        <button class="icon-btn" title="指派评审专家" onclick="assignReviewer(${x.id})">${ICON('edit',15)}</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function assignReviewer(id){
+  const x=(DB.submissions||[]).find(s=>s.id===id); if(!x) return;
+  const name=prompt('指派 / 修改评审专家：', x.reviewer||'');
+  if(name===null) return;
+  x.reviewer=name.trim();
+  if(x.reviewer && x.status==='pending') x.status='reviewed';
+  saveStore(DB); drawSubs(); toast('评审专家已更新');
+}
+
+/* ---- 管理员手动添加作品 ---- */
+const SUB_ACCEPT='.jpg,.jpeg,.png,.mp4,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx';
+let newSub=null;
+function openAddSubmission(eid){
+  newSub={eventId:eid,source:'individual',name:'',phone:'',province:'四川省',city:'',district:'',unit:'',workCount:'',files:[],reviewer:'',status:'pending',score:'',comment:''};
+  renderSubForm(); document.getElementById('subOverlay').classList.add('show');
+}
+function closeAddSubmission(){ document.getElementById('subOverlay').classList.remove('show'); newSub=null; }
+function syncSubForm(){
+  if(!newSub) return; const g=id=>document.getElementById(id); if(!g('ns_name')) return;
+  newSub.source=g('ns_source').value; newSub.name=g('ns_name').value; newSub.phone=g('ns_phone').value;
+  newSub.province=g('ns_province').value; newSub.city=g('ns_city').value; newSub.district=g('ns_district').value;
+  newSub.unit=g('ns_unit').value; newSub.workCount=g('ns_count').value;
+}
+function renderSubForm(){
+  const s=newSub, isOrg=s.source==='org';
+  const fileRows=s.files.map((f,i)=>`<div class="file-row"><span class="fname">${fileIcon(f.name)}<span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(f.name)}</span><small style="color:var(--muted)">${f.size||''}</small></span>
+      <button type="button" class="icon-btn danger" onclick="removeSubFile(${i})">${ICON('trash',15)}</button></div>`).join('');
+  document.getElementById('subFormBody').innerHTML=`
+    <div class="field"><label>作品来源</label>
+      <select id="ns_source" onchange="syncSubForm();renderSubForm()">
+        <option value="individual" ${!isOrg?'selected':''}>个人提交</option>
+        <option value="org" ${isOrg?'selected':''}>组织团队提交</option>
+      </select></div>
+    <div class="field-row">
+      <div class="field"><label>${isOrg?'联系人 / 负责人':'报名者姓名'}<span class="req">*</span></label><input id="ns_name" value="${esc(s.name)}" placeholder="请输入姓名"></div>
+      <div class="field"><label>手机号</label><input id="ns_phone" value="${esc(s.phone)}" placeholder="11位手机号"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>省份</label><input id="ns_province" value="${esc(s.province)}"></div>
+      <div class="field"><label>城市</label><input id="ns_city" value="${esc(s.city)}"></div>
+      <div class="field"><label>区/县</label><input id="ns_district" value="${esc(s.district)}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>${isOrg?'组织 / 单位名称':'单位名称'}</label><input id="ns_unit" value="${esc(s.unit)}" placeholder="学校或单位全称"></div>
+      <div class="field" style="flex:0 0 130px"><label>作品数量</label><input id="ns_count" type="number" min="1" value="${esc(s.workCount)}"></div>
+    </div>
+    <div class="field"><label>提交作品附件<span class="hint">支持图片 / 视频 / Office / PDF</span></label>
+      <div class="upload-wrap">${fileRows||'<div style="color:var(--muted);font-size:13px">暂无附件</div>'}
+        <button type="button" class="btn btn-ghost btn-sm" onclick="addSubFile()">${ICON('plus',14)}添加附件</button>
+      </div></div>`;
+}
+function addSubFile(){
+  syncSubForm();
+  const inp=document.createElement('input');inp.type='file';inp.multiple=true;inp.accept=SUB_ACCEPT;
+  inp.onchange=()=>{if(!inp.files.length)return;[...inp.files].forEach(f=>newSub.files.push({name:f.name,size:fmtSize(f.size),type:f.type}));renderSubForm();};
+  inp.click();
+}
+function removeSubFile(i){ syncSubForm(); newSub.files.splice(i,1); renderSubForm(); }
+function saveNewSubmission(){
+  syncSubForm();
+  if(!newSub.name.trim()){toast('请填写姓名 / 联系人');return}
+  const now=new Date(); const pad=n=>String(n).padStart(2,'0');
+  newSub.name=newSub.name.trim();
+  newSub.workCount=newSub.workCount||newSub.files.length;
+  newSub.submittedAt=`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  DB.submissions=DB.submissions||[];
+  newSub.id=nextId(DB.submissions);
+  DB.submissions.push({...newSub});
+  saveStore(DB); closeAddSubmission(); drawSubs();
+  // 刷新顶部统计
+  const all=DB.submissions.filter(x=>x.eventId===subState.eventId);
+  document.getElementById('pageSub').textContent=`共 ${all.length} 件提交`;
+  toast('已添加作品');
+}
+function previewWork(id){
+  const x=(DB.submissions||[]).find(s=>s.id===id); if(!x) return;
+  document.getElementById('lbTitle').textContent=x.name+' · 参赛作品';
+  const meta=`<div class="lb-meta">
+    <div><span>报名者</span>${esc(x.name)}</div>
+    <div><span>手机号</span>${esc(x.phone||'—')}</div>
+    <div><span>所在地区</span>${esc([x.province,x.city,x.district].filter(Boolean).join(' '))||'—'}</div>
+    <div><span>单位名称</span>${esc(x.unit||'—')}</div>
+    <div><span>作品数量</span>${esc(x.workCount||(x.files||[]).length)}</div>
+    <div><span>评审专家</span>${esc(x.reviewer||'未分配')}</div>
+    <div><span>提交时间</span>${esc(x.submittedAt||'—')}</div>
+    <div><span>状态</span>${SUB_STATUS[x.status]||x.status}${x.score?'（'+esc(x.score)+'分）':''}</div>
+  </div>`;
+  const files=x.files||[];
+  const grid=files.map((f,i)=>{
+    if(isImg(f.name)) return `<figure class="lb-fitem"><img src="${phImg(x.id+i,'作品图片')}" alt="${esc(f.name)}"><figcaption>${fileIcon(f.name)}${esc(f.name)}</figcaption></figure>`;
+    if(isVid(f.name)) return `<figure class="lb-fitem"><div class="lb-fph">${ICON('video',26)}<span>视频文件</span></div><figcaption>${fileIcon(f.name)}${esc(f.name)}</figcaption></figure>`;
+    return `<figure class="lb-fitem"><div class="lb-fph">${fileIcon(f.name)}<span>文档</span></div><figcaption>${fileIcon(f.name)}${esc(f.name)}<button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="toast('原型暂不支持下载')">${ICON('download',13)}查看</button></figcaption></figure>`;
+  }).join('');
+  document.getElementById('lbBody').innerHTML=meta+
+    `<div class="form-section" style="margin-top:4px">提交附件（${files.length}）</div>
+     <div class="lb-files">${grid||'<div style="color:var(--muted)">无附件</div>'}</div>`;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('show'); }
+
+/* ---- 点击状态：评审打分（后台可直接评分 / 写评语 / 改状态） ---- */
+let reviewingId=null;
+function showReview(id){
+  const x=(DB.submissions||[]).find(s=>s.id===id); if(!x) return;
+  reviewingId=id;
+  document.getElementById('lbTitle').textContent=x.name+' · 评审打分';
+  const statOpts=Object.keys(SUB_STATUS).map(s=>`<option value="${s}" ${x.status===s?'selected':''}>${SUB_STATUS[s]}</option>`).join('');
+  const body=`
+    <div class="lb-meta" style="margin-bottom:18px">
+      <div><span>报名者</span>${esc(x.name)}（${esc(x.unit||'—')}）</div>
+      <div><span>评审专家</span>${esc(x.reviewer||'未分配')}</div>
+      <div><span>所在地区</span>${esc([x.province,x.city,x.district].filter(Boolean).join(' '))||'—'}</div>
+      <div><span>提交作品</span>${(x.files||[]).length} 个文件 · <a onclick="previewWork(${id})" style="cursor:pointer;color:var(--primary)">查看作品</a></div>
+    </div>
+    <div class="form-section">评审打分</div>
+    <div class="field-row">
+      <div class="field"><label>评分<span class="hint">0–100</span></label><input id="rvScore" type="number" min="0" max="100" value="${esc(x.score||'')}" placeholder="请输入分数"></div>
+      <div class="field"><label>评审状态</label><select id="rvStatus">${statOpts}</select></div>
+    </div>
+    <div class="field"><label>专家评语</label><textarea id="rvComment" placeholder="请输入评语…">${esc(x.comment||'')}</textarea></div>
+    <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:4px">
+      <button class="btn btn-ghost" onclick="closeLightbox()">取消</button>
+      <button class="btn btn-primary" onclick="saveReview()">${ICON('save',15)}保存评审</button>
+    </div>`;
+  document.getElementById('lbBody').innerHTML=body;
+  document.getElementById('lightbox').classList.add('show');
+}
+function saveReview(){
+  const x=(DB.submissions||[]).find(s=>s.id===reviewingId); if(!x) return;
+  const score=document.getElementById('rvScore').value.trim();
+  const status=document.getElementById('rvStatus').value;
+  const comment=document.getElementById('rvComment').value.trim();
+  if(score!==''){const n=Number(score);if(isNaN(n)||n<0||n>100){toast('评分需为 0–100 的数字');return}}
+  x.score=score; x.comment=comment; x.status=status;
+  // 已打分但仍为待评审时，自动置为已评审
+  if(score!=='' && x.status==='pending') x.status='reviewed';
+  saveStore(DB); closeLightbox();
+  if(subState.eventId===x.eventId) drawSubs();
+  toast('评审已保存');
+}
+
+/* ============================================================
+   评审专家管理（每个赛事独立）+ 作品平均随机分配
+============================================================ */
+let expertEventId=null;
+function openExperts(eventId){ expertEventId=eventId; renderExpertList(); document.getElementById('expertOverlay').classList.add('show'); }
+function closeExperts(){ document.getElementById('expertOverlay').classList.remove('show'); }
+function eventExperts(eid){ return (DB.experts||[]).filter(e=>e.eventId===eid); }
+function reviewLink(e){ return new URL(`review.html?event=${e.eventId}&token=${e.token}`, location.href).href; }
+function newToken(){ return 'rvw'+Math.random().toString(36).slice(2,8)+Date.now().toString(36).slice(-3); }
+
+function renderExpertList(){
+  const eid=expertEventId;
+  const experts=eventExperts(eid);
+  const subs=(DB.submissions||[]).filter(s=>s.eventId===eid);
+  const rows=experts.map(e=>{
+    const cnt=subs.filter(s=>s.reviewer===e.name).length;
+    return `<div class="expert-row">
+      <span class="av">${esc(e.name.slice(0,1))}</span>
+      <div class="info"><b>${esc(e.name)}</b><small>📞 ${esc(e.phone||'—')} · 分配 ${cnt} 件</small></div>
+      <span class="cnt">${cnt} 件</span>
+      <div class="ops">
+        <button class="icon-btn" title="复制评审链接" onclick="copyExpertLink(${e.id})">${ICON('link',15)}</button>
+        <button class="icon-btn" title="编辑" onclick="editExpert(${e.id})">${ICON('edit',15)}</button>
+        <button class="icon-btn danger" title="删除" onclick="delExpert(${e.id})">${ICON('trash',15)}</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('expertBody').innerHTML=`
+    <div class="expert-add">
+      <div class="f"><label>专家姓名</label><input id="expName" placeholder="请输入姓名"></div>
+      <div class="f"><label>电话</label><input id="expPhone" placeholder="请输入电话"></div>
+      <button class="btn btn-primary" onclick="addExpert()">${ICON('plus',15)}添加</button>
+    </div>
+    ${rows||'<div style="color:var(--muted);font-size:13px;padding:8px 2px">尚未添加评审专家</div>'}
+    <div class="expert-foot">
+      <span>共 ${experts.length} 位专家 · ${subs.length} 件作品</span>
+      <button class="btn btn-ghost btn-sm" onclick="distributeWork()" ${experts.length?'':'disabled style=opacity:.5'}>${ICON('shuffle',14)}平均随机分配作品</button>
+    </div>`;
+}
+function addExpert(){
+  const name=document.getElementById('expName').value.trim();
+  const phone=document.getElementById('expPhone').value.trim();
+  if(!name){toast('请输入专家姓名');return}
+  DB.experts=DB.experts||[];
+  DB.experts.push({id:nextId(DB.experts),eventId:expertEventId,name,phone,token:newToken()});
+  saveStore(DB); renderExpertList(); toast('已添加专家');
+}
+function editExpert(id){
+  const e=(DB.experts||[]).find(x=>x.id===id); if(!e) return;
+  const name=prompt('专家姓名：',e.name); if(name===null) return;
+  const phone=prompt('电话：',e.phone||''); if(phone===null) return;
+  const oldName=e.name;
+  e.name=name.trim(); e.phone=phone.trim();
+  // 同步已分配作品的评审人姓名
+  (DB.submissions||[]).forEach(s=>{ if(s.eventId===e.eventId && s.reviewer===oldName) s.reviewer=e.name; });
+  saveStore(DB); renderExpertList(); if(typeof drawSubs==='function'&&subState.eventId===e.eventId) drawSubs(); toast('已更新');
+}
+function delExpert(id){
+  const e=(DB.experts||[]).find(x=>x.id===id); if(!e) return;
+  if(!confirm(`删除专家「${e.name}」？其名下作品将变为未分配。`)) return;
+  (DB.submissions||[]).forEach(s=>{ if(s.eventId===e.eventId && s.reviewer===e.name){ s.reviewer=''; if(s.status==='reviewed') s.status='pending'; } });
+  DB.experts=DB.experts.filter(x=>x.id!==id);
+  saveStore(DB); renderExpertList(); if(subState.eventId===e.eventId) drawSubs(); toast('已删除');
+}
+function copyExpertLink(id){
+  const e=(DB.experts||[]).find(x=>x.id===id); if(!e) return;
+  const link=reviewLink(e);
+  navigator.clipboard?.writeText(link).then(
+    ()=>toast('评审链接已复制'),
+    ()=>prompt('复制下面的评审链接：',link)
+  );
+}
+function distributeWork(){
+  const eid=expertEventId;
+  const experts=eventExperts(eid);
+  if(!experts.length){toast('请先添加评审专家');return}
+  const subs=(DB.submissions||[]).filter(s=>s.eventId===eid);
+  if(!subs.length){toast('暂无作品可分配');return}
+  if(!confirm(`将 ${subs.length} 件作品平均随机分配给 ${experts.length} 位专家？\n（将覆盖现有评审人分配）`)) return;
+  // Fisher–Yates 洗牌后轮流分配，确保人均件数差 ≤ 1
+  const shuffled=subs.slice();
+  for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
+  shuffled.forEach((s,i)=>{ s.reviewer=experts[i%experts.length].name; });
+  saveStore(DB); renderExpertList(); if(subState.eventId===eid) drawSubs();
+  const per=Math.floor(subs.length/experts.length);
+  toast(`已平均分配：每位约 ${per}~${per+(subs.length%experts.length?1:0)} 件`);
+}
+
+/* ---- 文件辅助 ---- */
+function fmtSize(b){if(b<1024)return b+'B';if(b<1048576)return (b/1024).toFixed(0)+'KB';return (b/1048576).toFixed(1)+'MB'}
+function fileIcon(n){n=(n||'').toLowerCase();
+  let color='var(--secondary)';
+  if(n.endsWith('.pdf'))color='#d92d20';
+  else if(n.endsWith('.epub'))color='#7c3aed';
+  else if(n.match(/\.docx?$/))color='#2563eb';
+  else if(n.match(/\.xlsx?$/))color='#0a9c5d';
+  else if(n.match(/\.pptx?$/))color='#d97706';
+  return `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>`;}
+
+/* ============================================================
+   导入 / 导出 / 重置
+============================================================ */
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download='sceav-content.json';a.click();
+  toast('已导出 sceav-content.json');
+}
+function importJSON(){
+  const inp=document.createElement('input');inp.type='file';inp.accept='.json';
+  inp.onchange=()=>{const f=inp.files[0];if(!f)return;const rd=new FileReader();
+    rd.onload=()=>{try{DB=JSON.parse(rd.result);saveStore(DB);go(current);toast('导入成功')}catch(e){toast('文件格式有误')}};
+    rd.readAsText(f)};
+  inp.click();
+}
+function resetData(){
+  if(!confirm('重置为初始原型数据？当前修改将丢失。'))return;
+  DB=JSON.parse(JSON.stringify(SEED));saveStore(DB);go('dashboard');toast('已重置');
+}
+
+/* ---------- utils ---------- */
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById('toast');t.innerHTML=ICON('check',16)+'<span>'+esc(msg)+'</span>';t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ---------- 自动登录（演示） ---------- */
+if(sessionStorage.getItem('sceav_admin_login')==='1') showApp();
+</script>
+</body>
+</html>
