@@ -126,6 +126,45 @@
   .stat-card .lbl{font-size:12.5px;color:var(--muted);margin-top:6px}
   .stat-card .go{position:absolute;top:16px;right:16px;color:var(--faint);opacity:0;transition:.16s}
   .stat-card:hover .go{opacity:1}
+  .stat-card .chip.warn{background:var(--warn-bg);color:var(--warn)}
+  .stat-card .chip.success{background:var(--success-bg);color:var(--success)}
+  .stat-card .num.warn{color:var(--warn)}
+  .kpi-sub{font-size:11.5px;color:var(--muted);margin-top:6px}
+  /* dashboard charts */
+  .dash-2{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-bottom:18px}
+  .dash-2.even{grid-template-columns:1fr 1fr}
+  @media(max-width:1000px){.dash-2,.dash-2.even{grid-template-columns:1fr}}
+  .panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .panel-h h3{font-size:14px;color:var(--ink);display:flex;align-items:center;gap:8px;margin:0}
+  .panel-h h3 svg{width:16px;height:16px;color:var(--secondary)}
+  .panel-h .more{font-size:12px;color:var(--primary);cursor:pointer}
+  .hb-row{display:grid;grid-template-columns:130px 1fr 40px;align-items:center;gap:12px;margin-bottom:11px;font-size:12.5px}
+  .hb-row:last-child{margin-bottom:0}
+  .hb-label{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hb-track{height:10px;background:var(--surface-2);border-radius:6px;overflow:hidden}
+  .hb-fill{height:100%;border-radius:6px;min-width:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+  .hb-val{text-align:right;font-weight:700;color:var(--ink)}
+  .donut-wrap{display:flex;align-items:center;gap:22px}
+  .donut-wrap svg{flex:none}
+  .donut-legend{flex:1;display:flex;flex-direction:column;gap:11px}
+  .lg-row{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink-2)}
+  .lg-dot{width:11px;height:11px;border-radius:3px;flex:none}
+  .lg-row .v{margin-left:auto;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .lg-row .p{color:var(--muted);width:44px;text-align:right;font-variant-numeric:tabular-nums}
+  .recent-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;cursor:pointer}
+  .recent-row:last-child{border:none}
+  .recent-row:hover{background:var(--surface-2)}
+  .recent-row .nm{font-weight:600;color:var(--ink)}
+  .recent-row .ev{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+  .recent-row .dt{color:var(--faint);font-size:11.5px;white-space:nowrap}
+  .biz-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:760px){.biz-stats{grid-template-columns:repeat(2,1fr)}}
+  .biz-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border:1px solid var(--border);
+    border-radius:var(--r-md);background:var(--surface-2)}
+  .biz-dot{width:10px;height:10px;border-radius:3px;flex:none}
+  .biz-num{font-size:22px;font-weight:700;color:var(--ink);line-height:1}
+  .biz-lbl{font-size:12px;color:var(--muted);margin-top:5px}
+  .dash-note{margin-top:16px;font-size:12px;color:var(--faint);line-height:1.7;text-align:center}
   .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
     padding:20px 22px;box-shadow:var(--shadow-sm);margin-bottom:18px}
   .panel h3{font-size:14.5px;margin-bottom:8px;color:var(--ink);display:flex;align-items:center;gap:8px}
@@ -507,9 +546,8 @@ const SCHEMAS = {
       {row:[{key:'badge', label:'标记', type:'select', options:{'':'无',new:'新书',hot:'热门',free:'免费'}},{key:'icon', label:'无封面时占位图标', type:'text', hint:'emoji，如 📖'}]},
       {row:[{key:'color1', label:'占位色 起', type:'color'},{key:'color2', label:'占位色 止', type:'color'}]},
       {key:'tags', label:'标签', type:'tags', hint:'逗号分隔'},
-      {key:'_g2', label:'内容简介与试读', type:'divider'},
+      {key:'_g2', label:'内容简介', type:'divider'},
       {key:'intro', label:'简介', type:'textarea'},
-      {key:'preview', label:'试读内容', type:'textarea'},
       {key:'_g3', label:'电子书文件', type:'divider'},
       {key:'bookFiles', label:'书籍文件', type:'files', accept:'.pdf,.epub,application/pdf,application/epub+zip', hint:'上传整本电子书，支持 PDF / EPUB（可同时上传两种格式）'},
     ],
@@ -780,36 +818,96 @@ function onBack(){ if(backCtx==='submissions') go('events'); else cancelForm(); 
 /* ============================================================
    仪表盘
 ============================================================ */
+/* ---- 仪表盘图表辅助 ---- */
+function svgDonut(data){
+  const total=data.reduce((s,d)=>s+d.value,0);
+  const r=52,cx=64,cy=64,c=2*Math.PI*r;let off=0;
+  let segs;
+  if(!total){segs=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--border)" stroke-width="16"/>`;}
+  else segs=data.filter(d=>d.value>0).map(d=>{
+    const len=d.value/total*c;
+    const s=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="16" stroke-dasharray="${len.toFixed(2)} ${(c-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    off+=len;return s;}).join('');
+  return `<svg viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="环形统计">${segs}
+    <text x="64" y="60" text-anchor="middle" font-size="26" font-weight="700" fill="var(--ink)">${total}</text>
+    <text x="64" y="80" text-anchor="middle" font-size="11" fill="var(--muted)">总数</text></svg>`;
+}
+function donutLegend(data){
+  const total=data.reduce((s,d)=>s+d.value,0)||1;
+  return data.map(d=>`<div class="lg-row"><span class="lg-dot" style="background:${d.color}"></span>${esc(d.label)}<span class="v">${d.value}</span><span class="p">${Math.round(d.value/total*100)}%</span></div>`).join('');
+}
+function hbars(items){
+  if(!items.length) return '<div style="color:var(--muted);font-size:13px;padding:8px 0">暂无数据</div>';
+  const max=Math.max(1,...items.map(i=>i.value));
+  return items.map(i=>`<div class="hb-row"><span class="hb-label" title="${esc(i.label)}">${esc(i.label)}</span>
+    <div class="hb-track"><div class="hb-fill" style="width:${Math.round(i.value/max*100)}%;background:${i.color}"></div></div>
+    <span class="hb-val">${i.value}</span></div>`).join('');
+}
+
 function renderDashboard(){
+  document.getElementById('backBtn').style.display='none';
   document.getElementById('pageTitle').textContent='仪表盘';
-  document.getElementById('pageSub').textContent='内容总览';
+  document.getElementById('pageSub').textContent='数据总览与赛事运营统计';
   document.getElementById('pageActions').innerHTML=
     `<button class="btn btn-ghost" onclick="exportJSON()">${ICON('download',15)}导出数据</button>
      <button class="btn btn-ghost" onclick="importJSON()">${ICON('upload',15)}导入数据</button>
      <button class="btn btn-danger" onclick="resetData()">${ICON('refresh',15)}重置数据</button>`;
-  let cards='';
-  for(const k in SCHEMAS){
-    cards+=`<div class="stat-card" onclick="go('${k}')" style="cursor:pointer">
-      <div class="chip">${ICON(MODULE_ICONS[k],20)}</div>
-      <div class="num tnum">${DB[k].length}</div>
-      <div class="lbl">${SCHEMAS[k].title}</div>
-      <span class="go">${ICON('plus',16)}</span>
-    </div>`;
-  }
+
+  const subs=DB.submissions||[];
+  const pending=subs.filter(s=>s.status==='pending').length;
+  const reviewedAll=subs.filter(s=>s.status==='reviewed'||s.status==='shortlisted').length;
+  const experts=(DB.experts||[]).length;
+
+  /* 全站内容模块 */
+  const COLORS=['#0f7bcf','#7c3aed','#0a9c5d','#d97706','#19d3c5'];
+  const modules=[
+    {k:'books',label:'电子书'},
+    {k:'events',label:'赛事活动'},
+    {k:'services',label:'赛事服务'},
+    {k:'announcements',label:'通知公告'},
+    {k:'banners',label:'首页轮播'},
+  ].map((m,i)=>({...m,value:(DB[m.k]||[]).length,color:COLORS[i]}));
+  const totalContent=modules.reduce((s,m)=>s+m.value,0);
+
+  /* KPI：每个业务一个小统计卡 */
+  const kpis=modules.map(m=>({icon:MODULE_ICONS[m.k],num:m.value,lbl:m.label,to:m.k}));
+  kpis.push({icon:'folder',num:subs.length,lbl:'收集作品',to:'events',sub:`待评审 ${pending}`});
+  const kcards=kpis.map(c=>`<div class="stat-card" onclick="go('${c.to}')" style="cursor:pointer">
+    <div class="chip">${ICON(c.icon,20)}</div>
+    <div class="num tnum">${c.num}</div>
+    <div class="lbl">${c.lbl}</div>${c.sub?`<div class="kpi-sub">${esc(c.sub)}</div>`:''}
+    <span class="go">${ICON('eye',16)}</span></div>`).join('');
+
+  /* 全站内容分布（环形 + 图例）为主统计 */
+  const distDonut=svgDonut(modules.map(m=>({label:m.label,value:m.value,color:m.color})));
+  const distLegend=donutLegend(modules.map(m=>({label:m.label,value:m.value,color:m.color})));
+  const distBars=hbars(modules.slice().sort((a,b)=>b.value-a.value).map(m=>({label:m.label,value:m.value,color:m.color})));
+
   document.getElementById('view').innerHTML=`
-    <div class="stat-grid">${cards}</div>
-    <div class="panel">
-      <h3>${ICON('info',16)}这是一个纯前端原型</h3>
-      <p>所有数据保存在浏览器本地（localStorage），刷新不会丢失，可随意增删改调试交互与字段结构。<br>
-      左侧每个模块都支持 新增 / 编辑 / 删除 / 搜索 / 筛选。调好后用「导出数据」拿到 JSON，即可作为接后端时的数据结构依据。</p>
+    <div class="stat-grid">${kcards}</div>
+
+    <div class="dash-2">
+      <div class="panel">
+        <div class="panel-h"><h3>${ICON('dashboard',16)}全站内容分布</h3><span style="font-size:12px;color:var(--muted)">内容总量 ${totalContent}</span></div>
+        <div class="donut-wrap">${distDonut}<div class="donut-legend">${distLegend}</div></div>
+      </div>
+      <div class="panel">
+        <div class="panel-h"><h3>${ICON('book',16)}各模块内容量</h3></div>
+        ${distBars}
+      </div>
     </div>
+
     <div class="panel">
-      <h3>${ICON('rocket',16)}下一步（接入真实服务）</h3>
-      <p>1. 把 <code>loadStore / saveStore</code> 换成后端 API（GET/POST/PUT/DELETE）。<br>
-      2. 登录改为真实鉴权（Token）。<br>
-      3. 图片字段接入文件上传。<br>
-      4. 主站页面改为从同一数据源 fetch，实现「后台改、前台变」。</p>
-    </div>`;
+      <div class="panel-h"><h3>${ICON('trophy',16)}赛事业务速览</h3><span class="more" onclick="go('events')">作品收集 ›</span></div>
+      <div class="biz-stats">
+        <div class="biz-item"><span class="biz-dot" style="background:#0f7bcf"></span><div><div class="biz-num tnum">${subs.length}</div><div class="biz-lbl">收集作品</div></div></div>
+        <div class="biz-item"><span class="biz-dot" style="background:#d97706"></span><div><div class="biz-num tnum">${pending}</div><div class="biz-lbl">待评审</div></div></div>
+        <div class="biz-item"><span class="biz-dot" style="background:#0a9c5d"></span><div><div class="biz-num tnum">${reviewedAll}</div><div class="biz-lbl">已评审 / 入围</div></div></div>
+        <div class="biz-item"><span class="biz-dot" style="background:#7c3aed"></span><div><div class="biz-num tnum">${experts}</div><div class="biz-lbl">评审专家</div></div></div>
+      </div>
+    </div>
+
+    <p class="dash-note">纯前端原型，数据存浏览器本地（localStorage），统计实时计算；接后端时把 loadStore / saveStore 换成 API，主站从同一数据源 fetch 即可实现「后台改、前台变」。</p>`;
 }
 
 /* ============================================================
