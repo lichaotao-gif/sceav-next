@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>制作服务 | 四川省教育电子音像出版社</title>
+  <title>出版服务 | 四川省教育电子音像出版社</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     /* ═══ Service Page Base ═══ */
@@ -16,17 +16,17 @@
     .svc-hero-bg {
       position: absolute; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse at 12% 38%, rgba(251,146,60,0.38) 0%, transparent 48%),
-        radial-gradient(ellipse at 82% 18%, rgba(245,158,11,0.3) 0%, transparent 42%),
-        radial-gradient(ellipse at 50% 88%, rgba(239,68,68,0.2) 0%, transparent 45%),
-        linear-gradient(135deg, #120500 0%, #221000 35%, #331800 65%, #451f00 100%);
+        radial-gradient(ellipse at 12% 38%, rgba(5,150,105,0.38) 0%, transparent 48%),
+        radial-gradient(ellipse at 82% 18%, rgba(4,120,87,0.3) 0%, transparent 42%),
+        radial-gradient(ellipse at 50% 88%, rgba(16,185,129,0.2) 0%, transparent 45%),
+        linear-gradient(135deg, #020d06 0%, #041a0e 35%, #073d1c 65%, #0a5129 100%);
     }
     .svc-hero-bg::after {
       content: '';
       position: absolute; inset: 0;
       background:
-        linear-gradient(rgba(251,146,60,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(251,146,60,.05) 1px, transparent 1px);
+        linear-gradient(rgba(5,150,105,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(5,150,105,.05) 1px, transparent 1px);
       background-size: 48px 48px;
       mask-image: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.45) 0%, transparent 72%);
     }
@@ -39,13 +39,13 @@
     .svc-hero-text .eyebrow {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: #fbbf24; background: rgba(251,191,36,.12); border: 1px solid rgba(251,191,36,.25);
+      color: #34d399; background: rgba(52,211,153,.12); border: 1px solid rgba(52,211,153,.25);
       padding: 4px 12px; border-radius: 999px; margin-bottom: 18px;
     }
     .svc-hero-text h1 {
       font-size: clamp(30px, 3.8vw, 52px);
       font-weight: 900; line-height: 1.2; margin-bottom: 18px;
-      text-shadow: 0 0 40px rgba(251,146,60,0.3);
+      text-shadow: 0 0 40px rgba(5,150,105,0.4);
     }
     .svc-hero-text p {
       font-size: 15px; line-height: 1.85;
@@ -53,19 +53,17 @@
     }
     .svc-hero-phone {
       display: inline-flex; align-items: center; gap: 12px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #1a0a00; font-weight: 900; font-size: 22px;
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #fff; font-weight: 900; font-size: 22px;
       padding: 14px 32px; border-radius: 999px;
-      box-shadow: 0 8px 32px rgba(245,158,11,0.45);
+      box-shadow: 0 8px 32px rgba(5,150,105,0.45);
       text-decoration: none; transition: all .2s;
       letter-spacing: 0.04em;
     }
-    .svc-hero-phone:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(245,158,11,0.55); }
+    .svc-hero-phone:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(5,150,105,0.55); }
     .svc-hero-phone svg { width: 22px; height: 22px; flex-shrink: 0; }
     .svc-hero-phone-sub { font-size: 12px; font-weight: 500; opacity: .7; display: block; margin-top: 10px; }
-    .svc-hero-visual {
-      flex-shrink: 0; width: 340px;
-    }
+    .svc-hero-visual { flex-shrink: 0; width: 340px; }
     .svc-hero-visual svg { width: 100%; display: block; }
 
     /* ── Service Body ── */
@@ -75,58 +73,46 @@
       display: grid; grid-template-columns: 1fr 320px; gap: 48px;
     }
 
-    /* Blocks */
     .svc-block { margin-bottom: 52px; }
     .svc-block:last-child { margin-bottom: 0; }
     .svc-block h2 {
       font-size: 20px; font-weight: 800; color: var(--dark);
       padding-bottom: 12px; margin-bottom: 22px;
-      border-bottom: 2px solid #f59e0b;
+      border-bottom: 2px solid #059669;
       display: flex; align-items: center; gap: 8px;
     }
-    .svc-block h2 svg { color: #f59e0b; }
-    .svc-block p {
-      font-size: 15px; color: #444; line-height: 1.9; margin-bottom: 14px;
-    }
+    .svc-block h2 svg { color: #059669; }
+    .svc-block p { font-size: 15px; color: #444; line-height: 1.9; margin-bottom: 14px; }
 
     /* Service grid cards */
-    .svc-items {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
-      margin-top: 4px;
-    }
+    .svc-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 4px; }
     .svc-item {
       display: flex; align-items: flex-start; gap: 14px;
       padding: 18px 16px; border-radius: 14px;
-      background: #fffbf0; border: 1px solid #fde68a;
+      background: #f0fdf4; border: 1px solid #bbf7d0;
       transition: all .2s;
     }
-    .svc-item:hover { border-color: #f59e0b; background: #fff8e1; box-shadow: 0 4px 16px rgba(245,158,11,0.12); }
+    .svc-item:hover { border-color: #059669; background: #dcfce7; box-shadow: 0 4px 16px rgba(5,150,105,0.12); }
     .svc-item-icon {
       width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
-      background: linear-gradient(135deg, #fbbf24, #d97706);
-      display: flex; align-items: center; justify-content: center;
-      color: #fff;
+      background: linear-gradient(135deg, #34d399, #059669);
+      display: flex; align-items: center; justify-content: center; color: #fff;
     }
     .svc-item-icon svg { width: 20px; height: 20px; }
     .svc-item-info h4 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 5px; }
     .svc-item-info p { font-size: 13px; color: #666; line-height: 1.65; margin: 0; }
 
     /* Process steps */
-    .svc-process {
-      display: flex; gap: 0; margin-top: 4px;
-      counter-reset: step;
-    }
-    .svc-step {
-      flex: 1; position: relative; text-align: center; padding: 20px 10px;
-    }
+    .svc-process { display: flex; gap: 0; margin-top: 4px; counter-reset: step; }
+    .svc-step { flex: 1; position: relative; text-align: center; padding: 20px 10px; }
     .svc-step::after {
       content: '→'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
-      color: #d97706; font-size: 18px; font-weight: 700;
+      color: #059669; font-size: 18px; font-weight: 700;
     }
     .svc-step:last-child::after { display: none; }
     .svc-step-num {
       width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 10px;
-      background: linear-gradient(135deg, #fbbf24, #d97706);
+      background: linear-gradient(135deg, #34d399, #059669);
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: 16px; font-weight: 800;
     }
@@ -141,39 +127,32 @@
       overflow: hidden; margin-bottom: 24px;
     }
     .sidebar-card-head {
-      background: linear-gradient(135deg, #d97706, #f59e0b);
+      background: linear-gradient(135deg, #047857, #059669);
       padding: 16px 20px; color: #fff;
     }
     .sidebar-card-head.blue { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
     .sidebar-card-head h3 { font-size: 15px; font-weight: 800; margin: 0; }
     .sidebar-card-body { padding: 20px; }
 
-    /* Big phone display */
-    .contact-phone-big {
-      text-align: center; padding: 8px 0 16px;
-    }
-    .contact-phone-big .phone-label {
-      font-size: 12px; color: #999; margin-bottom: 8px;
-    }
+    .contact-phone-big { text-align: center; padding: 8px 0 16px; }
+    .contact-phone-big .phone-label { font-size: 12px; color: #999; margin-bottom: 8px; }
     .contact-phone-big .phone-num {
       font-size: 26px; font-weight: 900; letter-spacing: .05em;
       color: var(--dark); line-height: 1.2; display: block;
     }
-    .contact-phone-big .phone-num span { color: #d97706; }
-    .contact-phone-big .phone-hint {
-      font-size: 12px; color: #aaa; margin-top: 6px;
-    }
+    .contact-phone-big .phone-num span { color: #059669; }
+    .contact-phone-big .phone-hint { font-size: 12px; color: #aaa; margin-top: 6px; }
     .btn-call {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; margin-top: 16px;
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      color: #1a0a00; font-weight: 800; font-size: 15px;
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #fff; font-weight: 800; font-size: 15px;
       padding: 13px 0; border-radius: 999px; border: none;
       cursor: pointer; transition: all .2s; text-align: center;
-      box-shadow: 0 4px 20px rgba(245,158,11,0.35);
+      box-shadow: 0 4px 20px rgba(5,150,105,0.35);
       text-decoration: none;
     }
-    .btn-call:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,158,11,0.45); }
+    .btn-call:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(5,150,105,0.45); }
 
     .sidebar-info-row {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -204,10 +183,10 @@
   <header class="site-header" data-header>
     <a class="brand" href="index.html" aria-label="四川省教育电子音像出版社首页">
       <span class="brand-mark"><img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="四川省教育电子音像出版社标志" /></span>
-        <div class="brand-name">
-          <span class="brand-text">四川省教育电子音像出版社</span>
-          <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
-        </div>
+      <div class="brand-name">
+        <span class="brand-text">四川省教育电子音像出版社</span>
+        <span class="brand-en">四川省教育信息化与大数据中心（四川省电化教育馆）主办</span>
+      </div>
     </a>
     <nav class="nav-links" aria-label="主导航">
       <a href="index.html">首页</a>
@@ -257,10 +236,7 @@
       <button class="login-close" type="button" data-login-close aria-label="关闭">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-      <div class="login-logo">
-        
-        <span>四川省教育电子音像出版社</span>
-      </div>
+      <div class="login-logo"><span>四川省教育电子音像出版社</span></div>
       <h2>欢迎登录</h2>
       <p class="login-sub">数字教育资源平台</p>
       <div class="login-tabs">
@@ -290,7 +266,6 @@
     <section class="svc-hero">
       <div class="svc-hero-bg" aria-hidden="true"></div>
 
-      <!-- 面包屑 -->
       <div class="page-breadcrumb">
         <a class="breadcrumb-back" href="index.html">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
@@ -299,122 +274,126 @@
         <nav class="breadcrumb-nav">
           <a href="index.html">首页</a>
           <span class="bc-sep">›</span>
-          <span class="bc-current">制作服务</span>
+          <span class="bc-current">出版服务</span>
         </nav>
       </div>
+
       <div class="svc-hero-inner">
         <div class="svc-hero-text">
-          <p class="eyebrow">Production Services · 制作服务</p>
-          <h1>专业音视频<br/>制作服务</h1>
-          <p>深耕教育内容制作超三十年，为教育机构、出版单位及企业提供课程视频录制、动画制作、音频录音、课件开发及后期剪辑等全链路制作服务，助力优质内容高效落地。</p>
-          <a class="svc-hero-phone" href="tel:13320992155">
+          <p class="eyebrow">Publishing Services · 出版服务</p>
+          <h1>专业教育出版<br/>全链路服务</h1>
+          <p>深耕教育出版领域三十余年，为教育机构、学校及出版单位提供数字教材、电子书、融合出版物的策划、编审、制作与发行全链路服务，助力优质教育内容广泛传播。</p>
+          <a class="svc-hero-phone" href="tel:02886669129">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
-            133 2099 2155
+            028-8666-9129
           </a>
-          <span class="svc-hero-phone-sub">工作日 9:00 – 18:00 · 电话直达制作团队</span>
+          <span class="svc-hero-phone-sub">工作日 9:00 – 18:00 · 电话直达出版业务团队</span>
         </div>
 
         <div class="svc-hero-visual">
           <svg viewBox="0 0 340 280" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="pvbg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#1a0a00"/>
-                <stop offset="100%" stop-color="#3d2000"/>
+              <linearGradient id="pub-bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#020d06"/>
+                <stop offset="100%" stop-color="#0a3d1e"/>
               </linearGradient>
-              <linearGradient id="pvgold" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#fbbf24"/>
-                <stop offset="100%" stop-color="#d97706"/>
+              <linearGradient id="pub-green" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#34d399"/>
+                <stop offset="100%" stop-color="#059669"/>
               </linearGradient>
-              <linearGradient id="pvscreen" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#0f172a"/>
-                <stop offset="100%" stop-color="#1e3a5f"/>
+              <linearGradient id="pub-cover1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#059669"/>
+                <stop offset="100%" stop-color="#064e3b"/>
               </linearGradient>
-              <filter id="pvglow">
+              <linearGradient id="pub-cover2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#0891b2"/>
+                <stop offset="100%" stop-color="#0e4f6e"/>
+              </linearGradient>
+              <linearGradient id="pub-cover3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7c3aed"/>
+                <stop offset="100%" stop-color="#4c1d95"/>
+              </linearGradient>
+              <filter id="pub-glow">
                 <feGaussianBlur stdDeviation="3" result="blur"/>
                 <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
+              <filter id="pub-shadow">
+                <feDropShadow dx="2" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.4)"/>
+              </filter>
             </defs>
 
-            <!-- Background panel -->
-            <rect width="340" height="280" rx="20" fill="url(#pvbg)" opacity="0.9"/>
+            <!-- Background -->
+            <rect width="340" height="280" rx="20" fill="url(#pub-bg)" opacity="0.95"/>
 
-            <!-- Studio screen / monitor -->
-            <rect x="28" y="32" width="180" height="120" rx="10" fill="url(#pvscreen)"/>
-            <rect x="28" y="32" width="180" height="120" rx="10" fill="none" stroke="rgba(251,191,36,0.4)" stroke-width="1.5"/>
-            <!-- Play indicator -->
-            <circle cx="118" cy="92" r="22" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
-            <polygon points="112,82 112,102 130,92" fill="#fbbf24" opacity="0.9"/>
-            <!-- Screen lines (waveform) -->
-            <polyline points="38,118 50,108 62,122 74,104 86,116 98,100 110,112 122,98 134,110 146,96 158,114 170,102 180,112 190,108 200,112" fill="none" stroke="rgba(251,191,36,0.35)" stroke-width="1.2"/>
+            <!-- Shelf line -->
+            <rect x="20" y="210" width="300" height="4" rx="2" fill="rgba(52,211,153,0.2)"/>
 
-            <!-- Camera body -->
-            <rect x="224" y="60" width="90" height="62" rx="8" fill="rgba(251,191,36,0.12)" stroke="rgba(251,191,36,0.4)" stroke-width="1.5"/>
-            <!-- Lens ring outer -->
-            <circle cx="269" cy="91" r="22" fill="#1a1000" stroke="rgba(251,191,36,0.6)" stroke-width="2"/>
-            <circle cx="269" cy="91" r="16" fill="#0f0800" stroke="rgba(251,191,36,0.3)" stroke-width="1.2"/>
-            <circle cx="269" cy="91" r="9" fill="#fbbf24" opacity="0.18"/>
-            <circle cx="269" cy="91" r="5" fill="rgba(251,191,36,0.7)"/>
-            <!-- Camera top detail -->
-            <rect x="244" y="52" width="36" height="12" rx="4" fill="rgba(251,191,36,0.2)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
-            <!-- Record light -->
-            <circle cx="304" cy="68" r="5" fill="#ef4444" filter="url(#pvglow)" opacity="0.9"/>
+            <!-- Book 1 (main, green) -->
+            <g filter="url(#pub-shadow)">
+              <rect x="68" y="100" width="48" height="112" rx="3" fill="url(#pub-cover1)"/>
+              <rect x="68" y="100" width="7" height="112" rx="2 0 0 2" fill="rgba(4,78,63,0.8)"/>
+              <text x="95" y="168" font-size="8" fill="rgba(255,255,255,0.9)" font-family="sans-serif" font-weight="700" text-anchor="middle" writing-mode="vertical-rl" transform="rotate(180,95,160)">数字教材</text>
+              <rect x="74" y="110" width="36" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+              <rect x="74" y="116" width="28" height="1.5" rx="1" fill="rgba(255,255,255,0.25)"/>
+            </g>
 
-            <!-- Clapperboard -->
-            <rect x="32" y="172" width="96" height="72" rx="6" fill="rgba(255,255,255,0.06)" stroke="rgba(251,191,36,0.35)" stroke-width="1.5"/>
-            <!-- Clapper stripes -->
-            <rect x="32" y="172" width="96" height="20" rx="6 6 0 0" fill="rgba(251,191,36,0.2)"/>
-            <line x1="48" y1="172" x2="40" y2="192" stroke="rgba(251,191,36,0.6)" stroke-width="3"/>
-            <line x1="64" y1="172" x2="56" y2="192" stroke="rgba(251,191,36,0.6)" stroke-width="3"/>
-            <line x1="80" y1="172" x2="72" y2="192" stroke="rgba(251,191,36,0.6)" stroke-width="3"/>
-            <line x1="96" y1="172" x2="88" y2="192" stroke="rgba(251,191,36,0.6)" stroke-width="3"/>
-            <text x="42" y="208" font-size="8" fill="rgba(255,255,255,0.6)" font-family="monospace">SCENE 01 TAKE 1</text>
-            <text x="42" y="222" font-size="7" fill="rgba(251,191,36,0.5)" font-family="monospace">SCEAV 2026</text>
-            <text x="42" y="234" font-size="7" fill="rgba(255,255,255,0.35)" font-family="monospace">DIRECTOR: ZHANG</text>
+            <!-- Book 2 (blue) -->
+            <g filter="url(#pub-shadow)">
+              <rect x="122" y="84" width="44" height="128" rx="3" fill="url(#pub-cover2)"/>
+              <rect x="122" y="84" width="6" height="128" rx="2 0 0 2" fill="rgba(8,60,90,0.8)"/>
+              <text x="147" y="154" font-size="8" fill="rgba(255,255,255,0.9)" font-family="sans-serif" font-weight="700" text-anchor="middle" writing-mode="vertical-rl" transform="rotate(180,147,148)">融合出版</text>
+              <rect x="128" y="94" width="32" height="2" rx="1" fill="rgba(255,255,255,0.4)"/>
+              <rect x="128" y="100" width="24" height="1.5" rx="1" fill="rgba(255,255,255,0.25)"/>
+            </g>
 
-            <!-- Microphone -->
-            <rect x="154" y="188" width="20" height="44" rx="10" fill="rgba(251,191,36,0.15)" stroke="rgba(251,191,36,0.45)" stroke-width="1.5"/>
-            <line x1="164" y1="232" x2="164" y2="244" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
-            <line x1="155" y1="244" x2="173" y2="244" stroke="rgba(251,191,36,0.5)" stroke-width="1.5"/>
-            <!-- Mic grille lines -->
-            <line x1="157" y1="200" x2="171" y2="200" stroke="rgba(251,191,36,0.3)" stroke-width="0.8"/>
-            <line x1="157" y1="205" x2="171" y2="205" stroke="rgba(251,191,36,0.3)" stroke-width="0.8"/>
-            <line x1="157" y1="210" x2="171" y2="210" stroke="rgba(251,191,36,0.3)" stroke-width="0.8"/>
-            <line x1="157" y1="215" x2="171" y2="215" stroke="rgba(251,191,36,0.3)" stroke-width="0.8"/>
-            <line x1="157" y1="220" x2="171" y2="220" stroke="rgba(251,191,36,0.3)" stroke-width="0.8"/>
+            <!-- Book 3 (purple) -->
+            <g filter="url(#pub-shadow)">
+              <rect x="172" y="94" width="40" height="118" rx="3" fill="url(#pub-cover3)"/>
+              <rect x="172" y="94" width="6" height="118" rx="2 0 0 2" fill="rgba(55,10,120,0.8)"/>
+              <text x="194" y="160" font-size="7.5" fill="rgba(255,255,255,0.9)" font-family="sans-serif" font-weight="700" text-anchor="middle" writing-mode="vertical-rl" transform="rotate(180,194,155)">电子音像</text>
+            </g>
 
-            <!-- Studio lights top -->
-            <line x1="220" y1="28" x2="220" y2="50" stroke="rgba(251,191,36,0.4)" stroke-width="2"/>
-            <polygon points="208,50 232,50 226,66 214,66" fill="rgba(251,191,36,0.25)" stroke="rgba(251,191,36,0.5)" stroke-width="1"/>
-            <!-- Light beam -->
-            <polygon points="215,66 225,66 235,100 205,100" fill="rgba(251,191,36,0.06)"/>
+            <!-- Book 4 (amber, thin) -->
+            <g filter="url(#pub-shadow)">
+              <rect x="218" y="110" width="28" height="102" rx="3" fill="rgba(217,119,6,0.9)"/>
+              <rect x="218" y="110" width="5" height="102" rx="2 0 0 2" fill="rgba(120,60,0,0.6)"/>
+            </g>
 
-            <!-- Film strip right -->
-            <rect x="290" y="170" width="30" height="80" rx="3" fill="rgba(251,191,36,0.1)" stroke="rgba(251,191,36,0.3)" stroke-width="1"/>
-            <rect x="293" y="174" width="24" height="16" rx="2" fill="rgba(251,191,36,0.15)"/>
-            <rect x="293" y="194" width="24" height="16" rx="2" fill="rgba(251,191,36,0.1)"/>
-            <rect x="293" y="214" width="24" height="16" rx="2" fill="rgba(251,191,36,0.15)"/>
-            <rect x="293" y="234" width="24" height="12" rx="2" fill="rgba(251,191,36,0.1)"/>
-            <!-- Sprocket holes -->
-            <circle cx="294" cy="182" r="2" fill="rgba(0,0,0,0.4)"/>
-            <circle cx="294" cy="202" r="2" fill="rgba(0,0,0,0.4)"/>
-            <circle cx="294" cy="222" r="2" fill="rgba(0,0,0,0.4)"/>
-            <circle cx="316" cy="182" r="2" fill="rgba(0,0,0,0.4)"/>
-            <circle cx="316" cy="202" r="2" fill="rgba(0,0,0,0.4)"/>
-            <circle cx="316" cy="222" r="2" fill="rgba(0,0,0,0.4)"/>
+            <!-- Book 5 (teal, thin) -->
+            <g filter="url(#pub-shadow)">
+              <rect x="252" y="118" width="26" height="94" rx="3" fill="rgba(15,182,172,0.85)"/>
+              <rect x="252" y="118" width="5" height="94" rx="2 0 0 2" fill="rgba(0,80,75,0.6)"/>
+            </g>
 
-            <!-- Floating labels -->
-            <rect x="190" y="136" width="68" height="22" rx="11" fill="rgba(251,191,36,0.18)" stroke="rgba(251,191,36,0.4)" stroke-width="1"/>
-            <text x="200" y="151" font-size="9" fill="#fbbf24" font-weight="700" font-family="sans-serif">4K · HDR</text>
+            <!-- Floating chip: ISBN -->
+            <rect x="30" y="48" width="72" height="24" rx="12" fill="rgba(52,211,153,0.18)" stroke="rgba(52,211,153,0.45)" stroke-width="1"/>
+            <text x="66" y="64" font-size="9" fill="#34d399" font-weight="700" font-family="monospace" text-anchor="middle">ISBN · CIP</text>
 
-            <rect x="36" y="148" width="80" height="20" rx="10" fill="rgba(239,68,68,0.15)" stroke="rgba(239,68,68,0.4)" stroke-width="1"/>
-            <circle cx="46" cy="158" r="4" fill="#ef4444" opacity="0.8"/>
-            <text x="54" y="162" font-size="9" fill="#fca5a5" font-weight="700" font-family="sans-serif">REC 00:08:42</text>
+            <!-- Floating chip: 出版许可 -->
+            <rect x="230" y="44" width="88" height="24" rx="12" fill="rgba(52,211,153,0.15)" stroke="rgba(52,211,153,0.35)" stroke-width="1"/>
+            <text x="274" y="60" font-size="9" fill="#34d399" font-weight="700" font-family="sans-serif" text-anchor="middle">互联网出版许可</text>
 
-            <!-- Sound wave near mic -->
-            <path d="M182,200 Q186,194 190,200 Q194,206 198,200" fill="none" stroke="rgba(251,191,36,0.4)" stroke-width="1.2"/>
-            <path d="M185,196 Q190,188 195,196 Q200,204 205,196" fill="none" stroke="rgba(251,191,36,0.25)" stroke-width="1"/>
+            <!-- Pen / editing icon area -->
+            <g transform="translate(26, 230)">
+              <circle cx="16" cy="16" r="14" fill="rgba(52,211,153,0.12)" stroke="rgba(52,211,153,0.35)" stroke-width="1"/>
+              <path d="M10 20 L14 16 L18 20" fill="none" stroke="rgba(52,211,153,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="12.5" y="9" width="7" height="9" rx="1" fill="none" stroke="rgba(52,211,153,0.7)" stroke-width="1.5"/>
+            </g>
+
+            <!-- Star sparkles -->
+            <circle cx="52" cy="82" r="2.5" fill="#34d399" opacity="0.6" filter="url(#pub-glow)"/>
+            <circle cx="296" cy="78" r="2" fill="#34d399" opacity="0.5" filter="url(#pub-glow)"/>
+            <circle cx="308" cy="230" r="3" fill="#34d399" opacity="0.4" filter="url(#pub-glow)"/>
+            <circle cx="30" cy="190" r="2" fill="#34d399" opacity="0.45"/>
+
+            <!-- Digital wave at bottom -->
+            <path d="M20,250 Q60,240 100,250 Q140,260 180,250 Q220,240 260,250 Q300,260 320,250" fill="none" stroke="rgba(52,211,153,0.25)" stroke-width="1.5"/>
+            <path d="M20,258 Q70,248 120,258 Q170,268 220,258 Q270,248 320,258" fill="none" stroke="rgba(52,211,153,0.12)" stroke-width="1"/>
+
+            <!-- Label: SCEAV -->
+            <text x="170" y="272" font-size="8" fill="rgba(52,211,153,0.35)" font-family="monospace" font-weight="700" text-anchor="middle" letter-spacing="3">SCEAV PRESS</text>
           </svg>
         </div>
       </div>
@@ -432,8 +411,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
             服务介绍
           </h2>
-          <p>四川省教育电子音像出版社制作中心依托专业录音棚、4K 摄制室及数字后期工作室，为教育机构、出版单位、政府部门及企业提供全链路音视频制作解决方案。</p>
-          <p>从脚本策划到内容录制，从动画制作到后期剪辑，我们以"内容为核，品质为本"的理念，帮助客户将知识内容高效转化为优质数字产品，累计服务超过 500 家机构，制作交付内容时长超过 10,000 小时。</p>
+          <p>四川省教育电子音像出版社持有国家互联网出版许可证及电子出版许可证，深耕教育出版领域三十余年，是西南地区规模领先的教育数字出版机构之一。</p>
+          <p>我们以"内容为魂，技术赋能"为核心理念，为全国各级各类学校、教育机构及出版单位提供数字教材策划编审、电子书出版、融合出版物制作与全渠道发行服务，已累计出版各类教育数字出版物超过 3,000 种，服务覆盖全国 31 个省市。</p>
         </div>
 
         <!-- 核心服务 -->
@@ -446,31 +425,11 @@
 
             <div class="svc-item">
               <div class="svc-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="3"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
               </div>
               <div class="svc-item-info">
-                <h4>课程视频录制</h4>
-                <p>专业摄影棚 + 绿幕合成 + 多机位拍摄，支持单人授课、对话访谈、实景教学等多种形式，最高支持 4K 输出。</p>
-              </div>
-            </div>
-
-            <div class="svc-item">
-              <div class="svc-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-              </div>
-              <div class="svc-item-info">
-                <h4>动画制作</h4>
-                <p>二维/MG 动画、三维场景演示、交互式动画教材，支持角色设计与原创 IP 形象定制，适配 PC 端及移动端。</p>
-              </div>
-            </div>
-
-            <div class="svc-item">
-              <div class="svc-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-              </div>
-              <div class="svc-item-info">
-                <h4>音频录制</h4>
-                <p>专业隔音录音棚，支持课文朗读、教辅音频、有声书、配乐与音效制作，提供降噪处理与多格式交付。</p>
+                <h4>数字教材出版</h4>
+                <p>提供 K12 及职业教育数字教材的选题策划、编辑审校、ISBN 申领及正式出版服务，支持富媒体交互版与纸数融合版双轨并行。</p>
               </div>
             </div>
 
@@ -479,65 +438,85 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
               </div>
               <div class="svc-item-info">
-                <h4>课件开发</h4>
-                <p>交互式 PPT / H5 课件、自学型网络课程（SCORM 标准），支持题库嵌入、进度记录及学习分析数据输出。</p>
+                <h4>电子书出版</h4>
+                <p>覆盖 EPUB / PDF / 自研阅读器格式，提供选题论证、版权办理、排版设计、平台上架及销售结算一体化服务。</p>
               </div>
             </div>
 
             <div class="svc-item">
               <div class="svc-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
               </div>
               <div class="svc-item-info">
-                <h4>后期剪辑</h4>
-                <p>专业调色、字幕制作、特效合成与音频混音，支持多平台发布格式转码，保证内容在各终端的最佳播放效果。</p>
+                <h4>融合出版物制作</h4>
+                <p>将传统纸质图书与视频、音频、AR/VR 等数字资源深度整合，打造二维码关联、扫描即看的新形态融合出版产品。</p>
               </div>
             </div>
 
             <div class="svc-item">
               <div class="svc-item-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
               </div>
               <div class="svc-item-info">
-                <h4>直播推流</h4>
-                <p>一站式直播技术支持，涵盖推流设备调试、多平台同步分发及直播回放剪辑，满足教育直播及发布会场景需求。</p>
+                <h4>音像出版</h4>
+                <p>具备互联网音视频出版资质，提供教学音频、教育纪录片、课程音像制品的立项、审批、制作及出版发行全程服务。</p>
+              </div>
+            </div>
+
+            <div class="svc-item">
+              <div class="svc-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div class="svc-item-info">
+                <h4>编审与版权</h4>
+                <p>配备专业编辑团队，提供书稿编辑加工、三审三校、CIP 数据核准及版权登记代办服务，确保出版物合规高质量交付。</p>
+              </div>
+            </div>
+
+            <div class="svc-item">
+              <div class="svc-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div class="svc-item-info">
+                <h4>发行与推广</h4>
+                <p>依托全国教育发行渠道及自有数字平台，提供实体教材征订配送与电子资源平台上架、推广运营及数据统计服务。</p>
               </div>
             </div>
 
           </div>
         </div>
 
-        <!-- 制作流程 -->
+        <!-- 出版流程 -->
         <div class="svc-block reveal">
           <h2>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            制作流程
+            出版流程
           </h2>
           <div class="svc-process">
             <div class="svc-step">
               <div class="svc-step-num">1</div>
-              <h4>需求沟通</h4>
-              <p>明确内容方向、风格定位与交付标准</p>
+              <h4>选题申报</h4>
+              <p>选题策划、立项论证与出版备案</p>
             </div>
             <div class="svc-step">
               <div class="svc-step-num">2</div>
-              <h4>方案策划</h4>
-              <p>脚本撰写、分镜设计、报价确认</p>
+              <h4>编辑加工</h4>
+              <p>三审三校、版式设计与资源整合</p>
             </div>
             <div class="svc-step">
               <div class="svc-step-num">3</div>
-              <h4>内容录制</h4>
-              <p>摄制拍摄 / 录音 / 动画制作</p>
+              <h4>出版审批</h4>
+              <p>ISBN 申领、CIP 核准及许可证办理</p>
             </div>
             <div class="svc-step">
               <div class="svc-step-num">4</div>
-              <h4>后期精制</h4>
-              <p>剪辑、调色、字幕、特效合成</p>
+              <h4>制作成品</h4>
+              <p>数字排版、格式转换与质检验收</p>
             </div>
             <div class="svc-step">
               <div class="svc-step-num">5</div>
-              <h4>验收交付</h4>
-              <p>客户审核确认，多格式文件交付</p>
+              <h4>发行上市</h4>
+              <p>平台上架、渠道发行与销售推广</p>
             </div>
           </div>
         </div>
@@ -548,10 +527,10 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             服务优势
           </h2>
-          <p><strong>专业团队</strong>：由具有十年以上经验的导演、摄影师、后期剪辑师及动画师组成，团队成员均持有相关专业资质证书。</p>
-          <p><strong>设备先进</strong>：配备专业 4K 摄影机、杜比 Atmos 录音棚、三维渲染工作站及全套广播级音视频制作设备。</p>
-          <p><strong>高效交付</strong>：标准课程视频（30分钟内）可在 5 个工作日内完成交付，同时支持快速通道加急处理。</p>
-          <p><strong>版权保障</strong>：所有交付内容均可签署版权协议，确保客户对最终成品拥有完整使用权和传播权。</p>
+          <p><strong>双资质保障</strong>：持有互联网出版许可证及电子出版物出版许可证，出版物合法合规，满足各类教育采购及招标需求。</p>
+          <p><strong>专业编审团队</strong>：由教育学、语文、数学等学科编辑及专业校对人员组成，确保内容科学性、严谨性与教学适用性。</p>
+          <p><strong>全渠道发行</strong>：与全国新华书店系统、教育电商平台及各省级教材征订系统对接，覆盖实体与数字双渠道。</p>
+          <p><strong>数据驱动运营</strong>：提供出版物阅读数据分析、用户反馈追踪及内容迭代建议，帮助出版方持续优化产品质量与推广策略。</p>
         </div>
 
       </div>
@@ -564,11 +543,11 @@
           <div class="sidebar-card-head"><h3>立即咨询</h3></div>
           <div class="sidebar-card-body">
             <div class="contact-phone-big">
-              <p class="phone-label">制作服务专线</p>
-              <span class="phone-num"><span>133</span> 2099 2155</span>
+              <p class="phone-label">出版业务专线</p>
+              <span class="phone-num"><span>028</span>-8666-9129</span>
               <p class="phone-hint">工作日 09:00 – 18:00</p>
             </div>
-            <a class="btn-call" href="tel:13320992155">
+            <a class="btn-call" href="tel:02886669129">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
               </svg>
@@ -579,13 +558,13 @@
 
         <!-- 服务信息 -->
         <div class="sidebar-card">
-          <div class="sidebar-card-head blue"><h3>服务信息</h3></div>
+          <div class="sidebar-card-head blue"><h3>出版资质</h3></div>
           <div class="sidebar-card-body">
+            <div class="sidebar-info-row"><span>出版许可</span><span>互联网出版许可</span></div>
+            <div class="sidebar-info-row"><span>电子出版</span><span>电子出版许可</span></div>
             <div class="sidebar-info-row"><span>服务区域</span><span>全国</span></div>
-            <div class="sidebar-info-row"><span>录制标准</span><span>最高 4K / 60fps</span></div>
-            <div class="sidebar-info-row"><span>录音规格</span><span>杜比 Atmos</span></div>
-            <div class="sidebar-info-row"><span>标准交期</span><span>5 个工作日</span></div>
-            <div class="sidebar-info-row"><span>加急通道</span><span style="color:#d97706;font-weight:700;">支持</span></div>
+            <div class="sidebar-info-row"><span>出版种类</span><span>超 3,000 种</span></div>
+            <div class="sidebar-info-row"><span>加急通道</span><span style="color:#059669;font-weight:700;">支持</span></div>
             <div class="sidebar-info-row"><span>联系邮箱</span><span style="font-size:11px;">sceav@sceav.online</span></div>
           </div>
         </div>
@@ -598,13 +577,13 @@
               <span style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">💻</span>
               <span style="font-size:13px;color:var(--dark);line-height:1.4;">数字化服务</span>
             </a>
-            <a href="events.html" style="display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid #f0f6ff;text-decoration:none;">
+            <a href="service-production.html" style="display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px solid #f0f6ff;text-decoration:none;">
+              <span style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🎬</span>
+              <span style="font-size:13px;color:var(--dark);line-height:1.4;">制作服务</span>
+            </a>
+            <a href="events.html" style="display:flex;align-items:center;gap:10px;padding:10px 6px;text-decoration:none;">
               <span style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#7c3aed,#db2777);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">🏆</span>
               <span style="font-size:13px;color:var(--dark);line-height:1.4;">赛事服务</span>
-            </a>
-            <a href="service-publishing.html" style="display:flex;align-items:center;gap:10px;padding:10px 6px;text-decoration:none;">
-              <span style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#059669,#0891b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">📚</span>
-              <span style="font-size:13px;color:var(--dark);line-height:1.4;">出版服务</span>
             </a>
           </div>
         </div>
@@ -620,8 +599,8 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <div class="footer-logo">
-            <img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="" />
-            <span>四川省教育电子音像出版社</span>
+          <img src="assets/press-logo-eav.png?v=2" class="brand-logo-img" alt="" />
+          <span>四川省教育电子音像出版社</span>
         </div>
         <p class="footer-slogan">数字出版 · 教育服务 · 融合创新</p>
         <p class="footer-en">Sichuan Audio-Visual Press Co., Ltd.</p>
@@ -634,7 +613,7 @@
         </div>
         <div class="footer-nav">
           <h4>业务服务</h4>
-          <a href="textbooks.html">数字教材</a><a href="ebooks.html">电子书</a><a href="courses.html">赛事服务</a><a href="service-production.html">制作服务</a>
+          <a href="textbooks.html">数字教材</a><a href="ebooks.html">电子书</a><a href="service-publishing.html">出版服务</a><a href="service-production.html">制作服务</a>
         </div>
         <div class="footer-nav">
           <h4>赛事活动</h4>
