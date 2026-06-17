@@ -2838,10 +2838,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 
   .hero { padding-inline: 18px; gap: 28px; padding-top: 88px; }
   .hero-content .eyebrow { display: none; }
-  .site-header { height: 60px; padding-inline: 14px; }
-  .brand-en { display: none; }
-  .brand-text { font-size: 15px; }
-  .nav-mobile-toggle { flex-shrink: 0; color: inherit; }
+  .site-header { height: auto; min-height: 60px; padding-block: 10px; padding-inline: 14px; align-items: center; }
+  .brand { white-space: normal; min-width: 0; flex: 1; }
+  .brand-text { font-size: 14px; white-space: nowrap; }
+  .brand-en { font-size: 10px; white-space: normal; line-height: 1.4; }
+  .nav-mobile-toggle { flex-shrink: 0; color: inherit; align-self: center; }
   .hero h1 { font-size: clamp(36px, 12vw, 58px); }
   .hero-carousel { height: 44vh; min-height: 300px; }
   .slide-content h2 { font-size: 20px; }
