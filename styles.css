@@ -695,6 +695,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   gap: 10px;
   white-space: nowrap;
   text-decoration: none;
+  min-width: 0;
+  overflow: hidden;
 }
 .brand-mark {
   display: flex;
@@ -794,6 +796,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: transparent;
   cursor: pointer;
   padding: 4px;
+  color: inherit;
 }
 .nav-mobile-toggle span {
   display: block;
@@ -2834,6 +2837,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   .btn-login { display: none; }
 
   .hero { padding-inline: 18px; gap: 28px; padding-top: 88px; }
+  .hero-content .eyebrow { display: none; }
+  .site-header { height: 60px; padding-inline: 14px; }
+  .brand-en { display: none; }
+  .brand-text { font-size: 15px; }
+  .nav-mobile-toggle { flex-shrink: 0; color: inherit; }
   .hero h1 { font-size: clamp(36px, 12vw, 58px); }
   .hero-carousel { height: 44vh; min-height: 300px; }
   .slide-content h2 { font-size: 20px; }
