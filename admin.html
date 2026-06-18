@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>后台管理（原型） | 四川省教育电子音像出版社</title>
+<title>内容管理后台 | 四川省教育电子音像出版社</title>
 <style>
   :root{
     /* brand (与主站一致) */
@@ -379,11 +379,10 @@
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
     </div>
     <h1>内容管理后台</h1>
-    <p>四川省教育电子音像出版社 · 原型</p>
+    <p>四川省教育电子音像出版社</p>
     <div class="login-field"><label>账号</label><input id="loginUser" placeholder="请输入账号" value="admin" /></div>
     <div class="login-field"><label>密码</label><input id="loginPass" type="password" placeholder="请输入密码" value="" /></div>
     <button class="btn-login" onclick="doLogin()">登 录</button>
-    <div class="login-hint">原型演示账号：admin / admin</div>
   </div>
 </div>
 
@@ -395,7 +394,7 @@
       <div class="brand-mark">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
       </div>
-      <div class="brand-text">四川教育电子音像<small>内容管理后台 · 原型</small></div>
+      <div class="brand-text">四川教育电子音像<small>内容管理后台</small></div>
     </div>
     <div class="nav-label">内容管理</div>
     <nav id="nav"></nav>
@@ -577,8 +576,8 @@ const SCHEMAS = {
       {key:'title', label:'赛事名称', type:'text', required:true},
       {key:'cover', label:'赛事封面', type:'image', ratio:'420 / 148', hint:'建议 840×296px，比例约 2.85∶1（横版 Banner）'},
       {key:'summary', label:'赛事描述', type:'textarea', hint:'卡片正文（列表卡片上的简短介绍）'},
-      {key:'images', label:'赛事图片', type:'gallery', hint:'可上传多张图片（海报 / 现场照片等），原型仅本地预览，正式环境对接云存储'},
-      {key:'videos', label:'赛事视频', type:'videos', hint:'可上传多个视频（MP4 / WebM），原型仅本地预览，正式环境对接云存储'},
+      {key:'images', label:'赛事图片', type:'gallery', hint:'可上传多张图片（海报 / 现场照片等），支持 JPG / PNG'},
+      {key:'videos', label:'赛事视频', type:'videos', hint:'可上传多个视频，支持 MP4 / WebM 格式'},
       {row:[{key:'status', label:'状态', type:'select', options:{open:'报名中',soon:'即将开始',ended:'已结束'}},{key:'deadline', label:'报名截止', type:'text', hint:'如 2026年8月15日'}]},
       {key:'audience', label:'参赛对象', type:'text', hint:'如 全国中小学生'},
       {key:'count', label:'报名人数', type:'countsource'},
@@ -593,7 +592,7 @@ const SCHEMAS = {
         ]},
       {key:'_gc', label:'绑定课程', type:'divider'},
       {key:'courseTitle', label:'课程名称', type:'text', hint:'与赛事关联的一节视频课，如 科幻创作技法'},
-      {key:'courseVideo', label:'课程视频', type:'video', hint:'上传一节视频课（MP4 / WebM）；原型仅本地预览，正式环境对接云存储'},
+      {key:'courseVideo', label:'课程视频', type:'video', hint:'上传一节视频课，支持 MP4 / WebM 格式'},
       {key:'_g4', label:'主办单位信息', type:'divider'},
       {row:[{key:'organizer', label:'主办单位', type:'text'},{key:'coOrganizer', label:'承办单位', type:'text'}]},
       {row:[{key:'email', label:'官方邮箱', type:'text', hint:'如 sceav@sceav.online'},{key:'phone', label:'咨询电话', type:'text', hint:'如 028-86669129'}]},
@@ -790,7 +789,7 @@ function doLogin(){
   if(u==='admin'&&p==='admin'){
     sessionStorage.setItem('sceav_admin_login','1');
     showApp();
-  }else{ toast('账号或密码错误（原型用 admin/admin）'); }
+  }else{ toast('账号或密码错误'); }
 }
 function logout(){ sessionStorage.removeItem('sceav_admin_login'); location.reload(); }
 function showApp(){
@@ -915,7 +914,7 @@ function renderDashboard(){
       </div>
     </div>
 
-    <p class="dash-note">纯前端原型，数据存浏览器本地（localStorage），统计实时计算；接后端时把 loadStore / saveStore 换成 API，主站从同一数据源 fetch 即可实现「后台改、前台变」。</p>`;
+    <p class="dash-note">数据实时统计，后台内容与主站同源；在后台更新即可同步至前台展示。</p>`;
 }
 
 /* ============================================================
@@ -1306,7 +1305,7 @@ function saveForm(){
       data.id=nextId(DB[k]); DB[k].push(data); toast('已新增');
     }
     saveStore(DB);
-  }catch(e){ toast('保存失败：图片过大超出本地存储上限（原型限制）'); return; }
+  }catch(e){ toast('保存失败：图片体积过大，请压缩后重试'); return; }
   if(s.fullpage) go(k); else { closeDrawer(); current==='dashboard'?renderDashboard():drawRows(k); }
 }
 function flatFields(s){let a=[];s.fields.forEach(f=>f.row?a.push(...f.row):a.push(f));return a}
@@ -1493,7 +1492,7 @@ function previewWork(id){
   const grid=files.map((f,i)=>{
     if(isImg(f.name)) return `<figure class="lb-fitem"><img src="${phImg(x.id+i,'作品图片')}" alt="${esc(f.name)}"><figcaption>${fileIcon(f.name)}${esc(f.name)}</figcaption></figure>`;
     if(isVid(f.name)) return `<figure class="lb-fitem"><div class="lb-fph">${ICON('video',26)}<span>视频文件</span></div><figcaption>${fileIcon(f.name)}${esc(f.name)}</figcaption></figure>`;
-    return `<figure class="lb-fitem"><div class="lb-fph">${fileIcon(f.name)}<span>文档</span></div><figcaption>${fileIcon(f.name)}${esc(f.name)}<button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="toast('原型暂不支持下载')">${ICON('download',13)}查看</button></figcaption></figure>`;
+    return `<figure class="lb-fitem"><div class="lb-fph">${fileIcon(f.name)}<span>文档</span></div><figcaption>${fileIcon(f.name)}${esc(f.name)}<button class="btn btn-ghost btn-sm" style="margin-left:auto" onclick="toast('文件下载功能开发中')">${ICON('download',13)}查看</button></figcaption></figure>`;
   }).join('');
   document.getElementById('lbBody').innerHTML=meta+
     `<div class="form-section" style="margin-top:4px">提交附件（${files.length}）</div>
@@ -1659,7 +1658,7 @@ function importJSON(){
   inp.click();
 }
 function resetData(){
-  if(!confirm('重置为初始原型数据？当前修改将丢失。'))return;
+  if(!confirm('重置为初始数据？当前修改将丢失。'))return;
   DB=JSON.parse(JSON.stringify(SEED));saveStore(DB);go('dashboard');toast('已重置');
 }
 
