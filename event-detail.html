@@ -128,6 +128,52 @@
       background: var(--accent);
     }
 
+    /* Intro inline figure */
+    .intro-figure { margin: 20px 0 4px; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(10,77,140,0.12); }
+    .intro-figure img { width: 100%; display: block; }
+    .intro-figure figcaption { font-size: 12px; color: #888; text-align: center; padding: 10px 12px; background: #f5f8ff; }
+
+    /* Video feature */
+    .video-feature {
+      position: relative; border-radius: 16px; overflow: hidden;
+      aspect-ratio: 16/9; background: #0a2a4a; cursor: pointer;
+      box-shadow: 0 8px 30px rgba(10,77,140,0.18);
+    }
+    .video-feature img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: .82; transition: opacity .3s, transform .6s; }
+    .video-feature:hover img { opacity: 1; transform: scale(1.05); }
+    .video-feature::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 45%, rgba(4,20,40,.65)); }
+    .video-play-btn {
+      position: absolute; inset: 0; margin: auto; z-index: 2;
+      width: 74px; height: 74px; border-radius: 50%;
+      background: rgba(255,255,255,.92);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 30px rgba(0,0,0,.3); transition: transform .2s, background .2s;
+    }
+    .video-feature:hover .video-play-btn { transform: scale(1.1); background: #fff; }
+    .video-play-btn svg { width: 30px; height: 30px; color: var(--secondary); margin-left: 5px; }
+    .video-cap { position: absolute; left: 18px; bottom: 16px; z-index: 2; color: #fff; }
+    .video-cap h4 { font-size: 16px; font-weight: 800; margin: 0 0 3px; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
+    .video-cap p { font-size: 12px; margin: 0; opacity: .9; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
+    .video-feature video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+
+    /* Image gallery */
+    .media-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .media-card {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 4/3; background: #e8f0fb; cursor: pointer;
+      box-shadow: 0 4px 16px rgba(10,77,140,0.1);
+    }
+    .media-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+    .media-card:hover img { transform: scale(1.07); }
+    .media-card .media-label {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
+      padding: 20px 12px 9px; font-size: 12px; font-weight: 600; color: #fff;
+      background: linear-gradient(transparent, rgba(0,0,0,.62));
+    }
+    @media (max-width: 600px) {
+      .media-gallery { grid-template-columns: 1fr 1fr; }
+    }
+
     /* Timeline */
     .timeline { display: flex; flex-direction: column; gap: 12px; }
     .timeline-item {
@@ -734,6 +780,50 @@
           </h2>
           <p>2026年省级科幻类作品征集活动由四川省教育电子音像出版社主办，面向全省中小学生开放参与。活动旨在激发青少年对科学与未来的想象，通过科幻创作培育具有创新精神的新一代少年。</p>
           <p>本届大赛以"蓝色家园·创想未来"为主题，设绘画、摄影、手工艺及数字创意四个参赛类别，面向小学、初中、高中各学段分组评奖，确保公平公正。</p>
+          <figure class="intro-figure">
+            <img src="assets/ocean-design-competition-web.jpg" alt="蓝色家园·创想未来 主题海报" loading="lazy" />
+            <figcaption>2026 年度主题海报 ——「蓝色家园·创想未来」</figcaption>
+          </figure>
+        </div>
+
+        <!-- 赛事宣传片 -->
+        <div class="detail-block reveal">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+            赛事宣传片
+          </h2>
+          <div class="video-feature" data-video-trigger>
+            <img src="assets/hero-ocean-ai-education-web.jpg" alt="赛事官方宣传片封面" loading="lazy" />
+            <div class="video-play-btn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="video-cap">
+              <h4>官方宣传片 · 蓝色家园·创想未来</h4>
+              <p>时长 2:30 · 点击播放，了解大赛理念与往届精彩</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 活动掠影 -->
+        <div class="detail-block reveal">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            活动掠影
+          </h2>
+          <div class="media-gallery">
+            <div class="media-card">
+              <img src="assets/ocean-design-competition-web.jpg" alt="往届颁奖现场" loading="lazy" />
+              <span class="media-label">往届颁奖典礼现场</span>
+            </div>
+            <div class="media-card">
+              <img src="assets/hero-ocean-ai-education-web.jpg" alt="选手创作风采" loading="lazy" />
+              <span class="media-label">选手创作风采</span>
+            </div>
+            <div class="media-card">
+              <img src="assets/digital-resource-ecosystem-web.jpg" alt="优秀作品展览" loading="lazy" />
+              <span class="media-label">优秀作品主题展览</span>
+            </div>
+          </div>
         </div>
         <!-- 赛程安排 -->
         <div class="detail-block reveal">
@@ -1302,6 +1392,25 @@
     if (closeBtn) closeBtn.addEventListener('click', closePdf);
     if (backdrop) backdrop.addEventListener('click', closePdf);
     document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePdf(); });
+  })();
+
+  /* 赛事宣传片：点击播放（如配置 data-src 则内嵌播放，否则友好提示） */
+  (function(){
+    var feature = document.querySelector('[data-video-trigger]');
+    if (!feature) return;
+    feature.addEventListener('click', function(){
+      var src = feature.dataset.src || '';
+      if (src) {
+        feature.innerHTML = '<video src="' + src + '" controls autoplay playsinline></video>';
+      } else {
+        var btn = feature.querySelector('.video-play-btn');
+        if (btn && !btn.dataset.hint) {
+          btn.dataset.hint = '1';
+          var cap = feature.querySelector('.video-cap p');
+          if (cap) cap.textContent = '宣传片即将上线，敬请期待官方发布';
+        }
+      }
+    });
   })();
   </script>
 
