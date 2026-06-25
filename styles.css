@@ -900,7 +900,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 100%;
   pointer-events: none;
   z-index: 1;
-  opacity: .55;
+  opacity: .32;
 }
 
 .hero {
@@ -913,11 +913,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--white);
   position: relative;
   background:
-    radial-gradient(ellipse at 8%  28%, rgba(25, 211, 197, 0.45) 0%, transparent 42%),
-    radial-gradient(ellipse at 88% 12%, rgba(110, 80, 255, 0.38) 0%, transparent 42%),
-    radial-gradient(ellipse at 58% 88%, rgba(20, 110, 255, 0.32) 0%, transparent 46%),
-    radial-gradient(ellipse at 38% 52%, rgba(30, 160, 255, 0.18) 0%, transparent 50%),
-    linear-gradient(135deg, #091a42 0%, #0f2d74 32%, #1549be 64%, #1d5cd8 100%);
+    linear-gradient(90deg, rgba(7, 26, 53, 0.62) 0%, rgba(7, 26, 53, 0.38) 36%, rgba(7, 26, 53, 0.08) 66%, rgba(7, 26, 53, 0.01) 100%),
+    radial-gradient(ellipse at 14% 30%, rgba(25, 211, 197, 0.30) 0%, transparent 42%),
+    radial-gradient(ellipse at 72% 16%, rgba(255, 255, 255, 0.34) 0%, transparent 38%),
+    url("assets/home-hero-banner.png") center / cover no-repeat,
+    linear-gradient(135deg, #0a4d8c 0%, #0f7bcf 52%, #dff9ff 100%);
   overflow: hidden;
 }
 
@@ -933,6 +933,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
   mask-image: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.15) 100%);
   animation: drift 28s ease-in-out infinite alternate;
+  opacity: .24;
 }
 
 .hero-particles {
@@ -946,7 +947,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   background-position: 0 0, 44px 70px, 88px 30px;
   background-size: 110px 110px, 85px 85px, 155px 155px;
   mask-image: linear-gradient(120deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 40%, rgba(0,0,0,0.1) 75%);
-  opacity: .55;
+  opacity: .28;
 }
 
 .hero-scanline {
@@ -969,7 +970,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.85;
+  opacity: 0.46;
 }
 
 .hero-content {
@@ -1141,6 +1142,36 @@ ul { margin: 0; padding: 0; list-style: none; }
 .slide-bg svg {
   width: 100%;
   height: 100%;
+}
+
+.slide--ocean .slide-bg,
+.slide--art .slide-bg {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.slide--ocean .slide-bg {
+  background-image: url("assets/carousel-sci-fi-competition.png");
+}
+
+.slide--art .slide-bg {
+  background-image: url("assets/carousel-art-calligraphy.png");
+}
+
+.slide--ocean .slide-bg svg,
+.slide--art .slide-bg svg {
+  display: none;
+}
+
+.slide--ocean .slide-bg::after,
+.slide--art .slide-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7,26,53,.04) 0%, rgba(7,26,53,.24) 48%, rgba(7,26,53,.70) 100%),
+    linear-gradient(90deg, rgba(7,26,53,.40) 0%, transparent 54%);
 }
 
 /* Slide content overlay */
