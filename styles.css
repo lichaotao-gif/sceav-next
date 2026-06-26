@@ -916,7 +916,7 @@ ul { margin: 0; padding: 0; list-style: none; }
     linear-gradient(90deg, rgba(7, 26, 53, 0.62) 0%, rgba(7, 26, 53, 0.38) 36%, rgba(7, 26, 53, 0.08) 66%, rgba(7, 26, 53, 0.01) 100%),
     radial-gradient(ellipse at 14% 30%, rgba(25, 211, 197, 0.30) 0%, transparent 42%),
     radial-gradient(ellipse at 72% 16%, rgba(255, 255, 255, 0.34) 0%, transparent 38%),
-    url("assets/home-hero-banner.png") center / cover no-repeat,
+    url("assets/home-hero-banner-no-people.png") center / cover no-repeat,
     linear-gradient(135deg, #0a4d8c 0%, #0f7bcf 52%, #dff9ff 100%);
   overflow: hidden;
 }
