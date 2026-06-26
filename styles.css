@@ -913,9 +913,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--white);
   position: relative;
   background:
-    linear-gradient(90deg, rgba(7, 26, 53, 0.62) 0%, rgba(7, 26, 53, 0.38) 36%, rgba(7, 26, 53, 0.08) 66%, rgba(7, 26, 53, 0.01) 100%),
-    radial-gradient(ellipse at 14% 30%, rgba(25, 211, 197, 0.30) 0%, transparent 42%),
-    radial-gradient(ellipse at 72% 16%, rgba(255, 255, 255, 0.34) 0%, transparent 38%),
+    linear-gradient(90deg, rgba(7, 26, 53, 0.38) 0%, rgba(7, 26, 53, 0.20) 34%, rgba(7, 26, 53, 0.03) 66%, rgba(7, 26, 53, 0) 100%),
+    radial-gradient(ellipse at 22% 18%, rgba(245, 250, 255, 0.28) 0%, transparent 36%),
+    radial-gradient(ellipse at 14% 30%, rgba(25, 211, 197, 0.40) 0%, transparent 44%),
+    radial-gradient(ellipse at 72% 16%, rgba(255, 255, 255, 0.48) 0%, transparent 40%),
     url("assets/home-hero-banner-no-people.png") center / cover no-repeat,
     linear-gradient(135deg, #0a4d8c 0%, #0f7bcf 52%, #dff9ff 100%);
   overflow: hidden;
@@ -1170,8 +1171,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(7,26,53,.04) 0%, rgba(7,26,53,.24) 48%, rgba(7,26,53,.70) 100%),
-    linear-gradient(90deg, rgba(7,26,53,.40) 0%, transparent 54%);
+    linear-gradient(180deg, rgba(7,26,53,0) 0%, rgba(7,26,53,.08) 52%, rgba(7,26,53,.32) 100%),
+    linear-gradient(90deg, rgba(7,26,53,.16) 0%, transparent 50%);
 }
 
 /* Slide content overlay */
@@ -1180,8 +1181,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   inset: auto 0 0 0;
   z-index: 2;
   padding: 32px 32px 28px;
-  background: linear-gradient(0deg, rgba(5,20,60,.82) 0%, rgba(5,20,60,.45) 55%, transparent 100%);
+  background: linear-gradient(0deg, rgba(5,20,60,.50) 0%, rgba(5,20,60,.22) 58%, transparent 100%);
   color: var(--white);
+  text-shadow: 0 2px 18px rgba(3, 12, 34, .55);
 }
 
 .slide-badge {
